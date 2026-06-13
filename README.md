@@ -86,7 +86,7 @@ vaishnavi-backend/
 
 ## Deployment
 
-See **[deploy/DEPLOY.md](deploy/DEPLOY.md)** for the full Ubuntu 22.04 runbook
+See **[deploy/DEPLOY.md](deploy/DEPLOY.md)** for the full Ubuntu 24.04 runbook
 (server setup, gunicorn, nginx, Let's Encrypt, cron, backups, going-live checklist).
 
 For local Postgres testing before deploy, see the "Test against Postgres locally"
@@ -304,7 +304,7 @@ base defaults.
 
 ### Going to production
 
-See **[deploy/DEPLOY.md](deploy/DEPLOY.md)** — full Ubuntu 22.04 runbook including
+See **[deploy/DEPLOY.md](deploy/DEPLOY.md)** — full Ubuntu 24.04 runbook including
 gunicorn systemd, nginx config, Let's Encrypt, crontab install, backup setup,
 restore drill, and the going-live checklist.
 

@@ -1,10 +1,16 @@
 # Vaishnavi Gaushala — Production Deployment
 
-Target: **Ubuntu 22.04 LTS** VPS (Digital Ocean / Hetzner / Linode / AWS Lightsail).
+Target: **Ubuntu 24.04 LTS** VPS (Digital Ocean / Hetzner / Linode / AWS Lightsail).
 
 - Minimum: 2 GB RAM, 2 vCPU, 40 GB SSD.
 - Recommended: 4 GB RAM, 2 vCPU, 80 GB SSD.
 - Domain pointed to the server's public IPv4 via an `A` record (and `AAAA` for IPv6 if available).
+
+> **Current production droplet:** runs on **1 GB RAM / 1 vCPU / 25 GB SSD** with
+> a **2 GB swap file** and gunicorn reduced to **2 workers**. That's below the
+> recommended minimum and only viable because of the swap + worker tuning —
+> resize to 2 GB+ as soon as traffic justifies it and bump workers back to 3
+> in [vaishnavi.service](vaishnavi.service).
 
 The runbook below assumes you're starting from a blank VPS. Subsequent
 deployments take ~2 minutes (see "Subsequent deployments" near the end).
@@ -13,12 +19,32 @@ deployments take ~2 minutes (see "Subsequent deployments" near the end).
 
 ## One-time server setup
 
+### 0. Create swap (required on 1 GB droplets)
+
+Skip this step if your droplet has 2 GB+ RAM. On a 1 GB droplet, `pip install`
+and `collectstatic` will OOM-kill without swap.
+
+```bash
+fallocate -l 2G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+sysctl vm.swappiness=10 && echo 'vm.swappiness=10' >> /etc/sysctl.conf
+```
+
+Verify with `free -h` — you should see 2.0 GiB under `Swap:`.
+
 ### 1. Update system, install dependencies
+
+Ubuntu 24.04 ships Python 3.12, which the stack (Django 5.2, Pillow, psycopg 3,
+whitenoise, gunicorn) fully supports; `python3.11` is not in the 24.04 default
+repos, so we use the unversioned `python3` packages.
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y \
-    python3.11 python3.11-venv python3-pip \
+    python3 python3-venv python3-pip \
     postgresql postgresql-contrib \
     nginx \
     certbot python3-certbot-nginx \
@@ -60,10 +86,10 @@ EOF
 ```bash
 sudo -u vaishnavi -i
 cd ~
-git clone <repo-url> vaishnavi-backend
+git clone https://github.com/theprashant26/Vaishnavigss.git vaishnavi-backend
 cd vaishnavi-backend
 
-python3.11 -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
@@ -113,6 +139,11 @@ sudo systemctl enable vaishnavi
 sudo systemctl start vaishnavi
 sudo systemctl status vaishnavi    # should report "active (running)"
 ```
+
+> The committed [vaishnavi.service](vaishnavi.service) runs **2 gunicorn
+> workers**, sized for the current 1 GB / 1 vCPU droplet with swap. If you
+> resize to 2 GB+, bump `--workers 2` → `--workers 3` (rule of thumb:
+> `(2 × CPU cores) + 1`) and `sudo systemctl restart vaishnavi`.
 
 Tail the logs to confirm gunicorn is happy:
 

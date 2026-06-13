@@ -11,9 +11,10 @@ WorkingDirectory=/home/vaishnavi/vaishnavi-backend
 EnvironmentFile=/home/vaishnavi/vaishnavi-backend/.env
 
 # Worker sizing: (2 * CPU cores) + 1 — adjust for your VPS.
-# 3 workers fits a 2 GB / 2 vCPU droplet comfortably (~200 MB each).
+# 2 workers fits the current 1 GB / 1 vCPU droplet (backed by a 2 GB swap file)
+# at ~200 MB resident each. Resize to 2 GB+ before bumping back to 3 workers.
 ExecStart=/home/vaishnavi/vaishnavi-backend/.venv/bin/gunicorn \
-    --workers 3 \
+    --workers 2 \
     --bind 127.0.0.1:8000 \
     --access-logfile /home/vaishnavi/vaishnavi-backend/logs/gunicorn-access.log \
     --error-logfile /home/vaishnavi/vaishnavi-backend/logs/gunicorn-error.log \
