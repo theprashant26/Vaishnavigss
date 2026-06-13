@@ -10,6 +10,12 @@ Group=vaishnavi
 WorkingDirectory=/home/vaishnavi/vaishnavi-backend
 EnvironmentFile=/home/vaishnavi/vaishnavi-backend/.env
 
+# Override HOME so gunicorn doesn't try to write its worker temp dir to
+# /home/vaishnavi/.gunicorn — ProtectHome=read-only below makes that fail with
+# "[Errno 30] Read-only file system". The logs/ dir is already in
+# ReadWritePaths so it's safe to use as HOME.
+Environment=HOME=/home/vaishnavi/vaishnavi-backend/logs
+
 # Worker sizing: (2 * CPU cores) + 1 — adjust for your VPS.
 # 2 workers fits the current 1 GB / 1 vCPU droplet (backed by a 2 GB swap file)
 # at ~200 MB resident each. Resize to 2 GB+ before bumping back to 3 workers.

@@ -112,11 +112,31 @@ Fill in:
 - **`EMAIL_*`** — Postmark / SES SMTP credentials (see README "Email setup").
 - **`DEFAULT_FROM_EMAIL=Vaishnavi Gaushala <hello@vaishnavigss.com>`**
 - **`SERVER_EMAIL=errors@vaishnavigss.com`** (where 500-error reports go)
-- **`ADMIN_EMAIL=admin@vaishnavigss.com`** (recipient for ERROR-level logs)
+- **`ADMIN_EMAIL=`** — leave empty until SMTP is verified end-to-end. DigitalOcean
+  blocks outbound port 25/587 by default, and a non-empty `ADMIN_EMAIL` makes
+  every 500 try to email the admins — combined with no `EMAIL_TIMEOUT` (now
+  default 10s) that took the site down on first deploy.
 - **`MSG91_*`** — once DLT registration is approved (see README "SMS setup").
 - **`RAZORPAY_*`** — start with test keys until KYC; flip to `rzp_live_*` after.
 
-Save and close.
+Save and close, then lock down `.env` so the world can't read your secrets:
+
+```bash
+chmod 600 .env
+```
+
+### 5b. Create the writable directories the daemon needs
+
+systemd's `ReadWritePaths=` (in [vaishnavi.service](vaishnavi.service)) names
+`media/` — if that directory is missing, the service fails to start with a
+cryptic "namespace setup failed" error. The backup script also expects a log
+dir at `/home/vaishnavi/logs`.
+
+```bash
+# As the vaishnavi user (still inside the `sudo -u vaishnavi -i` shell from step 4):
+mkdir -p /home/vaishnavi/vaishnavi-backend/media
+mkdir -p /home/vaishnavi/logs
+```
 
 ### 6. Bootstrap the database + collect static files
 
@@ -126,6 +146,22 @@ Save and close.
 
 This runs `migrate`, `createcachetable`, `collectstatic`, `load_initial_data`,
 and prompts for a superuser. About 30 seconds total.
+
+### 6b. Loosen permissions so nginx (www-data) can read static + media
+
+Ubuntu 24.04 creates `/home/<user>` as mode `0750`, so anything nginx
+serves through an `alias` returns **403 Forbidden** by default — every page
+loads but every static asset 404s in the browser.
+
+```bash
+chmod o+x /home/vaishnavi
+chmod -R o+rX /home/vaishnavi/vaishnavi-backend/staticfiles \
+              /home/vaishnavi/vaishnavi-backend/media
+```
+
+`o+rX` (capital X) makes directories traversable and files readable, without
+adding execute to data files. Re-run after every `collectstatic` (the
+"Subsequent deployments" block below already does this).
 
 ### 7. Install the gunicorn systemd service
 
@@ -151,7 +187,14 @@ Tail the logs to confirm gunicorn is happy:
 sudo journalctl -u vaishnavi -f
 ```
 
-### 8. Install nginx
+### 8. Install nginx (HTTP-only — certbot upgrades it in step 9)
+
+The committed [nginx.conf](nginx.conf) is **port-80 only on purpose**. A clean
+box has no Let's Encrypt cert yet, so any `listen 443 ssl` block with hard-coded
+`ssl_certificate` paths fails `nginx -t`. (Also: the previous file used `http2 on;`,
+which is nginx 1.25.1+ — Ubuntu 24.04 ships nginx 1.24 where that directive is a
+hard error.) `certbot --nginx` rewrites this file in step 9 to add the 443 listener,
+the cert paths it just issued, and the HTTP→HTTPS redirect.
 
 ```bash
 sudo cp /home/vaishnavi/vaishnavi-backend/deploy/nginx.conf \
@@ -159,13 +202,14 @@ sudo cp /home/vaishnavi/vaishnavi-backend/deploy/nginx.conf \
 sudo ln -s /etc/nginx/sites-available/vaishnavigss \
            /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
-sudo nginx -t       # syntax check
+sudo nginx -t       # syntax check — must pass before reload
 sudo systemctl reload nginx
 ```
 
 At this point `http://vaishnavigss.com` should reach gunicorn (still on port 80).
+Hit it in a browser to confirm the site renders before involving Let's Encrypt.
 
-### 9. Issue Let's Encrypt certificate
+### 9. Issue Let's Encrypt certificate (this is what flips you to HTTPS)
 
 ```bash
 sudo certbot --nginx -d vaishnavigss.com -d www.vaishnavigss.com
@@ -228,16 +272,24 @@ To do so, you must first set `SECURE_HSTS_PRELOAD=True` in
 
 ## Subsequent deployments
 
+Run this whole block as **root** (or `sudo`). The build runs as the `vaishnavi`
+user inside one subshell with `set -e` so any failing step aborts the deploy
+before gunicorn restarts, and `chmod -R o+rX staticfiles` re-applies the
+nginx-readable permissions after collectstatic regenerates files.
+
 ```bash
-sudo -u vaishnavi -i
-cd ~/vaishnavi-backend
-git pull
-source .venv/bin/activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py collectstatic --noinput
-exit
-sudo systemctl restart vaishnavi
+sudo -u vaishnavi bash -c '
+  set -e
+  cd /home/vaishnavi/vaishnavi-backend
+  git pull
+  source .venv/bin/activate
+  pip install -r requirements.txt
+  export DJANGO_SETTINGS_MODULE=vaishnavi.settings.prod
+  python manage.py migrate --noinput
+  python manage.py collectstatic --noinput
+  chmod -R o+rX staticfiles
+'
+systemctl restart vaishnavi
 ```
 
 If the deploy includes a `requirements.txt` change or a migration, also tail

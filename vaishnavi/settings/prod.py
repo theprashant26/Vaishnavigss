@@ -79,6 +79,14 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() == 'true'
 
+# Hard cap so a dead/blocked SMTP host can't pin a gunicorn worker forever.
+# DigitalOcean blocks outbound port 25/587 by default — without this, any error
+# that triggers the django.request -> AdminEmailHandler chain would hang the
+# worker until the kernel TCP timeout (minutes), which during the initial
+# deploy took the whole site down. 10s is plenty for SMTP STARTTLS to either
+# connect or fail loudly.
+EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', '10'))
+
 ADMINS = [('Admin', os.environ.get('ADMIN_EMAIL', ''))] if os.environ.get('ADMIN_EMAIL') else []
 MANAGERS = ADMINS
 SERVER_EMAIL = os.environ.get('SERVER_EMAIL', 'errors@vaishnavigss.com')
