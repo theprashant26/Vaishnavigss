@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Sitemap: {{ site_domain }}/sitemap.xml
+
+Disallow: /admin/
+Disallow: /account/
+Disallow: /cart/
+Disallow: /subscriptions/*/pay/
+Disallow: /subscriptions/pay/
+Disallow: /healthz/

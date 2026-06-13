@@ -1,0 +1,20 @@
+[
+  {
+    "id": "milk-dairy",
+    "name": "Milk & Dairy",
+    "tagline": "Fresh from the bilona",
+    "description": "Glass-bottled A2 desi cow milk, traditional hand-churned bilona ghee, and tangy fresh buttermilk — all from our indigenous Gir, Sahiwal, Tharparkar, Bachaur and Punganur cows.",
+    "image": "/assets/img/cat-milk-dairy.jpg",
+    "imageAlt": "Brass vessel of A2 ghee beside a glass milk bottle on a wooden tabletop",
+    "productCount": 3
+  },
+  {
+    "id": "traditional-snacks",
+    "name": "Traditional Snacks",
+    "tagline": "Hand-made by village women",
+    "description": "Thekua, nimki and mathri — slow-rolled, slow-fried, made with our own ghee. Sourced from women's collectives in nearby Bihar villages; proceeds support both the gaushala and rural livelihoods.",
+    "image": "/assets/img/cat-traditional-snacks.jpg",
+    "imageAlt": "Plate of golden thekua, crisp nimki and flaky mathri on a steel thali",
+    "productCount": 3
+  }
+]

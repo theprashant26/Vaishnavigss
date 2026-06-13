@@ -1,0 +1,16 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}New adoption inquiry.
+
+Name:    {{ submission.name }}
+Email:   {{ submission.email }}
+Phone:   {{ submission.phone }}
+Plan:    {{ submission.get_plan_interest_display }}
+Cow:     {% if submission.preferred_cow %}{{ submission.preferred_cow }}{% else %}(any){% endif %}
+Breed:   {% if submission.preferred_breed %}{{ submission.preferred_breed }}{% else %}(any){% endif %}
+
+Message:
+{{ submission.message|default:"(none)" }}
+
+Submitted: {{ submission.created_at|date:"j M Y, H:i" }}
+Review: {{ site_domain }}/admin/services/adoptioninquiry/{{ submission.pk }}/change/
+{% endblock %}

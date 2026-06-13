@@ -1,0 +1,97 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}{% if mode == 'add' %}Add address{% else %}Edit address{% endif %}{% endblock %}
+
+{% block breadcrumb_extra %}
+  <span class="sep">/</span>
+  <a href="{% url 'accounts:address_list' %}">Addresses</a>
+  <span class="sep">/</span>
+  <span aria-current="page">{% if mode == 'add' %}Add{% else %}Edit{% endif %}</span>
+{% endblock %}
+
+{% block profile_content %}
+
+  <section class="profile-view is-active" aria-label="{% if mode == 'add' %}Add address{% else %}Edit address{% endif %}">
+    <div class="view-card">
+      <h2>{% if mode == 'add' %}Add a new address{% else %}Edit address{% endif %}</h2>
+      <p class="view-card__lead">Used for delivery and order confirmations.</p>
+
+      {% if form.non_field_errors %}
+        <div class="auth-error" role="alert">{{ form.non_field_errors|join:" " }}</div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="settings-row">
+          <div>
+            <label for="id_label" class="form-label-vai">Label</label>
+            <input id="id_label" name="label" class="form-control-vai{% if form.label.errors %} is-invalid{% endif %}" type="text" placeholder="Home, Office, Mom's place" value="{{ form.label.value|default:'' }}" required />
+            {% if form.label.errors %}<div class="field-error">{{ form.label.errors|join:" " }}</div>{% endif %}
+          </div>
+
+          <div>
+            <label for="id_recipient_name" class="form-label-vai">Recipient name</label>
+            <input id="id_recipient_name" name="recipient_name" class="form-control-vai{% if form.recipient_name.errors %} is-invalid{% endif %}" type="text" value="{{ form.recipient_name.value|default:'' }}" required />
+            {% if form.recipient_name.errors %}<div class="field-error">{{ form.recipient_name.errors|join:" " }}</div>{% endif %}
+          </div>
+
+          <div>
+            <label for="id_recipient_phone" class="form-label-vai">Recipient phone</label>
+            <input id="id_recipient_phone" name="recipient_phone" class="form-control-vai{% if form.recipient_phone.errors %} is-invalid{% endif %}" type="tel" placeholder="+91 9XXXX XXXXX" value="{{ form.recipient_phone.value|default:'' }}" required />
+            {% if form.recipient_phone.errors %}<div class="field-error">{{ form.recipient_phone.errors|join:" " }}</div>{% endif %}
+          </div>
+
+          <div>
+            <label for="id_pincode" class="form-label-vai">PIN code</label>
+            <input id="id_pincode" name="pincode" class="form-control-vai{% if form.pincode.errors %} is-invalid{% endif %}" type="text" inputmode="numeric" maxlength="6" value="{{ form.pincode.value|default:'' }}" required />
+            {% if form.pincode.errors %}<div class="field-error">{{ form.pincode.errors|join:" " }}</div>{% endif %}
+          </div>
+
+          <div class="span-2">
+            <label for="id_line_1" class="form-label-vai">Address line 1</label>
+            <input id="id_line_1" name="line_1" class="form-control-vai{% if form.line_1.errors %} is-invalid{% endif %}" type="text" placeholder="House / flat / street" value="{{ form.line_1.value|default:'' }}" required />
+            {% if form.line_1.errors %}<div class="field-error">{{ form.line_1.errors|join:" " }}</div>{% endif %}
+          </div>
+
+          <div class="span-2">
+            <label for="id_line_2" class="form-label-vai">Address line 2 <span class="text-muted-soft">(optional)</span></label>
+            <input id="id_line_2" name="line_2" class="form-control-vai" type="text" placeholder="Apartment, sector, area" value="{{ form.line_2.value|default:'' }}" />
+          </div>
+
+          <div class="span-2">
+            <label for="id_landmark" class="form-label-vai">Landmark <span class="text-muted-soft">(optional)</span></label>
+            <input id="id_landmark" name="landmark" class="form-control-vai" type="text" placeholder="Near the temple, beside the school" value="{{ form.landmark.value|default:'' }}" />
+          </div>
+
+          <div>
+            <label for="id_city" class="form-label-vai">City</label>
+            <input id="id_city" name="city" class="form-control-vai{% if form.city.errors %} is-invalid{% endif %}" type="text" value="{{ form.city.value|default:'' }}" required />
+            {% if form.city.errors %}<div class="field-error">{{ form.city.errors|join:" " }}</div>{% endif %}
+          </div>
+
+          <div>
+            <label for="id_state" class="form-label-vai">State</label>
+            <input id="id_state" name="state" class="form-control-vai{% if form.state.errors %} is-invalid{% endif %}" type="text" value="{{ form.state.value|default:'' }}" required />
+            {% if form.state.errors %}<div class="field-error">{{ form.state.errors|join:" " }}</div>{% endif %}
+          </div>
+        </div>
+
+        <label class="notif-row filter__switch">
+          <div class="notif-row__label">
+            <strong>Make default</strong>
+            <span>Use this address by default at checkout.</span>
+          </div>
+          <input type="checkbox" name="is_default" {% if form.is_default.value %}checked{% endif %} />
+        </label>
+
+        <div class="auth-actions-row">
+          <a href="{% url 'accounts:address_list' %}" class="btn-vaishnavi-ghost">Cancel</a>
+          <button type="submit" class="btn-vaishnavi-primary">{% if mode == 'add' %}Save address{% else %}Update address{% endif %}</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+{% endblock %}

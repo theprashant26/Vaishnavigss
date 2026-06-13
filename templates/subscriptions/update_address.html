@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Change delivery address &mdash; {{ subscription.subscription_number }}{% endblock %}
+{% block body_page %}subscription-address{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+  <section class="checkout container-vai" aria-labelledby="addr-h">
+    <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+      <a href="{% url 'accounts:profile' %}">Profile</a>
+      <span class="sep">/</span>
+      <a href="{% url 'accounts:profile_subscription_detail' subscription_number=subscription.subscription_number %}">{{ subscription.subscription_number }}</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Change address</span>
+    </nav>
+
+    <h1 id="addr-h">Change delivery address</h1>
+
+    <div class="step-panel">
+      <p class="text-muted-soft">
+        Pick one of your saved addresses. Past and in-flight deliveries keep
+        their original address; everything scheduled from tomorrow onward will
+        switch to the new one.
+      </p>
+      <p style="font-size:0.9rem;">
+        <strong>Currently shipping to:</strong>
+        {{ subscription.shipping_line_1 }},
+        {{ subscription.shipping_city }} &mdash; {{ subscription.shipping_pincode }}
+      </p>
+    </div>
+
+    {% if addresses %}
+      <form method="post" class="step-panel">
+        {% csrf_token %}
+        <div class="addr-chips">
+          {% for addr in addresses %}
+            <label class="addr-chip">
+              <input type="radio" name="address_id" value="{{ addr.pk }}"
+                     {% if addr.is_default %}checked{% endif %}>
+              <strong>{{ addr.label }}{% if addr.is_default %} &middot; default{% endif %}</strong>
+              <span>{{ addr.recipient_name }} &middot; {{ addr.recipient_phone }}</span>
+              <span>{{ addr.line_1 }}{% if addr.line_2 %}, {{ addr.line_2 }}{% endif %}</span>
+              <span>{{ addr.city }}, {{ addr.state }} &mdash; {{ addr.pincode }}</span>
+            </label>
+          {% endfor %}
+        </div>
+        <div class="step-panel__actions">
+          <a class="btn-vaishnavi-ghost back" href="{% url 'accounts:profile_subscription_detail' subscription_number=subscription.subscription_number %}">Back</a>
+          <button type="submit" class="btn-vaishnavi-primary">Use this address</button>
+        </div>
+      </form>
+    {% else %}
+      <div class="step-panel" style="text-align:center;">
+        <p class="text-muted-soft">You don't have any other saved addresses. Add one first.</p>
+        <a class="btn-vaishnavi-primary" href="{% url 'accounts:profile_addresses' %}">Manage addresses</a>
+      </div>
+    {% endif %}
+  </section>
+{% endblock %}

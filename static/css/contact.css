@@ -1,0 +1,216 @@
+/* ============================================================
+   Contact page — page-scoped styles.
+   ============================================================ */
+
+/* ====================================================
+   CONTACT HERO (compact)
+   ==================================================== */
+.contact-hero {
+  position: relative;
+  padding-block: var(--sp-7) var(--sp-6);
+  background-color: var(--color-bg-alt);
+  text-align: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+.contact-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../svg/paisley-watermark.svg") center / 600px no-repeat;
+  opacity: 0.05;
+  z-index: -1;
+}
+.contact-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-block: var(--sp-3) var(--sp-3);
+  font-weight: 700;
+}
+.contact-hero p {
+  max-width: 56ch;
+  margin-inline: auto;
+  color: var(--color-ink-soft);
+}
+
+/* ====================================================
+   CONTACT GRID — form + info
+   ==================================================== */
+.contact-main {
+  display: grid;
+  gap: var(--sp-6);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 992px) {
+  .contact-main { grid-template-columns: 1.3fr 1fr; gap: var(--sp-7); }
+}
+
+.contact-form-card,
+.contact-info-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+}
+
+.contact-form-card h2 {
+  font-size: 1.625rem;
+  margin-bottom: var(--sp-2);
+}
+.contact-form-card > p {
+  color: var(--color-ink-soft);
+  margin-bottom: var(--sp-5);
+  font-size: var(--fs-small);
+}
+
+.contact-form__grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 576px) {
+  .contact-form__grid { grid-template-columns: 1fr 1fr; }
+  .contact-form__grid .span-2 { grid-column: span 2; }
+}
+
+.contact-form__hint {
+  font-size: var(--fs-tiny);
+  color: var(--color-muted);
+  margin-top: var(--sp-2);
+}
+
+/* Info card */
+.contact-info-card h3 {
+  font-size: 1.375rem;
+  margin-bottom: var(--sp-4);
+}
+.contact-info__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.contact-info__list li {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: flex-start;
+}
+.contact-info__list svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.contact-info__list strong {
+  display: block;
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: var(--fs-small);
+  margin-bottom: 2px;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+.contact-info__list a {
+  color: var(--color-ink-soft);
+  font-size: var(--fs-body);
+}
+.contact-info__list a:hover { color: var(--color-primary); }
+.contact-info__list span { color: var(--color-ink-soft); }
+
+.contact-info__actions {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--color-line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.contact-info__social {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-4);
+}
+.contact-info__social a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-bg-alt);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--dur-base) var(--ease-out);
+}
+.contact-info__social a:hover {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+/* ====================================================
+   MAP EMBED (full-width)
+   ==================================================== */
+.contact-map {
+  background-color: var(--color-bg);
+  padding-block: 0;
+}
+.contact-map__frame {
+  width: 100%;
+  height: 380px;
+  border-radius: 0;
+  position: relative;
+  background:
+    linear-gradient(rgba(43, 24, 16, 0.05), rgba(43, 24, 16, 0.1)),
+    linear-gradient(135deg, #E4D5B7 0%, #C9A961 50%, #A89472 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.contact-map__pin {
+  background-color: var(--color-surface);
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--r-md);
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+  box-shadow: var(--shadow-2);
+  max-width: 360px;
+  z-index: 2;
+}
+.contact-map__pin-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.contact-map__pin strong {
+  display: block;
+  color: var(--color-ink);
+  font-weight: 600;
+  font-family: var(--font-display);
+}
+.contact-map__pin span {
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+}
+.contact-map__note {
+  position: absolute;
+  bottom: var(--sp-3);
+  right: var(--sp-3);
+  background-color: rgba(43, 24, 16, 0.8);
+  color: var(--color-bg);
+  padding: 6px 12px;
+  border-radius: var(--r-sm);
+  font-size: var(--fs-tiny);
+  letter-spacing: 0.04em;
+}
+
+/* FAQ accordion styles moved to components.css so /services/ and /contact/
+   (and any future page using partials/_faq_accordion.html) share the same look. */

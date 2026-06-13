@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment didn't go through{% endblock %}
+{% block body_page %}subscription-pay-failed{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="container-vai" style="max-width:560px; text-align:center; padding:64px 16px;">
+      <span class="eyebrow">Try again</span>
+      <h1>Payment didn't go through.</h1>
+      <p class="text-muted-soft" style="margin:16px auto; max-width:480px;">
+        No money was taken. You can retry from your profile, or start a new subscription.
+      </p>
+      <div class="cta-row" style="margin-top:24px; justify-content:center;">
+        <a class="btn-vaishnavi-primary" href="{% url 'accounts:profile' %}">Open profile</a>
+        <a class="btn-vaishnavi-ghost" href="{% url 'services:service_list' %}">Browse plans</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{# Layout-only template for all profile sub-views. Each sub-view extends this and fills {% block profile_content %}. #}
+
+{% block title %}{% block profile_title %}My account{% endblock %} &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}profile{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+  <section class="profile container-vai" aria-labelledby="profile-h">
+
+    <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+      <a href="{% url 'core:home' %}">Home</a>
+      <span class="sep">/</span>
+      <a href="{% url 'accounts:profile' %}" {% if active_section == 'dashboard' %}aria-current="page"{% endif %}>My account</a>
+      {% block breadcrumb_extra %}{% endblock %}
+    </nav>
+
+    <div class="profile__header">
+      <h1 id="profile-h">
+        {% block profile_header %}
+          <em>Welcome back,</em>
+          <span data-user-name>{{ user.first_name|default:user.username }}</span>
+        {% endblock %}
+      </h1>
+      <p>{% block profile_subhead %}Manage your orders, subscriptions, addresses and account preferences here.{% endblock %}</p>
+    </div>
+
+    <div class="profile__grid">
+      {% include 'partials/_profile_sidebar.html' %}
+      <div>
+        {% block profile_content %}{% endblock %}
+      </div>
+    </div>
+
+  </section>
+
+{% endblock %}

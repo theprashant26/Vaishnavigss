@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Resume subscription &mdash; {{ subscription.subscription_number }}{% endblock %}
+{% block body_page %}subscription-resume{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+  <section class="checkout container-vai" aria-labelledby="resume-h">
+    <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+      <a href="{% url 'accounts:profile' %}">Profile</a>
+      <span class="sep">/</span>
+      <a href="{% url 'accounts:profile_subscription_detail' subscription_number=subscription.subscription_number %}">{{ subscription.subscription_number }}</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Resume</span>
+    </nav>
+
+    <h1 id="resume-h">Resume your subscription early?</h1>
+
+    <div class="step-panel">
+      <p>Your subscription is paused until
+        <strong>{{ subscription.paused_until|date:"j M Y"|default:"&mdash;" }}</strong>.
+        Resuming today will:</p>
+      <ul style="margin:0 0 16px 18px; line-height:1.7;">
+        <li>Restore any paused deliveries from today onward to <strong>scheduled</strong>.</li>
+        <li>Shrink your period to recover the days you didn't use.</li>
+        <li>Remove the surplus make-up deliveries past the new period end.</li>
+      </ul>
+      <p class="text-muted-soft" style="font-size:0.9rem;">
+        Your current period ends <strong>{{ subscription.current_period_end|date:"j M Y" }}</strong>
+        &mdash; it will move earlier after you resume.
+      </p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="step-panel__actions">
+          <a class="btn-vaishnavi-ghost back" href="{% url 'accounts:profile_subscription_detail' subscription_number=subscription.subscription_number %}">Stay paused</a>
+          <button type="submit" class="btn-vaishnavi-primary">Resume now</button>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

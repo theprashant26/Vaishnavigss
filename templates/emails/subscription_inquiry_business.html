@@ -1,0 +1,22 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}New subscription inquiry{% endblock %}
+{% block body %}
+  <table style="width:100%; border-collapse:collapse; font-size:14px;">
+    <tr><td style="padding:6px 0; color:#6b5b4a; width:130px;">Plan</td><td style="padding:6px 0;"><strong>{{ submission.plan.name }}</strong> ({{ submission.plan.get_tier_display }})</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Price</td><td style="padding:6px 0;">&#8377;{{ submission.plan.price|floatformat:"0" }} / {{ submission.plan.get_delivery_frequency_display|lower }}</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Delivery</td><td style="padding:6px 0;">{% if submission.plan.delivery_scope == 'NCR_ONLY' %}NCR only{% else %}Pan-India{% endif %}</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Name</td><td style="padding:6px 0;">{{ submission.name }}</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Email</td><td style="padding:6px 0;"><a href="mailto:{{ submission.email }}" style="color:#7A1F1F;">{{ submission.email }}</a></td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Phone</td><td style="padding:6px 0;">{{ submission.phone }}</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">City</td><td style="padding:6px 0;">{{ submission.delivery_city|default:"&mdash;" }}</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">PIN code</td><td style="padding:6px 0;">{{ submission.delivery_pincode|default:"&mdash;" }}</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Start date</td><td style="padding:6px 0;">{% if submission.start_date_preference %}{{ submission.start_date_preference|date:"j M Y" }}{% else %}(flexible){% endif %}</td></tr>
+  </table>
+  {% if submission.message %}
+    <h3 style="font-family:'Fraunces', Georgia, serif; color:#7A1F1F; font-size:16px; margin:24px 0 8px;">Message</h3>
+    <p style="white-space:pre-wrap; margin:0; padding:12px; background:#FBF5E9; border-radius:4px;">{{ submission.message }}</p>
+  {% endif %}
+  <p style="margin:24px 0 0;">
+    <a href="{{ site_domain }}/admin/subscriptions/subscriptioninquiry/{{ submission.pk }}/change/" style="display:inline-block; background:#7A1F1F; color:#fff; padding:10px 20px; text-decoration:none; border-radius:4px;">Open in admin</a>
+  </p>
+{% endblock %}

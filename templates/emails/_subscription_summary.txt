@@ -1,0 +1,12 @@
+Subscription #{{ subscription.subscription_number }}
+
+Plan:         {{ subscription.plan.name }}
+Status:       {{ subscription.get_status_display }}
+Period:       {{ subscription.current_period_start|date:"j M Y" }} – {{ subscription.current_period_end|date:"j M Y" }}
+{% if subscription.next_billing_date %}Next billing: {{ subscription.next_billing_date|date:"j M Y" }}
+{% endif %}Delivery:     {{ subscription.get_delivery_time_slot_display }}
+
+Shipping to:
+{{ subscription.shipping_recipient_name }} · {{ subscription.shipping_phone }}
+{{ subscription.shipping_line_1 }}{% if subscription.shipping_line_2 %}, {{ subscription.shipping_line_2 }}{% endif %}
+{{ subscription.shipping_city }}, {{ subscription.shipping_state }} — {{ subscription.shipping_pincode }}

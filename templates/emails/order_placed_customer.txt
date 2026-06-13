@@ -1,0 +1,12 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Thank you, {{ order.user.first_name|default:order.user.username }}.
+
+We received your order and will start preparing it shortly. Since this is a
+Cash on Delivery order, please keep Rs.{{ order.total|floatformat:"0" }} ready for the delivery agent.
+
+{% include 'emails/_order_summary.txt' %}
+Questions? Reply to this email or WhatsApp us.
+
+With seva,
+— {{ site_name }}
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign in &mdash; {{ site.business_name }}{% endblock %}
+{% block meta_description %}Sign in to your account. Track orders, manage subscriptions, adopt a cow.{% endblock %}
+{% block body_page %}login{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+    <section class="auth" aria-labelledby="login-h">
+      <div class="auth-card">
+
+        <div class="auth-card__brand">
+          <img src="{% static 'img/vaishnavilogo.jpeg' %}" alt="{{ site.business_name }}" width="64" height="64" class="logo-img logo-img--blend" />
+          <div class="auth-card__brand-name">Vaishnavi</div>
+          <div class="auth-card__brand-tag">गऊ सेवा</div>
+        </div>
+
+        <h1 id="login-h">Welcome back</h1>
+        <p class="auth-card__lead">Sign in to track orders, manage subscriptions, and see your adopted cows.</p>
+
+        {# Tabs are visual-only — they just swap the placeholder. Backend accepts either via `identifier`. #}
+        <div class="auth-tabs" role="tablist">
+          <button class="auth-tab is-active" type="button" data-tab="email" role="tab">Email</button>
+          <button class="auth-tab" type="button" data-tab="phone" role="tab">Phone</button>
+        </div>
+
+        {% if form.non_field_errors %}
+          <div class="auth-error" role="alert">{{ form.non_field_errors|join:" " }}</div>
+        {% endif %}
+
+        <div class="auth-pane is-active" data-pane="email" role="tabpanel">
+          <form data-auth-form="email" data-server-side method="post" action="{% url 'accounts:login' %}{% if next %}?next={{ next }}{% endif %}" novalidate>
+            {% csrf_token %}
+
+            <div class="auth-form-row">
+              <label for="id_identifier" class="form-label-vai" data-identifier-label>Email</label>
+              <input id="id_identifier" name="identifier" type="text" class="form-control-vai{% if form.identifier.errors %} is-invalid{% endif %}" placeholder="you@example.com" data-identifier-input autocomplete="username" value="{{ form.identifier.value|default:'' }}" required />
+              {% if form.identifier.errors %}<div class="field-error">{{ form.identifier.errors|join:" " }}</div>{% endif %}
+            </div>
+
+            <div class="auth-form-row">
+              <label for="id_password" class="form-label-vai">Password</label>
+              <input id="id_password" name="password" type="password" class="form-control-vai{% if form.password.errors %} is-invalid{% endif %}" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password" required />
+              {% if form.password.errors %}<div class="field-error">{{ form.password.errors|join:" " }}</div>{% endif %}
+            </div>
+
+            <label class="auth-terms">
+              <input type="checkbox" name="remember_me" {% if form.remember_me.value %}checked{% endif %} />
+              <span>Remember me on this device</span>
+            </label>
+
+            <a href="{% url 'accounts:password_reset' %}" class="auth-form__forgot">Forgot password?</a>
+
+            <button type="submit" class="btn-vaishnavi-primary auth-form__cta">Sign in</button>
+          </form>
+
+          <p class="auth-otp-hint">
+            Prefer a one-time code? <a href="{% url 'accounts:login_otp' %}">Sign in with OTP &rarr;</a>
+          </p>
+
+          <div class="auth-divider">or</div>
+
+          <button type="button" class="btn-google" data-google disabled aria-disabled="true" title="Coming soon">
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A10.99 10.99 0 0012 23z" fill="#34A853"/>
+              <path d="M5.84 14.09A6.6 6.6 0 015.5 12c0-.73.13-1.43.34-2.09V7.07H2.18A10.99 10.99 0 001 12c0 1.77.42 3.44 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.2 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z" fill="#EA4335"/>
+            </svg>
+            Continue with Google (coming soon)
+          </button>
+        </div>
+
+        <div class="auth-card__footer">
+          New to Vaishnavi?
+          <a href="{% url 'accounts:register' %}{% if next %}?next={{ next }}{% endif %}">Create an account &rarr;</a>
+        </div>
+
+      </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

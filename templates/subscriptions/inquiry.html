@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Subscribe to {{ plan.name }} &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}subscription-inquiry{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}?v=3" />
+  <link rel="stylesheet" href="{% static 'css/services.css' %}?v=3" />
+{% endblock %}
+
+{% block content %}
+
+  <section class="contact-hero" aria-labelledby="sub-inq-h">
+    <div class="container-vai">
+      <div>
+        <span class="eyebrow">Subscription &middot; {{ plan.get_tier_display }}</span>
+        <h1 id="sub-inq-h">Subscribe to {{ plan.name }}.</h1>
+        <p>
+          Tell us where to deliver and we'll confirm your first dispatch within a business day.
+          No charges until your first delivery is on the way.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Plan summary and inquiry form">
+    <div class="container-vai">
+      <div class="contact-main">
+
+        {# Plan summary (left) — reuse plan-card visual for consistency #}
+        <aside class="contact-info-card" aria-label="Plan summary">
+          <span class="eyebrow">You're subscribing to</span>
+          <h2 style="margin-top:8px;">{{ plan.name }}</h2>
+          <p class="text-muted-soft">{{ plan.description }}</p>
+
+          <div class="plan-card__price" style="margin: 12px 0;">
+            <strong>&#8377;{{ plan.price|floatformat:"0" }}</strong>
+            <span class="plan-card__price-period">
+              {% if plan.delivery_frequency == 'ONE_TIME' %}one-time{% else %}/ {{ plan.get_delivery_frequency_display|lower }}{% endif %}
+            </span>
+          </div>
+
+          {% if plan.whats_included %}
+            <ul class="plan-card__items" role="list">
+              {% for line in plan.whats_included.splitlines %}
+                {% if line %}<li><span>{{ line|cut:"• " }}</span></li>{% endif %}
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          <p class="text-muted-soft" style="font-size:0.85rem; margin-top:16px;">
+            {% if plan.delivery_scope == 'NCR_ONLY' %}Delhi NCR only.{% else %}Pan-India delivery.{% endif %}
+            No contracts &mdash; pause, skip, or cancel any time.
+          </p>
+        </aside>
+
+        {# Inquiry form (right) #}
+        <div class="contact-form-card">
+          <h2>Your details</h2>
+          <p>We'll reach out within a business day.</p>
+
+          {% if form.non_field_errors %}
+            <div class="auth-error" role="alert">{{ form.non_field_errors|join:" " }}</div>
+          {% endif %}
+
+          <form method="post" class="contact-form__grid" novalidate>
+            {% csrf_token %}
+            {{ form.submitted_at_min }}
+            {{ form.plan }}
+            <div class="vai-honeypot" aria-hidden="true">{{ form.website }}</div>
+
+            {% include 'partials/_form_field.html' with field=form.name label="Your name" %}
+            {% include 'partials/_form_field.html' with field=form.phone label="Phone" %}
+            {% include 'partials/_form_field.html' with field=form.email label="Email" span2=True %}
+            {% include 'partials/_form_field.html' with field=form.delivery_city label="Delivery city" optional=True %}
+            {% include 'partials/_form_field.html' with field=form.delivery_pincode label="PIN code" optional=True %}
+            {% include 'partials/_form_field.html' with field=form.start_date_preference label="Preferred start date" optional=True span2=True %}
+            {% include 'partials/_form_field.html' with field=form.message label="Anything you'd like us to know" optional=True span2=True %}
+
+            <div class="span-2">
+              <button type="submit" class="btn-vaishnavi-primary">Send inquiry</button>
+              <p class="contact-form__hint">No payment yet. We confirm the first dispatch by email.</p>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

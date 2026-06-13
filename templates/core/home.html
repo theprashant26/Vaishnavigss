@@ -1,0 +1,469 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Vaishnavi Gau Seva Gausansthan — Pure A2 Dairy from our Gaushala{% endblock %}
+{% block meta_description %}A2 desi cow milk, bilona ghee, fresh buttermilk and Bihari snacks delivered from a small gaushala in Delhi NCR. Every order funds the care of {{ site.cow_count|default:35 }}+ indigenous cows.{% endblock %}
+
+{% block body_page %}home{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/home.css' %}?v=3" />
+{% endblock %}
+
+{% block content %}
+
+    {% comment %} ============================================================
+       1. HERO
+       ============================================================ {% endcomment %}
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container-vai">
+        <div class="hero__grid">
+
+          <div class="hero__copy">
+            <span class="hero__eyebrow eyebrow">Established with love · 35+ cows</span>
+
+            <h1 id="hero-title" class="hero__title">
+              <span class="word">Pure.</span>
+              <span class="word">Sacred.</span>
+              <span class="word">From our</span>
+              <span class="word"><em>gaushala</em></span>
+              <span class="word">to your home.</span>
+            </h1>
+
+            <p class="hero__deva">शुद्धता &middot; सेवा &middot; गौ-कृपा</p>
+
+            <p class="hero__lead">
+              Hand-churned bilona ghee, glass-bottled A2 milk, and traditional dairy
+              from Gir, Sahiwal and Tharparkar cows raised under our care.
+              Every order feeds, shelters and protects them.
+            </p>
+
+            <div class="hero__ctas">
+              <a class="btn-vaishnavi-primary" href="#">Shop Ghee &amp; Milk</a>  {# TODO: products?cat=milk-dairy in Phase 2 #}
+              <a class="btn-vaishnavi-ghost"  href="#">Our Story</a>              {# TODO: about page in Phase 2 #}
+            </div>
+
+            <div class="hero__meta">
+              <div class="hero__meta-item">
+                <strong data-count-up>{{ site.cow_count }}+</strong>
+                <span>Indigenous<br/>cows in our care</span>
+              </div>
+              <div class="hero__meta-item">
+                <strong data-count-up>4000+</strong>
+                <span>Families<br/>we deliver to</span>
+              </div>
+              <div class="hero__meta-item">
+                <strong>100%</strong>
+                <span>A2 desi milk<br/>only</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero__visual">
+            <!-- Lotus crown ornament floating above -->
+            <span class="hero__visual-lotus" aria-hidden="true">
+              <span class="icon-lotus-lg"></span>
+            </span>
+
+            <!-- Logo is the hero centerpiece (until cow photography arrives) -->
+            <img src="{% static 'img/vaishnavilogo.jpeg' %}"
+                 alt="Vaishnavi Gau Seva Gausansthan"
+                 class="hero__visual-logo logo-img logo-img--blend"
+                 width="480" height="480" />
+
+            <!-- Top-right gold pill: signature trait -->
+            <span class="hero__visual-badge">Bilona&nbsp;Ghee · A2</span>
+
+            <!-- Bottom-left heritage chip -->
+            <span class="hero__visual-stat">
+              <strong>Est.</strong>
+              <span>2013 · 35+ cows</span>
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       2. TRUST STRIP
+       ============================================================ {% endcomment %}
+    <section class="trust" aria-label="Why customers trust Vaishnavi">
+      <div class="container-vai">
+        <div class="trust__grid">
+
+          <div class="trust__item">
+            <span class="trust__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 3h6l-1 4H10z"/>
+                <path d="M10 7l-3 4v9a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-9l-3-4"/>
+              </svg>
+            </span>
+            <span class="trust__label">A2 Desi Cow Milk</span>
+            <span class="trust__sub">Gir · Sahiwal · Tharparkar</span>
+          </div>
+
+          <div class="trust__item">
+            <span class="trust__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v4"/>
+                <path d="M6 8c-2 2-3 5-3 8 0 3 3 4 9 4s9-1 9-4c0-3-1-6-3-8"/>
+                <path d="M6 8c2-2 4-2 6-2s4 0 6 2"/>
+              </svg>
+            </span>
+            <span class="trust__label">Hand-Churned</span>
+            <span class="trust__sub">Bilona method · Never shortcut</span>
+          </div>
+
+          <div class="trust__item">
+            <span class="trust__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M9 12l2 2 4-4"/>
+              </svg>
+            </span>
+            <span class="trust__label">No Preservatives</span>
+            <span class="trust__sub">Nothing artificial. Ever.</span>
+          </div>
+
+          <div class="trust__item">
+            <span class="trust__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            </span>
+            <span class="trust__label">Funds {{ site.cow_count }}+ Cows</span>
+            <span class="trust__sub">Every rupee, transparent</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       3. FEATURED CATEGORIES (asymmetric)
+       ============================================================ {% endcomment %}
+    <section class="section cats" aria-labelledby="cats-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">Shop by category</span>
+          <div class="divider-gold">
+            <span class="icon-lotus" aria-hidden="true"></span>
+          </div>
+          <h2 id="cats-h">What we bring from the gaushala</h2>
+          <p>Five categories. Each one rooted in tradition, made for everyday devotion.</p>
+        </div>
+
+        <div class="cats__grid" data-cats-grid>
+          {# Server-rendered. home.js short-circuits when host has children. #}
+          {% for cat in featured_categories %}
+            <a class="cat-card cat-card--{{ cat.slug }}"
+               href="{% url 'catalog:product_list' %}?category={{ cat.slug }}"
+               aria-label="Shop {{ cat.name }}">
+              <div class="cat-card__bg" aria-hidden="true">
+                {% if cat.image %}<img loading="lazy" src="{{ cat.image.url }}" alt="">{% endif %}
+              </div>
+              <div class="cat-card__body">
+                <span class="cat-card__tagline">{{ cat.products.count }} product{{ cat.products.count|pluralize }}</span>
+                <h3 class="cat-card__name">{{ cat.name }}</h3>
+                <span class="cat-card__cta">Explore</span>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       4. STORY TEASER
+       ============================================================ {% endcomment %}
+    <section class="section story" aria-labelledby="story-h">
+      <div class="container-vai">
+        <div class="story__grid">
+
+          <div class="story__media" aria-hidden="true">
+            {# Placeholder gradient. Replace with real photography later. #}
+            <div class="story__media-frame"></div>
+            <div class="story__media-stat">
+              <strong data-count-up>{{ site.cow_count }}+</strong>
+              <span>indigenous cows in our family</span>
+            </div>
+          </div>
+
+          <div class="story__copy">
+            <span class="eyebrow">Our Sankalp</span>
+            <h2 id="story-h" class="story__title">
+              <em>Cow welfare first.</em><br/>
+              Commerce, second.
+            </h2>
+            <p>
+              Vaishnavi Gau Seva Gausansthan began with one Gir cow and a quiet promise:
+              that she would never know hunger, fear, or neglect. Twelve years later,
+              thirty-five indigenous cows share that promise. They are named, known, loved.
+            </p>
+            <p>
+              We sell what they give us — pure A2 milk, bilona ghee, fresh paneer —
+              not because we are a business, but because they need fodder, shelter,
+              and medicine. You buy. They thrive. The dharma continues.
+            </p>
+            <a href="{% url 'core:about' %}" class="story__link">
+              Read our story
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       5. BESTSELLERS
+       ============================================================ {% endcomment %}
+    <section class="section best" aria-labelledby="best-h">
+      <div class="container-vai">
+
+        <div class="best__header">
+          <div>
+            <span class="eyebrow">Customer favourites</span>
+            <h2 id="best-h">Bestsellers</h2>
+          </div>
+          <div class="best__nav" aria-label="Scroll bestsellers">
+            <button class="btn-icon" type="button" data-scroll-prev aria-label="Previous">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"/>
+              </svg>
+            </button>
+            <button class="btn-icon" type="button" data-scroll-next aria-label="Next">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="best__scroll" data-best-scroll role="list">
+          {# Server-rendered. home.js short-circuits when host has children. #}
+          {% for product in featured_products %}
+            {% include 'partials/_product_card.html' with product=product %}
+          {% endfor %}
+        </div>
+
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       6. SUBSCRIPTION TEASER
+       ============================================================ {% endcomment %}
+    <section class="section sub-teaser" aria-labelledby="sub-h">
+      <div class="container-vai">
+        <div class="sub-teaser__inner">
+
+          <div class="sub-teaser__lotus" aria-hidden="true">
+            <span class="icon-lotus-lg"></span>
+          </div>
+
+          <span class="eyebrow">Subscriptions</span>
+          <h2 id="sub-h">
+            Daily A2 milk from <strong>₹4,200</strong>/month.<br/>
+            Monthly Bilona ghee from <strong>₹825</strong>.
+          </h2>
+          <p>
+            Glass-bottled A2 milk before dawn in Delhi NCR. A jar of bilona ghee on the
+            first of every month, pan-India. Curated heritage hampers when the festival calendar asks.
+            Pause, skip, or cancel any time — no contracts, only relationships.
+          </p>
+          <div class="cta-row">
+            <a class="btn-vaishnavi-gold" href="{% url 'services:service_list' %}#subscriptions">Start a Subscription</a>
+            <a class="btn-vaishnavi-ghost btn-vaishnavi-ghost--on-dark" href="{% url 'services:service_list' %}">
+              See all services
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       7. TESTIMONIALS
+       ============================================================ {% endcomment %}
+    <section class="section testimonials" aria-labelledby="testi-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">Trusted by families</span>
+          <div class="divider-gold">
+            <span class="icon-lotus" aria-hidden="true"></span>
+          </div>
+          <h2 id="testi-h">What our customers say</h2>
+        </div>
+
+        <div class="testimonials__grid" data-testimonials>
+          {# Server-rendered. home.js short-circuits when host has children. #}
+          {% for testimonial in testimonials %}
+            {% include 'partials/_testimonial_card.html' with testimonial=testimonial %}
+          {% endfor %}
+        </div>
+
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       8. BLOG TEASER
+       ============================================================ {% endcomment %}
+    <section class="section blog section--alt" aria-labelledby="blog-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">Knowledge</span>
+          <div class="divider-gold">
+            <span class="icon-lotus" aria-hidden="true"></span>
+          </div>
+          <h2 id="blog-h">From our gaushala journal</h2>
+          <p>The science, the tradition, and the cows behind your jar.</p>
+        </div>
+
+        <div class="blog__grid">
+
+          <a class="blog-card blog-card--1" href="#">
+            <div class="blog-card__media" aria-hidden="true">
+              {# TODO image: cow being fed at sunrise #}
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__cat">Wellness</span>
+              <h3 class="blog-card__title">Why A2 milk matters: the science behind beta-casein</h3>
+              <p class="blog-card__excerpt">
+                A2 protein is structurally different from A1, and your digestion knows it.
+                A plain-English guide to why indigenous breeds matter.
+              </p>
+              <div class="blog-card__meta">
+                <span>6 min read</span><span>·</span><span>Wellness</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="blog-card blog-card--2" href="#">
+            <div class="blog-card__media" aria-hidden="true">
+              {# TODO image: cow profile gallery #}
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__cat">Our cows</span>
+              <h3 class="blog-card__title">Meet our breeds: Gir, Sahiwal and Tharparkar</h3>
+              <p class="blog-card__excerpt">
+                Three indigenous breeds, three temperaments, three different milks.
+                Why we choose them — and why they choose us back.
+              </p>
+              <div class="blog-card__meta">
+                <span>8 min read</span><span>·</span><span>Cow profiles</span>
+              </div>
+            </div>
+          </a>
+
+          <a class="blog-card blog-card--3" href="#">
+            <div class="blog-card__media" aria-hidden="true">
+              {# TODO image: brass diya next to panchgavya bottles #}
+            </div>
+            <div class="blog-card__body">
+              <span class="blog-card__cat">Tradition</span>
+              <h3 class="blog-card__title">Panchgavya: the five sacred gifts, decoded for today</h3>
+              <p class="blog-card__excerpt">
+                Milk, curd, ghee, gomutra, gobar — what each is, where it goes,
+                and why your grandmother kept all five in the house.
+              </p>
+              <div class="blog-card__meta">
+                <span>7 min read</span><span>·</span><span>Heritage</span>
+              </div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       9. NEWSLETTER + VISIT
+       ============================================================ {% endcomment %}
+    <section class="section contact-strip" aria-labelledby="contact-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">Stay close</span>
+          <div class="divider-gold">
+            <span class="icon-lotus" aria-hidden="true"></span>
+          </div>
+          <h2 id="contact-h">Newsletter &amp; visiting hours</h2>
+        </div>
+
+        <div class="contact-strip__grid">
+
+          <div class="contact-card">
+            <span class="eyebrow">Newsletter</span>
+            <h3>Receive seasonal recipes &amp; cow stories</h3>
+            <p class="text-muted-soft">
+              One short letter a month. Festive recipes from our kitchen,
+              new arrivals, and photos from the gaushala. Never more.
+            </p>
+            <form class="newsletter-form" data-newsletter method="post" action="{% url 'core:newsletter_subscribe' %}" novalidate>
+              {% csrf_token %}
+              <input type="hidden" name="source" value="homepage">
+              <div class="vai-honeypot" aria-hidden="true">
+                <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+              </div>
+              <label class="visually-hidden" for="nl-email">Email address</label>
+              <input id="nl-email" name="email" class="form-control-vai" type="email" placeholder="you@example.com" required />
+              <button type="submit" class="btn-vaishnavi-primary">Subscribe</button>
+              <span class="newsletter-form__hint">We never share your email. Unsubscribe with one click.</span>
+            </form>
+          </div>
+
+          <div class="contact-card">
+            <span class="eyebrow">Visit us</span>
+            <h3>Come spend a Saturday with the cows</h3>
+            <ul class="visit-list" role="list">
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>
+                  <strong>{{ site.business_name }}</strong>
+                  {% if site.address_line_1 %}{{ site.address_line_1 }}{% if site.city %}, {{ site.city }}{% endif %}{% if site.state %}, {{ site.state }}{% endif %}{% if site.pincode %} — {{ site.pincode }}{% endif %}{% endif %}
+                </span>
+              </li>
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+                <span>
+                  <strong>Visiting hours</strong>
+                  {{ site.business_hours|default:"Saturday &amp; Sunday · 8 am – 11 am, 4 pm – 6 pm" }}
+                </span>
+              </li>
+              {% if site.phone_primary %}
+              <li>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92V21a1 1 0 0 1-1.09 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.21 4.09 1 1 0 0 1 4.2 3h4.09a1 1 0 0 1 1 .75 12.32 12.32 0 0 0 .68 2.71 1 1 0 0 1-.23 1L7.91 9.91a16 16 0 0 0 6 6l2.46-2.46a1 1 0 0 1 1-.23 12.32 12.32 0 0 0 2.71.68 1 1 0 0 1 .75 1z"/></svg>
+                <span>
+                  <strong>Call us</strong>
+                  <a href="tel:{{ site.phone_primary|cut:' ' }}" class="link-inherit">{{ site.phone_primary }}</a>
+                </span>
+              </li>
+              {% endif %}
+            </ul>
+            <div class="contact-card__actions">
+              {% if site.phone_whatsapp %}
+                {% with wa=site.phone_whatsapp|cut:" "|cut:"+"|cut:"-" %}
+                  <a href="https://wa.me/{{ wa }}" class="btn-vaishnavi-gold btn-sm" target="_blank" rel="noopener">WhatsApp us</a>
+                {% endwith %}
+              {% endif %}
+              <a href="{% url 'core:contact' %}" class="btn-vaishnavi-ghost btn-sm">Directions &amp; map</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

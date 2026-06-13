@@ -1,0 +1,56 @@
+[
+  {
+    "id": "milk-subscription",
+    "name": "Daily Milk Subscription",
+    "tagline": "Glass-bottled, doorstep, before sunrise.",
+    "description": "Fresh A2 desi milk delivered every morning to homes in Delhi NCR. Glass bottles, cold-chain maintained, pause or skip from your dashboard anytime.",
+    "icon": "milk",
+    "cta": "Start Subscription",
+    "ctaHref": "/services.html#milk-subscription"
+  },
+  {
+    "id": "ghee-subscription",
+    "name": "Ghee Subscription Box",
+    "tagline": "A jar of bilona ghee, every month.",
+    "description": "Receive 500g of freshly hand-churned ghee on the first week of every month, packed in our signature jar with a curated mithai pairing.",
+    "icon": "ghee",
+    "cta": "Subscribe to Ghee",
+    "ctaHref": "/services.html#ghee-subscription"
+  },
+  {
+    "id": "wholesale",
+    "name": "Bulk & Wholesale",
+    "tagline": "For temples, restaurants, sweet-makers.",
+    "description": "Reliable bulk supply of A2 milk, ghee, paneer and khoya — with traceability, lab reports, and dedicated dispatch.",
+    "icon": "wholesale",
+    "cta": "Request a Quote",
+    "ctaHref": "/contact.html?topic=wholesale"
+  },
+  {
+    "id": "visit",
+    "name": "Visit the Gaushala",
+    "tagline": "Meet the cows. Light a diya. Stay for prasad.",
+    "description": "Family-friendly visits every Saturday and Sunday. Tour the sheds, witness the bilona process, and feed our cows by hand.",
+    "icon": "visit",
+    "cta": "Book a Visit",
+    "ctaHref": "/services.html#visit"
+  },
+  {
+    "id": "adoption",
+    "name": "Cow Adoption Program",
+    "tagline": "Sponsor a cow. Receive her milk and her story.",
+    "description": "Adopt one of our 35+ cows for ₹4,999/month. Receive her milk and ghee, monthly photos, naming rights, and full transparency on her welfare.",
+    "icon": "adopt",
+    "cta": "Adopt a Cow",
+    "ctaHref": "/services.html#adoption"
+  },
+  {
+    "id": "pooja",
+    "name": "Custom Pooja Items",
+    "tagline": "Festival hampers, panchamrut kits, havan samagri.",
+    "description": "Customised hampers for Diwali, Janmashtami, weddings, and grihapravesh — assembled with panchgavya, ghee diyas, and our seasonal sweets.",
+    "icon": "pooja",
+    "cta": "Build a Hamper",
+    "ctaHref": "/contact.html?topic=hamper"
+  }
+]

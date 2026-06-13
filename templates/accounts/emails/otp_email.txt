@@ -1,0 +1,10 @@
+Your {{ site_name }} OTP
+
+Your one-time code for {{ purpose }} is:
+
+    {{ code }}
+
+It expires in {{ lifetime_minutes }} minutes. If you didn't request this,
+you can safely ignore this email.
+
+— {{ site_name }}

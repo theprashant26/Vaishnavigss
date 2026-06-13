@@ -1,0 +1,16 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Renew in {{ days_before }} day{{ days_before|pluralize }}.
+
+Hello {{ subscription.user.first_name|default:subscription.user.username }},
+
+Your {{ subscription.plan.name }} subscription ends on {{ subscription.current_period_end|date:"l, j M Y" }} — {{ days_before }} day{{ days_before|pluralize }} from now.
+
+To keep your deliveries running, renew before then:
+{{ site_domain }}{% url 'subscriptions:renew' subscription_number=subscription.subscription_number %}
+
+{% include 'emails/_subscription_summary.txt' %}
+Don't want to renew? Cancel from your profile and we'll stop reminding you.
+
+With seva,
+— {{ site_name }}
+{% endblock %}

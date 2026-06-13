@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+  <!-- Lotus-dot ornament: 8 petals around a central jewel.
+       Matches the centerpiece motif at the top of the logo. -->
+  <g stroke="currentColor" stroke-width="1.25" fill="none" stroke-linecap="round">
+    <!-- Outer petals -->
+    <path d="M24 4 C20 11, 20 17, 24 22 C28 17, 28 11, 24 4 Z"/>
+    <path d="M24 44 C20 37, 20 31, 24 26 C28 31, 28 37, 24 44 Z"/>
+    <path d="M4 24 C11 20, 17 20, 22 24 C17 28, 11 28, 4 24 Z"/>
+    <path d="M44 24 C37 20, 31 20, 26 24 C31 28, 37 28, 44 24 Z"/>
+    <!-- Diagonal petals -->
+    <path d="M10 10 C14 14, 18 18, 22 22 C18 18, 14 14, 10 10 Z" opacity="0.7"/>
+    <path d="M38 10 C34 14, 30 18, 26 22 C30 18, 34 14, 38 10 Z" opacity="0.7"/>
+    <path d="M10 38 C14 34, 18 30, 22 26 C18 30, 14 34, 10 38 Z" opacity="0.7"/>
+    <path d="M38 38 C34 34, 30 30, 26 26 C30 30, 34 34, 38 38 Z" opacity="0.7"/>
+  </g>
+  <!-- Center jewel -->
+  <circle cx="24" cy="24" r="3.5" fill="currentColor"/>
+  <circle cx="24" cy="24" r="6.5" stroke="currentColor" stroke-width="0.8" fill="none" opacity="0.5"/>
+</svg>

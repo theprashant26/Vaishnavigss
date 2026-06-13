@@ -1,0 +1,11 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Hello {{ submission.name }},
+
+Thank you for your interest in the {{ submission.plan.name }} subscription.
+
+We received your inquiry and our team will reach out within one business day
+with delivery details and your first dispatch. No charges until we confirm.
+
+With seva,
+— {{ site_name }}
+{% endblock %}

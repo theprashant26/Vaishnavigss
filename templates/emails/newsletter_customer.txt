@@ -1,0 +1,12 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Welcome to the Vaishnavi family.
+
+We send one short letter a month — seasonal recipes from our kitchen,
+new arrivals from the shop, and photos from the gaushala. Never more.
+
+If you ever want to step away, one click does it:
+{{ site_domain }}{% url 'core:newsletter_unsubscribe' token=submission.unsubscribe_token %}
+
+With seva,
+— {{ site_name }}
+{% endblock %}

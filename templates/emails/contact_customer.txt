@@ -1,0 +1,12 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Hello {{ submission.name }},
+
+We received your message and will reply usually within one business day.
+If it's urgent, please WhatsApp us — we read those faster.
+
+You wrote:
+"{{ submission.message|truncatewords:60 }}"
+
+With seva,
+— {{ site_name }}
+{% endblock %}

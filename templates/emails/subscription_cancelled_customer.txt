@@ -1,0 +1,16 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Subscription cancelled.
+
+Hello {{ subscription.user.first_name|default:subscription.user.username }},
+
+Your {{ subscription.plan.name }} subscription has been cancelled.
+You'll continue receiving deliveries until {{ subscription.current_period_end|date:"j M Y" }};
+no further charges will be made.
+
+Thank you for the support you gave to our cows during this time.
+
+Browse other plans: {{ site_domain }}{% url 'services:service_list' %}
+
+With seva,
+— {{ site_name }}
+{% endblock %}

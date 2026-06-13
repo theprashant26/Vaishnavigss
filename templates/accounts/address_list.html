@@ -1,0 +1,56 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}Addresses{% endblock %}
+
+{% block breadcrumb_extra %}
+  <span class="sep">/</span>
+  <span aria-current="page">Addresses</span>
+{% endblock %}
+
+{% block profile_content %}
+
+  <section class="profile-view is-active" aria-label="Addresses">
+    <div class="view-card">
+      <div class="dash-recent__head">
+        <h2>Saved addresses</h2>
+        <a href="{% url 'accounts:address_add' %}" class="btn-vaishnavi-primary btn-sm">Add address</a>
+      </div>
+      <p class="view-card__lead">These show up at checkout. The default is selected automatically.</p>
+
+      {% if addresses %}
+        <div class="addr-grid">
+          {% for addr in addresses %}
+            <article class="addr-card{% if addr.is_default %} addr-card--default{% endif %}">
+              <header class="addr-card__head">
+                <strong>{{ addr.label }}</strong>
+                {% if addr.is_default %}<span class="addr-card__badge">Default</span>{% endif %}
+              </header>
+              <div class="addr-card__body">
+                <p>
+                  {{ addr.recipient_name }}<br>
+                  {{ addr.line_1 }}{% if addr.line_2 %}<br>{{ addr.line_2 }}{% endif %}{% if addr.landmark %}<br>Near {{ addr.landmark }}{% endif %}<br>
+                  {{ addr.city }}, {{ addr.state }} &mdash; {{ addr.pincode }}<br>
+                  &#9742; {{ addr.recipient_phone }}
+                </p>
+              </div>
+              <footer class="addr-card__footer">
+                <a href="{% url 'accounts:address_edit' addr.pk %}" class="btn-vaishnavi-ghost btn-sm">Edit</a>
+                {% if not addr.is_default %}
+                  <form method="post" action="{% url 'accounts:address_set_default' addr.pk %}" class="addr-inline-form">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-vaishnavi-ghost btn-sm">Make default</button>
+                  </form>
+                {% endif %}
+                <a href="{% url 'accounts:address_delete' addr.pk %}" class="btn-vaishnavi-ghost btn-sm addr-card__delete">Delete</a>
+              </footer>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="view-card__lead">You don't have any saved addresses yet. <a href="{% url 'accounts:address_add' %}">Add one &rarr;</a></p>
+      {% endif %}
+    </div>
+  </section>
+
+{% endblock %}

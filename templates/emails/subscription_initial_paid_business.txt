@@ -1,0 +1,12 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}New subscription activated.
+
+Customer:     {{ subscription.user.get_full_name|default:subscription.user.username }} · {{ subscription.user.email }}
+Plan:         {{ subscription.plan.name }} ({{ subscription.plan.get_tier_display }})
+Cadence:      {{ subscription.plan.get_delivery_frequency_display }} · bills every {{ subscription.plan.billing_period_days }}d
+Amount paid:  ₹{{ payment.total|floatformat:"2" }}
+Razorpay ref: {{ payment.razorpay_payment_id|default:"—" }}
+
+{% include 'emails/_subscription_summary.txt' %}
+Open in admin: {{ site_domain }}/admin/subscriptions/subscription/{{ subscription.pk }}/change/
+{% endblock %}

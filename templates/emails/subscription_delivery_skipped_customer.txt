@@ -1,0 +1,15 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Delivery skipped.
+
+Hello {{ subscription.user.first_name|default:subscription.user.username }},
+
+We've skipped your {{ delivery.scheduled_date|date:"l, j M Y" }} delivery as requested.
+
+To make up for it, your subscription period has been extended by 1 day.
+New period end: {{ subscription.current_period_end|date:"j M Y" }}
+
+View: {{ site_domain }}/account/profile/subscriptions/{{ subscription.subscription_number }}/
+
+With seva,
+— {{ site_name }}
+{% endblock %}

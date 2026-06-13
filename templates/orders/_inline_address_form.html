@@ -1,0 +1,24 @@
+{# Inline address-add form. Used inside checkout_address.html. #}
+<form method="post" action="{% url 'orders:checkout_address' %}" style="margin-top: 16px;">
+  {% csrf_token %}
+  <input type="hidden" name="new_address" value="1">
+  <div class="step-panel__row">
+    <div><label class="form-label-vai">Label</label>{{ form.label }}</div>
+    <div><label class="form-label-vai">Recipient name</label>{{ form.recipient_name }}</div>
+    <div><label class="form-label-vai">Phone</label>{{ form.recipient_phone }}</div>
+    <div><label class="form-label-vai">PIN code</label>{{ form.pincode }}</div>
+    <div class="span-2"><label class="form-label-vai">Address line 1</label>{{ form.line_1 }}</div>
+    <div class="span-2"><label class="form-label-vai">Address line 2 (optional)</label>{{ form.line_2 }}</div>
+    <div class="span-2"><label class="form-label-vai">Landmark (optional)</label>{{ form.landmark }}</div>
+    <div><label class="form-label-vai">City</label>{{ form.city }}</div>
+    <div><label class="form-label-vai">State</label>{{ form.state }}</div>
+  </div>
+  {% if form.errors %}
+    <ul class="field-error">
+      {% for f, errs in form.errors.items %}<li>{{ f }}: {{ errs|join:" " }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+  <div class="step-panel__actions">
+    <button type="submit" class="btn-vaishnavi-primary">Save &amp; continue</button>
+  </div>
+</form>

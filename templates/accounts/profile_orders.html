@@ -1,0 +1,37 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}Orders{% endblock %}
+
+{% block profile_content %}
+  <section class="profile-view is-active" aria-label="Orders">
+    <div class="view-card">
+      <h2>Your orders</h2>
+
+      {% if orders %}
+        <p class="view-card__lead">{{ orders|length }} order{{ orders|length|pluralize }} so far.</p>
+        <div class="orders-list">
+          {% for o in orders %}
+            <a class="order-row" href="{% url 'accounts:profile_order_detail' order_number=o.order_number %}">
+              <div class="order-row__main">
+                <strong class="order-row__num">{{ o.order_number }}</strong>
+                <span class="order-row__date">{{ o.placed_at|date:"j M Y" }}</span>
+              </div>
+              <div class="order-row__items">
+                {{ o.items.count }} item{{ o.items.count|pluralize }} &middot; {{ o.payment_method }}
+              </div>
+              <div class="order-row__status">
+                <span class="status-pill status-{{ o.status|lower }}">{{ o.get_status_display }}</span>
+                <span class="status-pill status-pay-{{ o.payment_status|lower }}">{{ o.get_payment_status_display }}</span>
+              </div>
+              <div class="order-row__total">&#8377;{{ o.total|floatformat:"0" }}</div>
+            </a>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="view-card__lead">No orders yet. Once you place an order, it'll appear here with delivery status, items, and a way to reorder.</p>
+        <a href="{% url 'catalog:product_list' %}" class="btn-vaishnavi-primary btn-sm">Browse the shop</a>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

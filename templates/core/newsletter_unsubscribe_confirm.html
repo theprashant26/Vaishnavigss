@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Unsubscribe &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}newsletter-unsubscribe{% endblock %}
+
+{% block content %}
+
+  <section class="section">
+    <div class="container-vai" style="max-width:560px; text-align:center; padding:48px 16px;">
+      <span class="eyebrow">Newsletter</span>
+      <h1>Are you sure?</h1>
+      <p class="text-muted-soft">
+        You're about to unsubscribe <strong>{{ subscriber.email }}</strong> from our seasonal letter.
+        You can resubscribe any time from the homepage footer.
+      </p>
+      <form method="post" action="{% url 'core:newsletter_unsubscribe' token=subscriber.unsubscribe_token %}" style="margin-top:24px;">
+        {% csrf_token %}
+        <div class="auth-actions-row" style="justify-content:center;">
+          <a href="{% url 'core:home' %}" class="btn-vaishnavi-ghost">Keep me subscribed</a>
+          <button type="submit" class="btn-vaishnavi-primary">Yes, unsubscribe</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+{% endblock %}

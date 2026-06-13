@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Complete payment &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}checkout-pay{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+  <section class="section">
+    <div class="container-vai" style="max-width:520px; text-align:center; padding:48px 16px;">
+
+      <span class="eyebrow">Almost there</span>
+      <h1>Complete your payment</h1>
+      <p class="text-muted-soft">
+        Order <strong>{{ order.order_number }}</strong> &middot;
+        Total <strong>&#8377;{{ order.total|floatformat:"0" }}</strong>
+      </p>
+
+      <button id="pay-btn" class="btn-vaishnavi-primary" style="margin-top:24px;">
+        Pay &#8377;{{ order.total|floatformat:"0" }}
+      </button>
+
+      <p class="text-muted-soft" style="margin-top:16px; font-size:0.85rem;">
+        You'll see the Razorpay window open. Pay via UPI, card, net banking, or wallet.
+      </p>
+
+      {# Hidden form Razorpay's handler() will populate + submit on success. #}
+      <form id="rzp-callback-form" method="post" action="{{ callback_url }}" style="display:none;">
+        <input type="hidden" name="razorpay_order_id">
+        <input type="hidden" name="razorpay_payment_id">
+        <input type="hidden" name="razorpay_signature">
+      </form>
+
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+(function () {
+  document.getElementById('pay-btn').addEventListener('click', function () {
+    var options = {
+      key: "{{ razorpay_key_id|escapejs }}",
+      amount: {{ order.total|floatformat:"0" }} * 100,
+      currency: "INR",
+      name: "{{ site.business_name|escapejs }}",
+      description: "Order {{ order.order_number|escapejs }}",
+      order_id: "{{ order.razorpay_order_id|escapejs }}",
+      handler: function (response) {
+        var form = document.getElementById('rzp-callback-form');
+        form.querySelector('[name=razorpay_order_id]').value = response.razorpay_order_id;
+        form.querySelector('[name=razorpay_payment_id]').value = response.razorpay_payment_id;
+        form.querySelector('[name=razorpay_signature]').value = response.razorpay_signature;
+        form.submit();
+      },
+      prefill: {
+        name: "{{ order.shipping_recipient_name|escapejs }}",
+        contact: "{{ order.shipping_phone|escapejs }}",
+        email: "{{ order.user.email|escapejs }}"
+      },
+      notes: { order_number: "{{ order.order_number|escapejs }}" },
+      theme: { color: "#7A1F1F" },
+      modal: {
+        ondismiss: function () {
+          // User closed without paying — leave order in PENDING.
+          window.location.href = "{% url 'orders:checkout_failed' %}";
+        }
+      }
+    };
+    var rzp = new Razorpay(options);
+    rzp.on('payment.failed', function () {
+      window.location.href = "{% url 'orders:checkout_failed' %}";
+    });
+    rzp.open();
+  });
+})();
+</script>
+{% endblock %}

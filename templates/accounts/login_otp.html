@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign in with OTP &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}login-otp{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+    <section class="auth" aria-labelledby="login-otp-h">
+      <div class="auth-card">
+
+        <div class="auth-card__brand">
+          <img src="{% static 'img/vaishnavilogo.jpeg' %}" alt="{{ site.business_name }}" width="64" height="64" class="logo-img logo-img--blend" />
+          <div class="auth-card__brand-name">Vaishnavi</div>
+          <div class="auth-card__brand-tag">गऊ सेवा</div>
+        </div>
+
+        <h1 id="login-otp-h">Sign in with a code</h1>
+        <p class="auth-card__lead">
+          Enter your email or phone and we'll send you a 6-digit code.
+          No password needed.
+        </p>
+
+        {% if form.errors %}
+          {% for field, errs in form.errors.items %}
+            <div class="auth-error" role="alert">{{ errs|join:" " }}</div>
+          {% endfor %}
+        {% endif %}
+
+        <form data-server-side method="post" action="{% url 'accounts:login_otp' %}" novalidate>
+          {% csrf_token %}
+
+          <div class="auth-form-row">
+            <label for="id_identifier" class="form-label-vai">Email or phone</label>
+            <input id="id_identifier" name="identifier" type="text" class="form-control-vai" placeholder="you@example.com or 9XXXXXXXXX" autocomplete="username" value="{{ form.identifier.value|default:'' }}" required />
+          </div>
+
+          <button type="submit" class="btn-vaishnavi-primary auth-form__cta">Send me a code</button>
+        </form>
+
+        <div class="auth-card__footer">
+          Use password instead? <a href="{% url 'accounts:login' %}">Sign in &rarr;</a>
+        </div>
+
+      </div>
+    </section>
+
+{% endblock %}

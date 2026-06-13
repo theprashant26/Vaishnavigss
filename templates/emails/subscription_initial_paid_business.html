@@ -1,0 +1,16 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}New subscription activated{% endblock %}
+{% block body %}
+  <p>A new subscription has been paid for and activated.</p>
+  <table style="width:100%; border-collapse:collapse; font-size:14px;">
+    <tr><td style="padding:4px 0; color:#6b5b4a; width:140px;">Customer</td><td style="padding:4px 0;"><strong>{{ subscription.user.get_full_name|default:subscription.user.username }}</strong> &middot; {{ subscription.user.email }}</td></tr>
+    <tr><td style="padding:4px 0; color:#6b5b4a;">Plan</td><td style="padding:4px 0;">{{ subscription.plan.name }} ({{ subscription.plan.get_tier_display }})</td></tr>
+    <tr><td style="padding:4px 0; color:#6b5b4a;">Cadence</td><td style="padding:4px 0;">{{ subscription.plan.get_delivery_frequency_display }} &middot; bills every {{ subscription.plan.billing_period_days }}d</td></tr>
+    <tr><td style="padding:4px 0; color:#6b5b4a;">Amount paid</td><td style="padding:4px 0;"><strong>&#8377;{{ payment.total|floatformat:"2" }}</strong></td></tr>
+    <tr><td style="padding:4px 0; color:#6b5b4a;">Razorpay ref</td><td style="padding:4px 0; font-size:12px;">{{ payment.razorpay_payment_id|default:"&mdash;" }}</td></tr>
+  </table>
+  {% include 'emails/_subscription_summary.html' %}
+  <p style="margin:24px 0 0;">
+    <a href="{{ site_domain }}/admin/subscriptions/subscription/{{ subscription.pk }}/change/" style="display:inline-block; background:#7A1F1F; color:#fff; padding:10px 20px; text-decoration:none; border-radius:4px;">Open in admin</a>
+  </p>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | {{ site_title }}{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <style>
+    .roster-toolbar { display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:12px 16px; background:#f8f8f8; border:1px solid #ddd; border-radius:4px; margin:16px 0; }
+    .roster-toolbar form { display:flex; gap:8px; align-items:center; margin:0; }
+    .roster-toolbar input[type="date"] { padding:6px 8px; border:1px solid #ccc; border-radius:3px; }
+    .roster-totals { display:flex; gap:24px; flex-wrap:wrap; font-size:13px; }
+    .roster-totals strong { color:#7A1F1F; }
+    .roster-group { margin:24px 0; border:1px solid #ddd; border-radius:6px; overflow:hidden; }
+    .roster-group__head {
+      background:#7A1F1F; color:#fff; padding:10px 16px;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .roster-group__head h3 { margin:0; font-size:15px; color:#fff; }
+    .roster-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .roster-table th, .roster-table td { padding:8px 12px; border-bottom:1px solid #eee; text-align:left; vertical-align:top; }
+    .roster-table th { background:#FBF5E9; color:#7A1F1F; font-weight:600; }
+    .roster-status { padding:2px 8px; border-radius:3px; font-size:11px; font-weight:600; }
+    .roster-status-scheduled { background:#fff7cd; color:#8a6d00; }
+    .roster-status-out_for_delivery { background:#cfe8ff; color:#003b7a; }
+    .roster-status-delivered { background:#c8f0d0; color:#0e6a23; }
+    .roster-status-missed { background:#ffd0d0; color:#a40000; }
+    .roster-items small { color:#666; }
+    .roster-empty { padding:24px; text-align:center; color:#666; background:#fafafa; border:1px dashed #ccc; border-radius:6px; }
+    @media print {
+      #header, #nav-sidebar, .roster-toolbar, .object-tools { display:none !important; }
+      .roster-group { break-inside: avoid; }
+      body { background:#fff !important; }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+
+  <div class="roster-toolbar">
+    <form method="get">
+      <label for="date">Date:</label>
+      <input id="date" name="date" type="date" value="{{ roster_date|date:'Y-m-d' }}">
+      <button type="submit" class="default">View</button>
+    </form>
+    <button onclick="window.print()" class="button">Print / Save as PDF</button>
+    <div class="roster-totals" style="margin-left:auto;">
+      <span><strong>{{ totals.deliveries }}</strong> deliveries</span>
+      <span><strong>{{ totals.pincodes }}</strong> pincodes</span>
+      <span>Scheduled: <strong>{{ totals.scheduled }}</strong></span>
+      <span>Out: <strong>{{ totals.out_for_delivery }}</strong></span>
+      <span>Delivered: <strong>{{ totals.delivered }}</strong></span>
+      <span>Missed: <strong>{{ totals.missed }}</strong></span>
+    </div>
+  </div>
+
+  {% if grouped %}
+    {% for group_key, deliveries in grouped.items %}
+      {% with pincode=group_key.0 window=group_key.1 %}
+        <div class="roster-group">
+          <div class="roster-group__head">
+            <h3>{{ pincode }} &middot; {{ window|title }} ({{ deliveries|length }} stop{{ deliveries|length|pluralize }})</h3>
+          </div>
+          <table class="roster-table">
+            <thead>
+              <tr>
+                <th style="width:25%;">Customer</th>
+                <th style="width:30%;">Address</th>
+                <th style="width:25%;">Items</th>
+                <th style="width:10%;">Status</th>
+                <th style="width:10%;">Sub#</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for d in deliveries %}
+                <tr>
+                  <td>
+                    <strong>{{ d.shipping_recipient_name }}</strong><br>
+                    <small>{{ d.shipping_phone }}</small>
+                  </td>
+                  <td>
+                    {{ d.shipping_line_1 }}{% if d.shipping_line_2 %}, {{ d.shipping_line_2 }}{% endif %}<br>
+                    {% if d.shipping_landmark %}<small>Near {{ d.shipping_landmark }}</small><br>{% endif %}
+                    <small>{{ d.shipping_city }}, {{ d.shipping_state }} &mdash; {{ d.shipping_pincode }}</small>
+                  </td>
+                  <td class="roster-items">
+                    {% for it in d.items.all %}
+                      <strong>{{ it.quantity|floatformat:"-2" }}×</strong> {{ it.product_name }}
+                      <small>({{ it.variant_label }})</small>{% if not forloop.last %}<br>{% endif %}
+                    {% endfor %}
+                  </td>
+                  <td>
+                    <span class="roster-status roster-status-{{ d.status|lower }}">{{ d.get_status_display }}</span>
+                  </td>
+                  <td><small>{{ d.subscription.subscription_number }}</small></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endwith %}
+    {% endfor %}
+  {% else %}
+    <div class="roster-empty">
+      No deliveries scheduled for {{ roster_date|date:"j M Y" }}.
+    </div>
+  {% endif %}
+{% endblock %}

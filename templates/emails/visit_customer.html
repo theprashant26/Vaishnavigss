@@ -1,0 +1,8 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Your visit request{% endblock %}
+{% block body %}
+  <p>Hello {{ submission.name }},</p>
+  <p>We received your visit request for <strong>{{ submission.preferred_date|date:"l, j M Y" }}</strong> (party of {{ submission.party_size }}{% if submission.has_children %}, with children{% endif %}).</p>
+  <p>We'll confirm your slot by email within one business day. If your date is urgent, please WhatsApp us.</p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

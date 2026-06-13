@@ -1,0 +1,92 @@
+/* ============================================================
+   Vaishnavi Gaushala — Design Tokens
+   Single source of truth. Never hand-roll a hex, font, radius,
+   or shadow that isn't declared here.
+   ============================================================ */
+
+:root {
+  /* ---------- Color ---------- */
+  --color-bg:           #FBF5E9;   /* primary cream background        */
+  --color-bg-alt:       #F4EBD6;   /* alternating section background  */
+  --color-surface:      #FFFFFF;   /* cards, modals, elevated         */
+  --color-ink:          #2B1810;   /* primary text (warm near-black)  */
+  --color-ink-soft:     #5B4636;   /* secondary text                  */
+  --color-primary:      #7A1F1F;   /* maroon                          */
+  --color-primary-deep: #5C1414;   /* maroon hover / pressed          */
+  --color-gold:         #C9A961;   /* gold accents, ornaments         */
+  --color-gold-deep:    #A0843F;   /* gold hover                      */
+  --color-accent-red:   #B33A2A;   /* sale tags, sacred hand-prints   */
+  --color-success:      #5C8A4A;   /* in-stock, add-to-cart           */
+  --color-line:         #E4D5B7;   /* hairline borders                */
+  --color-muted:        #9C8B72;   /* disabled, captions              */
+
+  /* RGB helpers for rgba() use */
+  --rgb-ink:     43, 24, 16;
+  --rgb-primary: 122, 31, 31;
+  --rgb-gold:    201, 169, 97;
+
+  /* ---------- Typography ---------- */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body:    "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-deva:    "Tiro Devanagari Hindi", "Noto Serif Devanagari", serif;
+
+  /* Fluid scale */
+  --fs-display: clamp(2.5rem, 6vw, 4.75rem);
+  --fs-h1:      clamp(2rem, 4vw, 3rem);
+  --fs-h2:      clamp(1.5rem, 3vw, 2.25rem);
+  --fs-h3:      clamp(1.25rem, 2vw, 1.625rem);
+  --fs-body:    1rem;
+  --fs-small:   0.875rem;
+  --fs-tiny:    0.75rem;
+
+  /* Line heights */
+  --lh-display: 1.05;
+  --lh-heading: 1.2;
+  --lh-body:    1.65;
+
+  /* Letter spacing */
+  --tracking-eyebrow: 0.18em;
+  --tracking-tight:   -0.01em;
+
+  /* ---------- Spacing ---------- */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  24px;
+  --sp-6:  32px;
+  --sp-7:  48px;
+  --sp-8:  64px;
+  --sp-9:  96px;
+  --sp-10: 128px;
+
+  /* ---------- Radius ---------- */
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:   16px;
+  --r-pill: 999px;
+
+  /* ---------- Shadows (soft, never harsh) ---------- */
+  --shadow-1: 0 1px 2px rgba(43, 24, 16, .06), 0 1px 1px rgba(43, 24, 16, .04);
+  --shadow-2: 0 6px 18px  rgba(43, 24, 16, .08);
+  --shadow-3: 0 18px 40px rgba(43, 24, 16, .12);
+
+  /* ---------- Layout ---------- */
+  --container-max: 1280px;
+  --nav-height:    72px;
+
+  /* ---------- Motion ---------- */
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:  150ms;
+  --dur-base:  300ms;
+  --dur-slow:  600ms;
+
+  /* ---------- Z-index scale ---------- */
+  --z-base:    1;
+  --z-sticky:  100;
+  --z-nav:     1000;
+  --z-overlay: 1100;
+  --z-modal:   1200;
+  --z-toast:   1300;
+}

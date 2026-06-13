@@ -1,0 +1,8 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Thank you for your interest in adopting{% endblock %}
+{% block body %}
+  <p>Hello {{ submission.name }},</p>
+  <p>Thank you for your interest in adopting one of our cows. It means a lot.</p>
+  <p>We received your inquiry (<strong>{{ submission.get_plan_interest_display }}</strong>) and will be in touch within one business day with available cows and next steps.</p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

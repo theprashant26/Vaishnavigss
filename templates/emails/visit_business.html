@@ -1,0 +1,20 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}New visit booking request{% endblock %}
+{% block body %}
+  <table style="width:100%; border-collapse:collapse; font-size:14px;">
+    <tr><td style="padding:6px 0; color:#6b5b4a; width:140px;">Name</td><td style="padding:6px 0;"><strong>{{ submission.name }}</strong></td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Email</td><td style="padding:6px 0;"><a href="mailto:{{ submission.email }}" style="color:#7A1F1F;">{{ submission.email }}</a></td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Phone</td><td style="padding:6px 0;">{{ submission.phone }}</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Preferred date</td><td style="padding:6px 0;"><strong>{{ submission.preferred_date|date:"l, j M Y" }}</strong></td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Alternate date</td><td style="padding:6px 0;">{% if submission.alternate_date %}{{ submission.alternate_date|date:"l, j M Y" }}{% else %}&mdash;{% endif %}</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Party size</td><td style="padding:6px 0;">{{ submission.party_size }}</td></tr>
+    <tr><td style="padding:6px 0; color:#6b5b4a;">Children?</td><td style="padding:6px 0;">{{ submission.has_children|yesno:"Yes,No" }}</td></tr>
+  </table>
+  {% if submission.special_requests %}
+    <h3 style="font-family:'Fraunces', Georgia, serif; color:#7A1F1F; font-size:16px; margin:24px 0 8px;">Special requests</h3>
+    <p style="white-space:pre-wrap; margin:0; padding:12px; background:#FBF5E9; border-radius:4px;">{{ submission.special_requests }}</p>
+  {% endif %}
+  <p style="margin:24px 0 0;">
+    <a href="{{ site_domain }}/admin/services/visitbooking/{{ submission.pk }}/change/" style="display:inline-block; background:#7A1F1F; color:#fff; padding:10px 20px; text-decoration:none; border-radius:4px;">Confirm slot in admin</a>
+  </p>
+{% endblock %}

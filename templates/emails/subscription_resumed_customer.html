@@ -1,0 +1,11 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Subscription resumed{% endblock %}
+{% block body %}
+  <p>Hello {{ subscription.user.first_name|default:subscription.user.username }},</p>
+  <p>Your <strong>{{ subscription.plan.name }}</strong> subscription is back on. Deliveries will resume on the next scheduled date.</p>
+  {% include 'emails/_subscription_summary.html' %}
+  <p style="margin-top:24px;">
+    <a href="{{ site_domain }}/account/profile/subscriptions/{{ subscription.subscription_number }}/" style="display:inline-block; background:#7A1F1F; color:#fff; padding:10px 20px; text-decoration:none; border-radius:4px;">View subscription</a>
+  </p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

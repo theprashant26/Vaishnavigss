@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Order placed &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}checkout-success{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+  <section class="section">
+    <div class="container-vai" style="max-width:640px; text-align:center; padding:48px 16px;">
+
+      <div class="checkout-success__icon" aria-hidden="true">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="8 12 11 15 16 9"/>
+        </svg>
+      </div>
+
+      <span class="eyebrow">Thank you</span>
+      <h1>Your order is placed.</h1>
+      <p class="checkout-success__id">Order # <strong>{{ order.order_number }}</strong></p>
+
+      <p style="margin: 16px auto; max-width: 480px;" class="text-muted-soft">
+        {% if order.payment_status == 'COMPLETED' %}
+          Payment received. We're preparing your order now &mdash; you'll get an update before delivery.
+        {% elif order.payment_method == 'COD' %}
+          We're preparing your order. Keep &#8377;{{ order.total|floatformat:"0" }} ready for the delivery agent.
+        {% else %}
+          We're waiting for payment confirmation. Refresh this page in a moment, or check your email.
+        {% endif %}
+        The cows say thank you, too.
+      </p>
+
+      <div style="background:#FBF5E9; padding:24px; border-radius:8px; text-align:left; max-width:480px; margin: 24px auto;">
+        <h3 style="margin:0 0 12px; font-family:Fraunces, Georgia, serif; color:#7A1F1F;">Order summary</h3>
+        {% for item in order.items.all %}
+          <div style="display:flex; justify-content:space-between; padding: 4px 0;">
+            <span>{{ item.product_name }} &middot; {{ item.variant_label }} &times; {{ item.quantity }}</span>
+            <strong>&#8377;{{ item.line_total|floatformat:"0" }}</strong>
+          </div>
+        {% endfor %}
+        <hr style="border:0; border-top:1px solid #e0d3a8; margin:12px 0;">
+        <div style="display:flex; justify-content:space-between; font-size:1.1rem;">
+          <span>Total</span><strong style="color:#7A1F1F;">&#8377;{{ order.total|floatformat:"0" }}</strong>
+        </div>
+      </div>
+
+      <div class="cta-row" style="justify-content:center;">
+        <a href="{% url 'accounts:profile_orders' %}" class="btn-vaishnavi-primary">Track order</a>
+        <a href="{% url 'catalog:product_list' %}" class="btn-vaishnavi-ghost">Continue shopping</a>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

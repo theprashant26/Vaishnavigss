@@ -1,0 +1,46 @@
+{% load static %}
+{# Reusable. Requires `product` in context. Pass via {% include ... with product=p %}. #}
+{# Markup matches productCardHTML in static/js/home.js. #}
+{# Views that render this should: select_related('category'), prefetch_related('variants'), #}
+{# and annotate(min_price=Min('variants__price')) so we don't trigger N+1 queries. #}
+{% with first_variant=product.variants.all|first %}
+<article class="product-card" data-product-id="{{ product.slug }}">
+  <div class="product-card__media">
+    <div class="product-card__media-placeholder">
+      {% if product.image %}
+        <img loading="lazy" src="{{ product.image.url }}" alt="{{ product.name }}">
+      {% else %}
+        {{ product.name }}
+      {% endif %}
+    </div>
+    {% if product.is_featured %}
+      <div class="product-card__badges">
+        <span class="badge-vai badge-vai--gold">Bestseller</span>
+      </div>
+    {% endif %}
+    <button class="product-card__wishlist" aria-label="Add {{ product.name }} to wishlist" data-wishlist>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 8.5C20 14 12 20 12 20S4 14 4 8.5A4.5 4.5 0 0 1 12 6a4.5 4.5 0 0 1 8 2.5z"/>
+      </svg>
+    </button>
+  </div>
+  <div class="product-card__body">
+    <span class="product-card__cat">{{ product.category.name }}</span>
+    <a class="product-card__name" href="{% url 'catalog:product_detail' slug=product.slug %}">{{ product.name }}</a>
+    {% if first_variant %}<span class="product-card__weight">{{ first_variant.label }}</span>{% endif %}
+    <div class="product-card__price-row">
+      <span class="product-card__price">
+        {% if product.min_price %}&#8377;{{ product.min_price|floatformat:"0" }}{% else %}&mdash;{% endif %}
+      </span>
+      {% if first_variant %}
+      <button class="btn-vaishnavi-primary product-card__add"
+              data-add-to-cart='{"variant_id": {{ first_variant.pk }}, "id": "{{ product.slug }}", "name": "{{ product.name|escapejs }}", "price": {{ first_variant.price|floatformat:"0" }}, "size": "{{ first_variant.label|escapejs }}", "image": "{% if product.image %}{{ product.image.url }}{% endif %}"}'>
+        Add
+      </button>
+      {% else %}
+      <a href="{% url 'catalog:product_detail' slug=product.slug %}" class="btn-vaishnavi-ghost btn-sm">View</a>
+      {% endif %}
+    </div>
+  </div>
+</article>
+{% endwith %}

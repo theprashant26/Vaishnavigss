@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Confirm &mdash; {{ plan.name }}{% endblock %}
+{% block body_page %}subscription-signup-review{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+  <section class="checkout container-vai" aria-labelledby="review-h">
+    <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+      <a href="{% url 'core:home' %}">Home</a>
+      <span class="sep">/</span>
+      <a href="{% url 'subscriptions:signup' plan_slug=plan.slug %}">{{ plan.name }}</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Review</span>
+    </nav>
+
+    <h1 id="review-h">Almost done &mdash; confirm and pay</h1>
+
+    <div class="step-panel">
+      <h2 style="margin:0 0 8px;">{{ plan.name }}</h2>
+      <p class="text-muted-soft" style="margin:0;">{{ plan.description }}</p>
+
+      <h3 style="margin-top:24px;">What ships in each delivery</h3>
+      {% if plan_items %}
+        <ul class="order-detail-table" style="list-style:none; padding:0;">
+          {% for item in plan_items %}
+            <li>
+              <strong>{{ item.quantity_per_delivery|floatformat:"-2" }} ×</strong>
+              {{ item.variant.product.name }} ({{ item.variant.label }})
+              {% if item.notes %}<small class="text-muted-soft"> &mdash; {{ item.notes }}</small>{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-muted-soft">This plan's items will be confirmed by our team.</p>
+      {% endif %}
+
+      <h3 style="margin-top:24px;">Delivery</h3>
+      <p><strong>{{ address.recipient_name }}</strong> &middot; {{ address.recipient_phone }}<br>
+        {{ address.line_1 }}{% if address.line_2 %}, {{ address.line_2 }}{% endif %}<br>
+        {{ address.city }}, {{ address.state }} &mdash; {{ address.pincode }}</p>
+      <p class="text-muted-soft" style="font-size:0.9rem;">
+        Window: {{ data.delivery_time_slot|title }} &middot;
+        First delivery: <strong>{{ start_date|date:"j M Y" }}</strong> &middot;
+        Period ends: <strong>{{ period_end|date:"j M Y" }}</strong>
+      </p>
+
+      {% if data.customer_notes %}
+        <h3 style="margin-top:24px;">Your notes</h3>
+        <p style="white-space:pre-wrap;">{{ data.customer_notes }}</p>
+      {% endif %}
+    </div>
+
+    <div class="step-panel">
+      <table style="width:100%;">
+        <tr><td>Subscription price</td><td style="text-align:right;">&#8377;{{ plan.price|floatformat:"2" }}</td></tr>
+        <tr><td>Tax (GST)</td><td style="text-align:right;">&#8377;0.00</td></tr>
+        <tr style="border-top:2px solid #7A1F1F;">
+          <td><strong>Total due now</strong></td>
+          <td style="text-align:right;"><strong style="color:#7A1F1F; font-size:1.15rem;">&#8377;{{ plan.price|floatformat:"2" }}</strong></td>
+        </tr>
+      </table>
+      <p class="text-muted-soft" style="font-size:0.85rem; margin-top:8px;">
+        You'll be redirected to Razorpay. We support UPI, cards, net banking, wallets.
+      </p>
+      <form method="post">
+        {% csrf_token %}
+        <div class="step-panel__actions">
+          <a class="btn-vaishnavi-ghost back" href="{% url 'subscriptions:signup' plan_slug=plan.slug %}">Edit</a>
+          <button type="submit" class="btn-vaishnavi-primary">Pay &amp; subscribe</button>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

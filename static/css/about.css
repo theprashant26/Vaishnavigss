@@ -1,0 +1,650 @@
+/* ============================================================
+   About page — page-scoped styles.
+   ============================================================ */
+
+/* ====================================================
+   ABOUT HERO
+   ==================================================== */
+.about-hero {
+  position: relative;
+  padding-block: var(--sp-8) var(--sp-7);
+  background:
+    radial-gradient(circle at 20% 30%, rgba(201, 169, 97, 0.12), transparent 55%),
+    var(--color-bg-alt);
+  overflow: hidden;
+  isolation: isolate;
+}
+.about-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../svg/paisley-watermark.svg") -80px center / 600px no-repeat;
+  opacity: 0.06;
+  z-index: -1;
+}
+.about-hero__grid {
+  display: grid;
+  gap: var(--sp-7);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 992px) {
+  .about-hero__grid { grid-template-columns: 1.05fr 1fr; gap: var(--sp-9); }
+}
+.about-hero h1 {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: var(--lh-display);
+  font-weight: 700;
+  margin-block: var(--sp-3) var(--sp-4);
+}
+.about-hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+.about-hero__lead {
+  font-size: 1.0625rem;
+  color: var(--color-ink-soft);
+  max-width: 52ch;
+  margin-bottom: var(--sp-5);
+}
+.about-hero__signature {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+}
+.about-hero__signature-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-gold), var(--color-primary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.about-hero__signature-meta strong {
+  display: block;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.about-hero__signature-meta span {
+  font-size: var(--fs-tiny);
+  color: var(--color-ink-soft);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+
+.about-hero__portrait {
+  position: relative;
+  /* Drop the forced 4:5 aspect — let the logo's natural square shape lead.
+     Square + max-width keeps the column compact and removes the wasted strip
+     of cream between the image edge and the container edge. */
+  max-width: 460px;
+  margin-inline: auto;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--color-bg-alt);
+  box-shadow: var(--shadow-3);
+}
+.about-hero__portrait-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* Frame is decorative — keep but tone down so it doesn't double up with the
+   logo's own internal border. */
+.about-hero__portrait-frame {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(122, 31, 31, 0.10);
+  border-radius: calc(var(--r-lg) - 4px);
+  pointer-events: none;
+}
+.about-hero__portrait-badge {
+  position: absolute;
+  bottom: var(--sp-5);
+  left: var(--sp-5);
+  right: var(--sp-5);
+  background-color: rgba(43, 24, 16, 0.78);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  color: var(--color-bg);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  font-size: var(--fs-small);
+  border: 1px solid rgba(201, 169, 97, 0.3);
+}
+.about-hero__portrait-badge strong {
+  color: var(--color-gold);
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+/* ====================================================
+   TIMELINE
+   ==================================================== */
+.timeline {
+  background-color: var(--color-bg);
+}
+.timeline__inner {
+  position: relative;
+}
+
+/* Mobile: vertical timeline with left rail */
+.timeline__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-6);
+  position: relative;
+}
+.timeline__list::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-image: linear-gradient(to bottom, var(--color-gold) 33%, transparent 33%);
+  background-size: 1px 8px;
+  background-repeat: repeat-y;
+}
+.timeline__item {
+  position: relative;
+  padding-left: var(--sp-7);
+}
+.timeline__dot {
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timeline__dot::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-gold);
+}
+.timeline__year {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: var(--tracking-tight);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.timeline__title {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-block: var(--sp-2);
+  color: var(--color-ink);
+}
+.timeline__desc {
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+  max-width: 48ch;
+}
+
+/* Desktop: horizontal timeline */
+@media (min-width: 992px) {
+  .timeline__list {
+    flex-direction: row;
+    gap: var(--sp-5);
+    padding-top: var(--sp-7);
+  }
+  .timeline__list::before {
+    left: 0;
+    right: 0;
+    top: 30px;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+    background-image: linear-gradient(to right, var(--color-gold) 33%, transparent 33%);
+    background-size: 8px 1px;
+    background-repeat: repeat-x;
+  }
+  .timeline__item {
+    flex: 1;
+    padding-left: 0;
+    padding-top: var(--sp-6);
+    text-align: left;
+  }
+  .timeline__dot {
+    left: 0;
+    top: -10px;
+  }
+  .timeline__desc { max-width: none; }
+}
+
+/* ====================================================
+   VALUES (4-up grid)
+   ==================================================== */
+.values {
+  background-color: var(--color-bg-alt);
+}
+.values__grid {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 576px) { .values__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 992px) { .values__grid { grid-template-columns: repeat(4, 1fr); } }
+
+.value-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.value-card__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--sp-4);
+  border-radius: 50%;
+  background-color: var(--color-bg-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+.value-card__sanskrit {
+  font-family: var(--font-deva);
+  color: var(--color-gold-deep);
+  font-size: 1.25rem;
+  margin-bottom: var(--sp-1);
+}
+.value-card__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--sp-3);
+}
+.value-card__desc {
+  color: var(--color-ink-soft);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+
+/* ====================================================
+   OUR BREEDS — editorial 5-card row (heritage encyclopedia)
+   ==================================================== */
+.breeds {
+  background-color: var(--color-bg);
+}
+.breeds__intro {
+  max-width: 60ch;
+  margin-inline: auto;
+  text-align: center;
+  color: var(--color-ink-soft);
+  margin-bottom: var(--sp-6);
+}
+.breeds__grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 576px) { .breeds__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 992px) { .breeds__grid { grid-template-columns: repeat(5, 1fr); } }
+
+.breed-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+  isolation: isolate;
+}
+.breed-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-3px);
+}
+.breed-card--hero {
+  border-color: var(--color-gold);
+}
+.breed-card--hero::after {
+  content: "Sacred";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 3px 9px;
+  background-color: var(--color-gold);
+  color: var(--color-primary-deep);
+  font-size: var(--fs-tiny);
+  font-weight: 700;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  border-radius: var(--r-pill);
+  z-index: 2;
+}
+
+.breed-card__silhouette {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: var(--sp-4);
+}
+.breed-card__silhouette::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, var(--bc-from, #C9A961) 0%, var(--bc-to, #5B4636) 100%);
+  z-index: -1;
+}
+.breed-card__silhouette svg {
+  width: 80%;
+  max-width: 140px;
+  height: auto;
+  color: rgba(251, 245, 233, 0.85);
+  filter: drop-shadow(0 4px 12px rgba(43, 24, 16, 0.4));
+}
+
+/* Per-breed gradient stops (placeholder palettes; swap to photo backgrounds later) */
+.breed-card[data-breed="gir"]        .breed-card__silhouette { --bc-from: #B33A2A; --bc-to: #5C1414; }
+.breed-card[data-breed="sahiwal"]    .breed-card__silhouette { --bc-from: #C9A961; --bc-to: #8B6F2E; }
+.breed-card[data-breed="tharparkar"] .breed-card__silhouette { --bc-from: #E4D5B7; --bc-to: #9C8B72; }
+.breed-card[data-breed="bachaur"]    .breed-card__silhouette { --bc-from: #B8A476; --bc-to: #5B4636; }
+.breed-card[data-breed="punganur"]   .breed-card__silhouette { --bc-from: #C9A961; --bc-to: #7A1F1F; }
+
+.breed-card__body {
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  flex-grow: 1;
+}
+.breed-card__region {
+  font-size: var(--fs-tiny);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-gold-deep);
+  font-weight: 600;
+}
+.breed-card__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--color-ink);
+  line-height: 1.1;
+}
+.breed-card__color {
+  font-size: var(--fs-tiny);
+  color: var(--color-muted);
+  letter-spacing: 0.02em;
+}
+.breed-card__trait {
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+  flex-grow: 1;
+}
+.breed-card__fact {
+  font-size: var(--fs-tiny);
+  font-style: italic;
+  color: var(--color-primary);
+  padding-top: var(--sp-2);
+  border-top: 1px dashed var(--color-line);
+  line-height: 1.5;
+}
+
+/* ====================================================
+   COWS GALLERY (cow profile cards with hover-flip story)
+   ==================================================== */
+.cows__grid {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 576px) { .cows__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 992px) { .cows__grid { grid-template-columns: repeat(3, 1fr); } }
+
+.cow-card {
+  position: relative;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  isolation: isolate;
+  transition: box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+}
+.cow-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-3px);
+}
+.cow-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: linear-gradient(135deg, var(--color-bg-alt), var(--color-line));
+  overflow: hidden;
+}
+.cow-card__media-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--color-bg);
+  letter-spacing: 0.05em;
+  background: linear-gradient(160deg, #8B6F2E 0%, #5B4636 70%, #2B1810 100%);
+}
+.cow-card:nth-child(2) .cow-card__media-placeholder { background: linear-gradient(160deg, #B8956A 0%, #6B5238 70%, #3A2818 100%); }
+.cow-card:nth-child(3) .cow-card__media-placeholder { background: linear-gradient(160deg, #D8C8A8 0%, #9C8B72 70%, #5B4636 100%); }
+.cow-card:nth-child(4) .cow-card__media-placeholder { background: linear-gradient(160deg, #7A1F1F 0%, #5C1414 70%, #2B0A0A 100%); }
+.cow-card:nth-child(5) .cow-card__media-placeholder { background: linear-gradient(160deg, #C9A961 0%, #8B6F2E 70%, #4D3B14 100%); }
+.cow-card:nth-child(6) .cow-card__media-placeholder { background: linear-gradient(160deg, #E8DCC4 0%, #B8A476 70%, #6B5238 100%); }
+
+.cow-card__body {
+  padding: var(--sp-5);
+}
+.cow-card__name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: var(--sp-2);
+  color: var(--color-ink);
+}
+.cow-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+  margin-bottom: var(--sp-3);
+}
+.cow-card__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.cow-card__meta strong {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.cow-card__story {
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+  line-height: 1.65;
+}
+
+/* ====================================================
+   PHOTO GALLERY (masonry)
+   ==================================================== */
+.gallery {
+  background-color: var(--color-bg);
+}
+.gallery__grid {
+  column-count: 1;
+  column-gap: var(--sp-4);
+}
+@media (min-width: 576px) { .gallery__grid { column-count: 2; } }
+@media (min-width: 992px) { .gallery__grid { column-count: 3; } }
+@media (min-width: 1200px) { .gallery__grid { column-count: 4; } }
+
+.gallery__item {
+  break-inside: avoid;
+  margin-bottom: var(--sp-4);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  display: block;
+  background-color: var(--color-bg-alt);
+}
+.gallery__item img,
+.gallery__item .gallery__placeholder {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.gallery__item:hover img,
+.gallery__item:hover .gallery__placeholder { transform: scale(1.04); }
+
+.gallery__placeholder {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: var(--sp-3);
+  color: var(--color-bg);
+  font-size: var(--fs-tiny);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.gallery__item--1 .gallery__placeholder { aspect-ratio: 4/5; background: linear-gradient(160deg, #7A1F1F 0%, #2B1810 100%); }
+.gallery__item--2 .gallery__placeholder { aspect-ratio: 1/1; background: linear-gradient(160deg, #C9A961 0%, #5C1414 100%); }
+.gallery__item--3 .gallery__placeholder { aspect-ratio: 4/3; background: linear-gradient(160deg, #B33A2A 0%, #5B4636 100%); }
+.gallery__item--4 .gallery__placeholder { aspect-ratio: 3/4; background: linear-gradient(160deg, #5C8A4A 0%, #2B4A22 100%); }
+.gallery__item--5 .gallery__placeholder { aspect-ratio: 1/1; background: linear-gradient(160deg, #A0843F 0%, #5B4636 100%); }
+.gallery__item--6 .gallery__placeholder { aspect-ratio: 4/5; background: linear-gradient(160deg, #5B4636 0%, #2B1810 100%); }
+.gallery__item--7 .gallery__placeholder { aspect-ratio: 4/3; background: linear-gradient(160deg, #7A1F1F 0%, #B33A2A 100%); }
+.gallery__item--8 .gallery__placeholder { aspect-ratio: 3/4; background: linear-gradient(160deg, #C9A961 0%, #8B6F2E 100%); }
+
+.gallery__item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(43, 24, 16, 0.4));
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
+  pointer-events: none;
+}
+.gallery__item:hover::after { opacity: 1; }
+
+/* Lightbox modal */
+.gallery-modal .modal-content {
+  background-color: transparent;
+  border: none;
+}
+.gallery-modal .modal-body {
+  padding: 0;
+  position: relative;
+}
+.gallery-modal img,
+.gallery-modal .gallery__placeholder {
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--r-md);
+}
+.gallery-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--color-ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* ====================================================
+   FINAL CTA banner (visit / adopt)
+   ==================================================== */
+.about-cta {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.about-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../svg/paisley-watermark.svg") right -100px center / 600px no-repeat;
+  opacity: 0.07;
+  z-index: -1;
+}
+.about-cta__grid {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .about-cta__grid { grid-template-columns: 1.5fr auto; gap: var(--sp-7); }
+}
+.about-cta h2 {
+  color: var(--color-bg);
+  margin-bottom: var(--sp-3);
+}
+.about-cta p {
+  color: rgba(251, 245, 233, 0.8);
+  margin-bottom: 0;
+}
+.about-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+.about-cta .eyebrow { color: var(--color-gold); }
+.about-cta h2 { margin-top: var(--sp-2); }
+
+.about-hero__deva {
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  margin-bottom: var(--sp-4);
+}
+
+/* Left-align variant of .cta-row (default is centered) */
+.cta-row--left { justify-content: flex-start; }

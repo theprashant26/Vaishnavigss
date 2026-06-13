@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Our Story — Vaishnavi Gau Seva Gausansthan{% endblock %}
+{% block meta_description %}From one Gir cow in 2013 to a family of {{ site.cow_count }}+ indigenous cows today. The story, the values, and the cows behind Vaishnavi Gau Seva Gausansthan.{% endblock %}
+{% block body_page %}about{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/about.css' %}?v=3" />
+{% endblock %}
+
+{% block content %}
+
+    {% comment %} ============================================================
+       HERO
+       ============================================================ {% endcomment %}
+    <section class="about-hero" aria-labelledby="about-h">
+      <div class="container-vai">
+        <div class="about-hero__grid">
+
+          <div class="about-hero__copy">
+            <span class="eyebrow">Our Sankalp · since 2013</span>
+            <h1 id="about-h">
+              One cow, <em>one promise.</em><br/>
+              Thirteen years later, thirty-five.
+            </h1>
+            <p class="text-deva about-hero__deva">
+              शुद्धता &middot; सेवा &middot; गौ-कृपा
+            </p>
+            <p class="about-hero__lead">
+              Vaishnavi began the day we brought home one Gir cow named Saraswati and made
+              her a quiet promise: that she would never know hunger, fear, or neglect.
+              Thirteen years on, that promise is shared by thirty-five indigenous cows &mdash;
+              and the families who let our milk into their homes keep it alive.
+            </p>
+            <div class="cta-row cta-row--left">
+              <a href="{% url 'services:service_list' %}#adoption" class="btn-vaishnavi-primary">Adopt a Cow</a>
+              <a href="{% url 'services:service_list' %}#visit" class="btn-vaishnavi-ghost">Visit the Gaushala</a>
+            </div>
+            <div class="about-hero__signature">
+              <div class="about-hero__signature-avatar" aria-hidden="true">RS</div>
+              <div class="about-hero__signature-meta">
+                <strong>Founder &amp; Guardian</strong>
+                <span>{{ site.business_name }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-hero__portrait">
+            <img src="{% static 'img/vaishnavilogo.jpeg' %}"
+                 alt="{{ site.business_name }}"
+                 class="about-hero__portrait-img logo-img logo-img--blend"
+                 width="480" height="480" />
+            <div class="about-hero__portrait-frame" aria-hidden="true"></div>
+            <div class="about-hero__portrait-badge">
+              <strong>{{ site.business_name }}</strong>
+              Saraswati &amp; the founder · since 2013
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       TIMELINE
+       ============================================================ {% endcomment %}
+    <section class="section timeline" aria-labelledby="timeline-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">Our journey</span>
+          <div class="divider-gold">
+            <span class="icon-lotus" aria-hidden="true"></span>
+          </div>
+          <h2 id="timeline-h">From one cow to thirty-five</h2>
+        </div>
+
+        <div class="timeline__inner">
+          <ol class="timeline__list" role="list">
+
+            <li class="timeline__item">
+              <span class="timeline__dot" aria-hidden="true"></span>
+              <div class="timeline__year">2013</div>
+              <h3 class="timeline__title">Saraswati comes home</h3>
+              <p class="timeline__desc">A loan from a temple trust buys our first Tharparkar cow. The promise begins.</p>
+            </li>
+
+            <li class="timeline__item">
+              <span class="timeline__dot" aria-hidden="true"></span>
+              <div class="timeline__year">2017</div>
+              <h3 class="timeline__title">The first ten</h3>
+              <p class="timeline__desc">A shed expansion, two Gir cows from Junagadh, and our first bilona ghee churn at scale.</p>
+            </li>
+
+            <li class="timeline__item">
+              <span class="timeline__dot" aria-hidden="true"></span>
+              <div class="timeline__year">2021</div>
+              <h3 class="timeline__title">Twenty-five cows, four hundred families</h3>
+              <p class="timeline__desc">We launch glass-bottled milk deliveries across Delhi NCR. The waiting list begins almost immediately.</p>
+            </li>
+
+            <li class="timeline__item">
+              <span class="timeline__dot" aria-hidden="true"></span>
+              <div class="timeline__year">2024</div>
+              <h3 class="timeline__title">Thirty-five and growing</h3>
+              <p class="timeline__desc">Cow adoption opens to the public. A new medical shed, fodder programme, and weekend visitor schedule make us a true sanctuary.</p>
+            </li>
+
+            <li class="timeline__item">
+              <span class="timeline__dot" aria-hidden="true"></span>
+              <div class="timeline__year">Today</div>
+              <h3 class="timeline__title">Your kitchen, our gaushala</h3>
+              <p class="timeline__desc">Every order you place feeds, shelters, and protects our family. The dharma continues.</p>
+            </li>
+
+          </ol>
+        </div>
+
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       VALUES
+       ============================================================ {% endcomment %}
+    <section class="section values" aria-labelledby="values-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">What guides us</span>
+          <div class="divider-gold"><span class="icon-lotus" aria-hidden="true"></span></div>
+          <h2 id="values-h">Four values, four pillars</h2>
+        </div>
+
+        <div class="values__grid">
+
+          <article class="value-card">
+            <div class="value-card__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div class="value-card__sanskrit">अहिंसा</div>
+            <h3 class="value-card__title">Ahimsa</h3>
+            <p class="value-card__desc">Non-violence in every choice. No cow is ever sold, hurried, or hurt. Even her end is gentle, on her own time.</p>
+          </article>
+
+          <article class="value-card">
+            <div class="value-card__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M6 8c-2 2-3 5-3 8 0 3 3 4 9 4s9-1 9-4c0-3-1-6-3-8"/><path d="M6 8c2-2 4-2 6-2s4 0 6 2"/></svg>
+            </div>
+            <div class="value-card__sanskrit">सेवा</div>
+            <h3 class="value-card__title">Seva</h3>
+            <p class="value-card__desc">Service before profit. We feed thirty-five mouths first, every morning, before a single jar is sold.</p>
+          </article>
+
+          <article class="value-card">
+            <div class="value-card__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+            </div>
+            <div class="value-card__sanskrit">शुद्धता</div>
+            <h3 class="value-card__title">Shuddhata</h3>
+            <p class="value-card__desc">Purity without compromise. A2 only, bilona only, no preservatives. If it isn't right by the cow, it isn't right by you.</p>
+          </article>
+
+          <article class="value-card">
+            <div class="value-card__icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 12L22 2"/><path d="M16 2h6v6"/></svg>
+            </div>
+            <div class="value-card__sanskrit">धर्म</div>
+            <h3 class="value-card__title">Dharma</h3>
+            <p class="value-card__desc">Right action, every day. Transparent accounts, traceable milk, and a sankalp that does not waver.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       OUR BREEDS (DB-driven)
+       ============================================================ {% endcomment %}
+    <section class="section breeds" id="breeds" aria-labelledby="breeds-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">Our breeds</span>
+          <div class="divider-gold"><span class="icon-lotus" aria-hidden="true"></span></div>
+          <h2 id="breeds-h">Five indigenous breeds, one family</h2>
+          <p class="breeds__intro">
+            We keep only indigenous Indian cows &mdash; never cross-bred Holstein-Friesians or Jerseys.
+            Every breed below is A2 by birth, drought- or heat-tolerant by inheritance, and
+            has been part of Indian farming life for two thousand years or more.
+          </p>
+        </div>
+
+        <div class="breeds__grid" data-breeds-grid>
+          {% for breed in breeds %}
+            {% include 'partials/_breed_card.html' with breed=breed %}
+          {% endfor %}
+        </div>
+
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       MEET OUR COWS (DB-driven)
+       ============================================================ {% endcomment %}
+    <section class="section cows section--alt" id="cows" aria-labelledby="cows-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">Meet our family</span>
+          <div class="divider-gold"><span class="icon-lotus" aria-hidden="true"></span></div>
+          <h2 id="cows-h">Thirty-five names, thirty-five stories</h2>
+          <p>Each cow at Vaishnavi is named, known, and loved. A few of them, below &mdash; one from each of our five breeds.</p>
+        </div>
+
+        <div class="cows__grid" data-cows-grid>
+          {% for cow in featured_cows %}
+            {% include 'partials/_cow_card.html' with cow=cow %}
+          {% endfor %}
+        </div>
+
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       PHOTO GALLERY (hardcoded placeholders, GSAP stagger preserved)
+       ============================================================ {% endcomment %}
+    <section class="section gallery section--alt" aria-labelledby="gallery-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">From the gaushala</span>
+          <div class="divider-gold"><span class="icon-lotus" aria-hidden="true"></span></div>
+          <h2 id="gallery-h">A few quiet moments</h2>
+        </div>
+
+        <div class="gallery__grid">
+          <a href="#" class="gallery__item gallery__item--1" data-gallery-open role="button" tabindex="0" aria-label="View photo 1"><div class="gallery__placeholder">Dawn at the gaushala</div></a>
+          <a href="#" class="gallery__item gallery__item--2" data-gallery-open role="button" tabindex="0" aria-label="View photo 2"><div class="gallery__placeholder">Gauri at the trough</div></a>
+          <a href="#" class="gallery__item gallery__item--3" data-gallery-open role="button" tabindex="0" aria-label="View photo 3"><div class="gallery__placeholder">Bilona churning</div></a>
+          <a href="#" class="gallery__item gallery__item--4" data-gallery-open role="button" tabindex="0" aria-label="View photo 4"><div class="gallery__placeholder">The medical shed</div></a>
+          <a href="#" class="gallery__item gallery__item--5" data-gallery-open role="button" tabindex="0" aria-label="View photo 5"><div class="gallery__placeholder">Lakshmi's calf</div></a>
+          <a href="#" class="gallery__item gallery__item--6" data-gallery-open role="button" tabindex="0" aria-label="View photo 6"><div class="gallery__placeholder">Diya offerings</div></a>
+          <a href="#" class="gallery__item gallery__item--7" data-gallery-open role="button" tabindex="0" aria-label="View photo 7"><div class="gallery__placeholder">The herd at dusk</div></a>
+          <a href="#" class="gallery__item gallery__item--8" data-gallery-open role="button" tabindex="0" aria-label="View photo 8"><div class="gallery__placeholder">Festive hampers</div></a>
+        </div>
+
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       FINAL CTA
+       ============================================================ {% endcomment %}
+    <section class="section about-cta" aria-labelledby="about-cta-h">
+      <div class="container-vai">
+        <div class="about-cta__grid">
+          <div>
+            <span class="eyebrow">Be part of the family</span>
+            <h2 id="about-cta-h">Adopt a cow. Visit the gaushala. Share a meal.</h2>
+            <p>
+              For &#8377;4,999 a month you adopt one cow by name &mdash; and receive her milk, her photos,
+              and a transparent account of her welfare. Or simply come and visit, any weekend.
+            </p>
+          </div>
+          <div class="about-cta__actions">
+            <a href="{% url 'services:service_list' %}#adoption" class="btn-vaishnavi-gold">Adopt a Cow</a>
+            <a href="{% url 'services:service_list' %}#visit" class="btn-vaishnavi-ghost btn-vaishnavi-ghost--on-dark">Book a Visit</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# Lightbox modal — used by about.js wireLightbox() #}
+    <div class="modal fade gallery-modal" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button type="button" class="gallery-modal__close" data-bs-dismiss="modal" aria-label="Close">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6"  x2="6"  y2="18"/><line x1="6"  y1="6"  x2="18" y2="18"/></svg>
+            </button>
+            <div data-gallery-target></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/about.js' %}"></script>
+{% endblock %}

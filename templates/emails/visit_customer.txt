@@ -1,0 +1,12 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Hello {{ submission.name }},
+
+We received your visit request for {{ submission.preferred_date|date:"l, j M Y" }}
+(party of {{ submission.party_size }}{% if submission.has_children %}, with children{% endif %}).
+
+We'll confirm your slot by email within one business day. If your date is
+urgent, please WhatsApp us.
+
+With seva,
+— {{ site_name }}
+{% endblock %}

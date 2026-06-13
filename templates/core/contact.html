@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact &amp; Visit &mdash; {{ site.business_name }}{% endblock %}
+{% block meta_description %}Get in touch with {{ site.business_name }}. WhatsApp, phone, email, address, visiting hours and an FAQ.{% endblock %}
+{% block body_page %}contact{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}?v=3" />
+{% endblock %}
+
+{% block content %}
+
+    {% comment %} ============================================================
+       HERO
+       ============================================================ {% endcomment %}
+    <section class="contact-hero" aria-labelledby="contact-h">
+      <div class="container-vai">
+        <div>
+          <span class="eyebrow">Reach out</span>
+          <h1 id="contact-h">We answer every message, by hand.</h1>
+          <p>
+            Questions, orders, subscriptions, a wish to visit the cows &mdash; write to us
+            and someone here will reply, usually within a day.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       FORM + INFO
+       ============================================================ {% endcomment %}
+    <section class="section" aria-label="Contact details">
+      <div class="container-vai">
+        <div class="contact-main">
+
+          {# Real Django form wired in Phase 5. #}
+          <div class="contact-form-card">
+            <h2>Write to us</h2>
+            <p>We read every message. Please share enough so we can help quickly.</p>
+
+            <form data-contact-form class="contact-form__grid" method="post" action="{% url 'core:contact' %}" novalidate>
+              {% csrf_token %}
+              {{ form.submitted_at_min }}
+              <div class="vai-honeypot" aria-hidden="true">{{ form.website }}</div>
+
+              {% if form.non_field_errors %}
+                <div class="auth-error span-2" role="alert">{{ form.non_field_errors|join:" " }}</div>
+              {% endif %}
+
+              <div>
+                <label for="id_name" class="form-label-vai">Your name</label>
+                <input id="id_name" name="name" type="text" class="form-control-vai{% if form.name.errors %} is-invalid{% endif %}" placeholder="Anjali Sharma" value="{{ form.name.value|default:'' }}" required />
+                {% if form.name.errors %}<div class="field-error">{{ form.name.errors|join:" " }}</div>{% endif %}
+              </div>
+
+              <div>
+                <label for="id_phone" class="form-label-vai">Phone <span class="text-muted-soft">(optional)</span></label>
+                <input id="id_phone" name="phone" type="tel" class="form-control-vai{% if form.phone.errors %} is-invalid{% endif %}" placeholder="+91 9XXXX XXXXX" value="{{ form.phone.value|default:'' }}" />
+                {% if form.phone.errors %}<div class="field-error">{{ form.phone.errors|join:" " }}</div>{% endif %}
+              </div>
+
+              <div class="span-2">
+                <label for="id_email" class="form-label-vai">Email</label>
+                <input id="id_email" name="email" type="email" class="form-control-vai{% if form.email.errors %} is-invalid{% endif %}" placeholder="you@example.com" value="{{ form.email.value|default:'' }}" required />
+                {% if form.email.errors %}<div class="field-error">{{ form.email.errors|join:" " }}</div>{% endif %}
+              </div>
+
+              <div class="span-2">
+                <label for="id_subject" class="form-label-vai">Subject</label>
+                <select id="id_subject" name="subject" class="form-control-vai{% if form.subject.errors %} is-invalid{% endif %}">
+                  {% for value, label in form.fields.subject.choices %}
+                    <option value="{{ value }}" {% if form.subject.value == value %}selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+                {% if form.subject.errors %}<div class="field-error">{{ form.subject.errors|join:" " }}</div>{% endif %}
+              </div>
+
+              <div class="span-2">
+                <label for="id_message" class="form-label-vai">Message</label>
+                <textarea id="id_message" name="message" class="form-control-vai{% if form.message.errors %} is-invalid{% endif %}" rows="5" placeholder="Tell us a little about what you need&hellip;" required>{{ form.message.value|default:'' }}</textarea>
+                {% if form.message.errors %}<div class="field-error">{{ form.message.errors|join:" " }}</div>{% endif %}
+              </div>
+
+              <div class="span-2">
+                <button type="submit" class="btn-vaishnavi-primary">Send Message</button>
+                <p class="contact-form__hint">
+                  We never share your details. We will reply only to the contact you give us.
+                </p>
+              </div>
+
+            </form>
+          </div>
+
+          {# Info — driven by site context vars #}
+          <aside class="contact-info-card">
+            <h3>The gaushala</h3>
+
+            <ul class="contact-info__list" role="list">
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <div>
+                  <strong>Address</strong>
+                  <span>{{ site.business_name }},<br/>{{ site.address_line_1 }}{% if site.address_line_2 %}<br/>{{ site.address_line_2 }}{% endif %}{% if site.city %},<br/>{{ site.city }}{% if site.state %}, {{ site.state }}{% endif %}{% if site.pincode %} &mdash; {{ site.pincode }}{% endif %}{% endif %}</span>
+                </div>
+              </li>
+
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9"/>
+                  <polyline points="12 7 12 12 15 14"/>
+                </svg>
+                <div>
+                  <strong>Visiting hours</strong>
+                  <span>{% if site.business_hours %}{{ site.business_hours }}{% else %}Saturday &amp; Sunday<br/>8 am &ndash; 11 am &middot; 4 pm &ndash; 6 pm{% endif %}</span>
+                </div>
+              </li>
+
+              {% if site.phone_primary %}
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M22 16.92V21a1 1 0 0 1-1.09 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.21 4.09 1 1 0 0 1 4.2 3h4.09a1 1 0 0 1 1 .75 12.32 12.32 0 0 0 .68 2.71 1 1 0 0 1-.23 1L7.91 9.91a16 16 0 0 0 6 6l2.46-2.46a1 1 0 0 1 1-.23 12.32 12.32 0 0 0 2.71.68 1 1 0 0 1 .75 1z"/>
+                </svg>
+                <div>
+                  <strong>Phone</strong>
+                  <a href="tel:{{ site.phone_primary|cut:' ' }}">{{ site.phone_primary }}</a>
+                </div>
+              </li>
+              {% endif %}
+
+              {% if site.email_primary %}
+              <li>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22 6 12 13 2 6"/>
+                </svg>
+                <div>
+                  <strong>Email</strong>
+                  <a href="mailto:{{ site.email_primary }}">{{ site.email_primary }}</a>
+                </div>
+              </li>
+              {% endif %}
+            </ul>
+
+            <div class="contact-info__actions">
+              {% if site.phone_whatsapp %}
+                {% with wa=site.phone_whatsapp|cut:" "|cut:"+"|cut:"-" %}
+                  <a href="https://wa.me/{{ wa }}" class="btn-vaishnavi-gold btn-sm" target="_blank" rel="noopener">WhatsApp us</a>
+                {% endwith %}
+              {% endif %}
+              <a href="{% url 'services:service_list' %}#visit" class="btn-vaishnavi-ghost btn-sm">Plan a visit</a>
+            </div>
+
+            <div class="contact-info__social" aria-label="Social media">
+              <a href="{{ site.instagram_url|default:'#' }}" aria-label="Instagram"{% if site.instagram_url %} target="_blank" rel="noopener"{% endif %}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+              </a>
+              <a href="{{ site.facebook_url|default:'#' }}" aria-label="Facebook"{% if site.facebook_url %} target="_blank" rel="noopener"{% endif %}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <a href="{{ site.youtube_url|default:'#' }}" aria-label="YouTube"{% if site.youtube_url %} target="_blank" rel="noopener"{% endif %}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
+              </a>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       MAP — real embed if site.map_embed_url, otherwise placeholder
+       ============================================================ {% endcomment %}
+    <section class="contact-map" aria-label="Map and directions">
+      {% if site.map_embed_url %}
+        <iframe class="contact-map__frame"
+                src="{{ site.map_embed_url }}"
+                width="100%" height="450" style="border:0;"
+                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Gaushala location"></iframe>
+      {% else %}
+        <div class="contact-map__frame">
+          <div class="contact-map__pin">
+            <div class="contact-map__pin-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <strong>{{ site.business_name }}</strong>
+              <span>Map embed not yet configured</span>
+            </div>
+          </div>
+          <span class="contact-map__note">Add a Google Maps embed URL via the Site Settings admin.</span>
+        </div>
+      {% endif %}
+    </section>
+
+    {% comment %} ============================================================
+       FAQ (DB-driven)
+       ============================================================ {% endcomment %}
+    <section class="section faq" aria-labelledby="faq-h">
+      <div class="container-vai">
+        <div class="section-heading">
+          <span class="eyebrow">Questions, answered</span>
+          <div class="divider-gold"><span class="icon-lotus" aria-hidden="true"></span></div>
+          <h2 id="faq-h">Frequently asked</h2>
+        </div>
+        {% include 'partials/_faq_accordion.html' with faqs=faqs %}
+      </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/contact.js' %}"></script>
+{% endblock %}

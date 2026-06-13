@@ -1,0 +1,10 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Your order is on its way, {{ order.user.first_name|default:order.user.username }}.
+
+We've shipped your order {{ order.order_number }} today. Watch your phone — our
+delivery partner will reach out before they arrive.
+
+{% include 'emails/_order_summary.txt' %}
+With seva,
+— {{ site_name }}
+{% endblock %}

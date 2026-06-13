@@ -1,0 +1,23 @@
+{% extends 'services/_inquiry_base.html' %}
+
+{% block inquiry_title %}Visit the gaushala{% endblock %}
+{% block inquiry_body_page %}visit{% endblock %}
+{% block inquiry_eyebrow %}Plan a weekend visit{% endblock %}
+{% block inquiry_heading %}Meet the cows. Stay for prasad.{% endblock %}
+{% block inquiry_lead %}
+  Free guided visits every Saturday and Sunday &mdash; 8&ndash;11 am and 4&ndash;6 pm.
+  Walk the sheds, watch the bilona churn, feed our cows by hand. Children very welcome.
+  Pick a weekend date at least two days out and we'll confirm your slot by email.
+{% endblock %}
+{% block inquiry_submit %}Request a slot{% endblock %}
+
+{% block inquiry_fields %}
+  {% include 'partials/_form_field.html' with field=form.name label="Your name" %}
+  {% include 'partials/_form_field.html' with field=form.phone label="Phone" %}
+  {% include 'partials/_form_field.html' with field=form.email label="Email" span2=True %}
+  {% include 'partials/_form_field.html' with field=form.preferred_date label="Preferred date (Sat or Sun)" %}
+  {% include 'partials/_form_field.html' with field=form.alternate_date label="Alternate date" optional=True %}
+  {% include 'partials/_form_field.html' with field=form.party_size label="Party size (max 20)" %}
+  {% include 'partials/_form_field.html' with field=form.has_children label="Bringing children?" %}
+  {% include 'partials/_form_field.html' with field=form.special_requests label="Any special requests" optional=True span2=True %}
+{% endblock %}

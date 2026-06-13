@@ -1,0 +1,9 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Welcome to the Vaishnavi family{% endblock %}
+{% block body %}
+  <p>We send one short letter a month &mdash; seasonal recipes from our kitchen, new arrivals from the shop, and photos from the gaushala. Never more.</p>
+  <p style="margin-top:24px; color:#6b5b4a; font-size:13px;">
+    Want to step away? One click does it:<br>
+    <a href="{{ site_domain }}{% url 'core:newsletter_unsubscribe' token=submission.unsubscribe_token %}" style="color:#7A1F1F;">Unsubscribe</a>
+  </p>
+{% endblock %}

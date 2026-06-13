@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice {{ order.order_number }} — {{ site.business_name }}</title>
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    /* Standalone, print-clean. No external CSS. */
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'DM Sans', Arial, sans-serif;
+      color: #2B1810; background: #fff; margin: 0; padding: 24px;
+      font-size: 13px; line-height: 1.45;
+    }
+    .invoice { max-width: 800px; margin: 0 auto; }
+    .invoice__header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      border-bottom: 3px solid #7A1F1F; padding-bottom: 16px; margin-bottom: 24px;
+    }
+    .invoice__title { font-family: 'Fraunces', Georgia, serif; font-size: 24px; color: #7A1F1F; margin: 0 0 4px; }
+    .invoice__meta { text-align: right; }
+    .invoice__meta strong { display: block; font-size: 18px; color: #7A1F1F; }
+    .invoice__parties { display: flex; gap: 32px; margin-bottom: 24px; }
+    .invoice__party { flex: 1; }
+    .invoice__party h3 {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+      color: #6b5b4a; margin: 0 0 8px;
+    }
+    table.invoice__items {
+      width: 100%; border-collapse: collapse; margin-bottom: 16px;
+    }
+    .invoice__items th, .invoice__items td {
+      padding: 8px 6px; text-align: right; border-bottom: 1px solid #ddd;
+    }
+    .invoice__items th { background: #FBF5E9; color: #7A1F1F; font-weight: 600; }
+    .invoice__items th:nth-child(1), .invoice__items td:nth-child(1),
+    .invoice__items th:nth-child(2), .invoice__items td:nth-child(2),
+    .invoice__items th:nth-child(3), .invoice__items td:nth-child(3) { text-align: left; }
+    .invoice__totals {
+      margin-left: auto; width: 360px; margin-top: 16px;
+    }
+    .invoice__totals table { width: 100%; }
+    .invoice__totals td { padding: 4px 0; }
+    .invoice__totals td:last-child { text-align: right; }
+    .invoice__totals .grand td {
+      border-top: 2px solid #7A1F1F; padding-top: 8px;
+      font-size: 16px; font-weight: 700; color: #7A1F1F;
+    }
+    .invoice__tax-box {
+      background: #FBF5E9; padding: 12px; border-radius: 4px;
+      margin: 16px 0; font-size: 12px;
+    }
+    .invoice__tax-box table { width: 100%; }
+    .invoice__tax-box td { padding: 2px 6px; }
+    .invoice__footer {
+      margin-top: 32px; padding-top: 16px;
+      border-top: 1px solid #ddd; color: #6b5b4a; font-size: 11px;
+    }
+    .invoice__actions {
+      text-align: center; margin: 24px 0; padding: 16px;
+      background: #FBF5E9; border-radius: 6px;
+    }
+    .invoice__actions button {
+      background: #7A1F1F; color: #fff; border: 0; padding: 10px 24px;
+      font-size: 14px; border-radius: 4px; cursor: pointer;
+    }
+    @media print {
+      body { padding: 0; }
+      .invoice__actions { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="invoice">
+
+    <div class="invoice__actions">
+      <button onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <div class="invoice__header">
+      <div>
+        <h1 class="invoice__title">Tax Invoice</h1>
+        <div>{{ site.business_name }}</div>
+        {% if site.address_line_1 %}<div>{{ site.address_line_1 }}{% if site.city %}, {{ site.city }}{% endif %}{% if site.state %}, {{ site.state }}{% endif %}{% if site.pincode %} - {{ site.pincode }}{% endif %}</div>{% endif %}
+        {% if site.phone_primary %}<div>Phone: {{ site.phone_primary }}</div>{% endif %}
+        {% if site.email_primary %}<div>Email: {{ site.email_primary }}</div>{% endif %}
+        {% if site.gstin %}<div><strong>GSTIN:</strong> {{ site.gstin }}</div>{% endif %}
+        {% if site.fssai_license %}<div><strong>FSSAI:</strong> {{ site.fssai_license }}</div>{% endif %}
+      </div>
+      <div class="invoice__meta">
+        <strong>{{ order.order_number }}</strong>
+        <div>Invoice date: {{ order.placed_at|date:"j M Y" }}</div>
+        <div>Payment: {{ order.get_payment_method_display }}</div>
+        {% if order.razorpay_payment_id %}<div style="font-size:10px;">Ref: {{ order.razorpay_payment_id }}</div>{% endif %}
+      </div>
+    </div>
+
+    <div class="invoice__parties">
+      <div class="invoice__party">
+        <h3>Billed / shipped to</h3>
+        <strong>{{ order.shipping_recipient_name }}</strong><br>
+        {{ order.shipping_phone }}<br>
+        {{ order.shipping_line_1 }}{% if order.shipping_line_2 %},<br>{{ order.shipping_line_2 }}{% endif %}<br>
+        {% if order.shipping_landmark %}Near {{ order.shipping_landmark }}<br>{% endif %}
+        {{ order.shipping_city }}, {{ order.shipping_state }} &mdash; {{ order.shipping_pincode }}
+      </div>
+      <div class="invoice__party">
+        <h3>Status</h3>
+        Order: <strong>{{ order.get_status_display }}</strong><br>
+        Payment: <strong>{{ order.get_payment_status_display }}</strong>
+        {% if order.paid_at %}<br>Paid on: {{ order.paid_at|date:"j M Y" }}{% endif %}
+      </div>
+    </div>
+
+    <table class="invoice__items">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Description</th>
+          <th>HSN</th>
+          <th>Qty</th>
+          <th>Unit (&#8377;)</th>
+          <th>Taxable (&#8377;)</th>
+          <th>GST</th>
+          <th>Tax (&#8377;)</th>
+          <th>Total (&#8377;)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.items.all %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.product_name }}<br><small style="color:#6b5b4a;">{{ item.variant_label }}</small></td>
+            <td>{{ item.hsn_code|default:"&mdash;" }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.unit_price|floatformat:"2" }}</td>
+            <td>{{ item.line_subtotal|floatformat:"2" }}</td>
+            <td>{{ item.gst_rate|floatformat:"2" }}%</td>
+            <td>{{ item.line_tax|floatformat:"2" }}</td>
+            <td>{{ item.line_total|floatformat:"2" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    {% if tax_breakdown %}
+      <div class="invoice__tax-box">
+        <strong>GST summary</strong>
+        <table>
+          {% for rate, b in tax_breakdown.items %}
+            <tr>
+              <td>{{ rate|floatformat:"2" }}% on &#8377;{{ b.taxable|floatformat:"2" }}</td>
+              <td style="text-align:right;">&#8377;{{ b.tax|floatformat:"2" }}</td>
+            </tr>
+          {% endfor %}
+          <tr style="border-top:1px solid #c9a961;">
+            <td><strong>Total GST</strong></td>
+            <td style="text-align:right;"><strong>&#8377;{{ order.tax_amount|floatformat:"2" }}</strong></td>
+          </tr>
+        </table>
+      </div>
+    {% endif %}
+
+    <div class="invoice__totals">
+      <table>
+        <tr><td>Subtotal</td><td>&#8377;{{ order.subtotal|floatformat:"2" }}</td></tr>
+        {% if order.discount %}<tr><td>Discount{% if order.promo_code %} ({{ order.promo_code }}){% endif %}</td><td>&minus;&#8377;{{ order.discount|floatformat:"2" }}</td></tr>{% endif %}
+        <tr><td>Shipping</td><td>&#8377;{{ order.shipping_charge|floatformat:"2" }}</td></tr>
+        <tr><td>GST (incl.)</td><td>&#8377;{{ order.tax_amount|floatformat:"2" }}</td></tr>
+        <tr class="grand"><td>Grand total</td><td>&#8377;{{ order.total|floatformat:"2" }}</td></tr>
+      </table>
+    </div>
+
+    <div class="invoice__footer">
+      <p>This is a system-generated invoice. No physical signature is required.</p>
+      <p>For questions about this invoice, write to {{ site.email_primary|default:"hello@vaishnavigss.com" }} citing order number <strong>{{ order.order_number }}</strong>.</p>
+      {# TODO Phase 8: amount-in-words helper (e.g. "Indian Rupees one thousand nine hundred and fifty only"). #}
+    </div>
+
+  </div>
+</body>
+</html>

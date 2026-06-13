@@ -1,0 +1,11 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Hello {{ submission.name }},
+
+Thank you for your interest in adopting one of our cows. It means a lot.
+
+We received your inquiry ({{ submission.get_plan_interest_display }}) and will be in touch
+within one business day with available cows and next steps.
+
+With seva,
+— {{ site_name }}
+{% endblock %}

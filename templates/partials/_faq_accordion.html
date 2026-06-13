@@ -1,0 +1,14 @@
+{# Reusable. Requires `faqs` (iterable of FAQ) in context. #}
+{# Uses native <details>/<summary> to match the existing .faq__* CSS in contact.html. #}
+<div class="faq__list">
+  {% for faq in faqs %}
+    <details class="faq__item" id="faq-{{ faq.pk }}">
+      <summary class="faq__q">{{ faq.question }}</summary>
+      <div class="faq__a">
+        {{ faq.answer|linebreaks }}
+      </div>
+    </details>
+  {% empty %}
+    <p class="text-muted-soft">No questions yet — check back soon.</p>
+  {% endfor %}
+</div>

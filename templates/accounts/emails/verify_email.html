@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<body style="margin:0; padding:24px; font-family: 'DM Sans', Arial, sans-serif; background:#FBF5E9; color:#2B1810;">
+  <div style="max-width:480px; margin:0 auto; background:#fff; border-radius:8px; padding:32px;">
+    <h2 style="font-family:'Fraunces', Georgia, serif; color:#7A1F1F; margin-top:0;">Welcome to {{ site_name }}</h2>
+    <p>Hello {{ first_name }},</p>
+    <p>Please verify your email address with this code:</p>
+    <p style="font-size:28px; letter-spacing:6px; font-weight:700; background:#FBF5E9; padding:16px; text-align:center; border-radius:4px; color:#7A1F1F;">{{ code }}</p>
+    <p style="color:#6b5b4a; font-size:14px;">Valid for {{ lifetime_minutes }} minutes. If you didn't sign up, please ignore this email.</p>
+    <p style="margin-top:32px; color:#6b5b4a; font-size:13px;">&mdash; {{ site_name }}</p>
+  </div>
+</body>
+</html>

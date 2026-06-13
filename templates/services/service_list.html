@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Services — Subscriptions, Visits &amp; Cow Adoption · Vaishnavi Gaushala{% endblock %}
+{% block meta_description %}Daily milk subscription, monthly ghee box, gaushala visits, cow adoption and festival hampers from {{ site.business_name }}.{% endblock %}
+{% block body_page %}services{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/services.css' %}?v=3" />
+{% endblock %}
+
+{% block content %}
+
+    {% comment %} ============================================================
+       HERO
+       ============================================================ {% endcomment %}
+    <section class="svc-hero" aria-labelledby="svc-h">
+      <div class="container-vai">
+        <span class="eyebrow">What we offer</span>
+        <h1 id="svc-h">
+          More than products. <em>A relationship</em><br/>
+          with our gaushala.
+        </h1>
+        <p>
+          Milk before sunrise. A jar of ghee on the first of the month. A cow you can call
+          by name. A weekend with our family. Choose any one &mdash; or all of them.
+        </p>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       SUBSCRIPTION PLANS — 3 tiers, tabbed (DB-driven, grouped by tier)
+       ============================================================ {% endcomment %}
+    <section class="section subs" id="subscriptions" aria-labelledby="subs-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">Subscription Plans</span>
+          <div class="divider-gold"><span class="icon-lotus" aria-hidden="true"></span></div>
+          <h2 id="subs-h">Pure dairy, on schedule.</h2>
+          <p>Three tiers, every plan: pause, skip, or cancel any time.</p>
+        </div>
+
+        <div class="subs__tabs" role="tablist" data-subs-tabs>
+          {% for tier in tiers %}
+            <button type="button"
+                    class="subs__tab{% if forloop.first %} is-active{% endif %}"
+                    data-subs-tab="{{ tier.slug }}"
+                    role="tab">{{ tier.name }}</button>
+          {% endfor %}
+        </div>
+
+        <div data-subs-panes>
+          {% for tier in tiers %}
+            <div class="subs__pane{% if forloop.first %} is-active{% endif %}" data-subs-pane="{{ tier.slug }}" role="tabpanel">
+              <p class="subs__pane-tagline">{{ tier.tagline }}</p>
+              <div class="subs__plan-grid">
+                {% for plan in tier.plans %}
+                  {% include 'partials/_subscription_plan_card.html' with plan=plan %}
+                {% empty %}
+                  <p class="text-muted-soft">No plans available in this tier right now.</p>
+                {% endfor %}
+              </div>
+              {% if tier.footnote %}<p class="subs__footnote">{{ tier.footnote }}</p>{% endif %}
+            </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       HOW IT WORKS (hardcoded 4-step flow)
+       ============================================================ {% endcomment %}
+    <section class="section how-it-works" aria-labelledby="how-h">
+      <div class="container-vai">
+
+        <div class="section-heading">
+          <span class="eyebrow">How subscriptions work</span>
+          <div class="divider-gold"><span class="icon-lotus" aria-hidden="true"></span></div>
+          <h2 id="how-h">From sign-up to your kitchen, in four steps</h2>
+        </div>
+
+        <ol class="how__steps" role="list">
+          <li class="how__step">
+            <div class="how__step-num" aria-hidden="true">1</div>
+            <h3 class="how__step-title">Choose your plan</h3>
+            <p class="how__step-desc">Pick the products and quantity that fit your family. Daily milk, monthly ghee, festive hamper &mdash; or a curated combo.</p>
+          </li>
+          <li class="how__step">
+            <div class="how__step-num" aria-hidden="true">2</div>
+            <h3 class="how__step-title">Set your schedule</h3>
+            <p class="how__step-desc">Daily (Delhi NCR) or monthly (pan-India). Pause, skip, or swap any item &mdash; all from your dashboard.</p>
+          </li>
+          <li class="how__step">
+            <div class="how__step-num" aria-hidden="true">3</div>
+            <h3 class="how__step-title">Pay once a cycle</h3>
+            <p class="how__step-desc">UPI, cards or COD on the first delivery. No hidden charges, no auto-renew traps.</p>
+          </li>
+          <li class="how__step">
+            <div class="how__step-num" aria-hidden="true">4</div>
+            <h3 class="how__step-title">Receive &mdash; fresh, fair, with love</h3>
+            <p class="how__step-desc">Bottles returned, refunded, reused. Snack tins keep weeks. Every order feeds our cows.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       NON-SUBSCRIPTION SERVICES (DB-driven)
+       ============================================================ {% endcomment %}
+    <section class="section" aria-labelledby="other-h">
+      <div class="container-vai">
+        <div class="section-heading">
+          <span class="eyebrow">Beyond the dairy</span>
+          <div class="divider-gold"><span class="icon-lotus" aria-hidden="true"></span></div>
+          <h2 id="other-h">Visit. Adopt. Bulk-order. Gift.</h2>
+          <p>Subscriptions are most of what we do &mdash; but not all. Four ways to connect more deeply.</p>
+        </div>
+
+        <div class="svc-grid" data-svc-grid>
+          {% for service in services %}
+            {% include 'partials/_service_card.html' with service=service %}
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    {% comment %} ============================================================
+       FAQ (DB-driven, filtered: SUBSCRIPTION / DELIVERY / GENERAL)
+       ============================================================ {% endcomment %}
+    <section class="section faq" aria-labelledby="svc-faq-h">
+      <div class="container-vai">
+        <div class="section-heading">
+          <span class="eyebrow">Questions, answered</span>
+          <div class="divider-gold"><span class="icon-lotus" aria-hidden="true"></span></div>
+          <h2 id="svc-faq-h">Subscriptions &amp; delivery FAQ</h2>
+        </div>
+        {% include 'partials/_faq_accordion.html' with faqs=faqs %}
+      </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/services.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Subscription expired.
+
+Hello {{ subscription.user.first_name|default:subscription.user.username }},
+
+Your {{ subscription.plan.name }} subscription expired on {{ subscription.current_period_end|date:"j M Y" }} because the next period wasn't renewed.
+
+You can restart it any time:
+{{ site_domain }}{% url 'subscriptions:signup' plan_slug=subscription.plan.slug %}
+
+With seva,
+— {{ site_name }}
+{% endblock %}

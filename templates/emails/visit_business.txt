@@ -1,0 +1,17 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}New visit booking request.
+
+Name:           {{ submission.name }}
+Email:          {{ submission.email }}
+Phone:          {{ submission.phone }}
+Preferred date: {{ submission.preferred_date|date:"l, j M Y" }}
+Alternate date: {% if submission.alternate_date %}{{ submission.alternate_date|date:"l, j M Y" }}{% else %}(none){% endif %}
+Party size:     {{ submission.party_size }}
+Children?       {{ submission.has_children|yesno:"Yes,No" }}
+
+Special requests:
+{{ submission.special_requests|default:"(none)" }}
+
+Submitted: {{ submission.created_at|date:"j M Y, H:i" }}
+Confirm in admin: {{ site_domain }}/admin/services/visitbooking/{{ submission.pk }}/change/
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Page not found &mdash; {{ site.business_name }}{% endblock %}
+{% block meta_description %}This page seems to have wandered off. Find your way back to the gaushala.{% endblock %}
+{% block body_page %}404{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/404.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+    <section class="nfp" aria-labelledby="nfp-h">
+      <div class="nfp__inner">
+
+        <span class="nfp__number" aria-hidden="true">404</span>
+
+        <div class="nfp__cow" aria-hidden="true">
+          <img src="{% static 'img/vaishnavilogo.jpeg' %}" alt="{{ site.business_name }}" width="100" height="100" class="logo-img logo-img--medallion" />
+        </div>
+
+        <span class="nfp__deva">मार्ग खो गया</span>
+
+        <h1 id="nfp-h">This pasture is <em>empty.</em></h1>
+
+        <p class="nfp__lead">
+          The page you were looking for has wandered off &mdash; perhaps to graze, perhaps
+          to take prasad. Let us guide you back to somewhere useful.
+        </p>
+
+        <div class="nfp__actions">
+          <a href="{% url 'core:home' %}" class="btn-vaishnavi-primary">Take me home</a>
+          <a href="{% url 'catalog:product_list' %}" class="btn-vaishnavi-ghost">Browse the shop</a>
+        </div>
+
+        <div class="nfp__quick">
+          <div class="nfp__quick-label">Or try one of these</div>
+          <ul class="nfp__quick-links" role="list">
+            <li><a href="{% url 'core:about' %}">Our story</a></li>
+            <li><a href="{% url 'services:service_list' %}#adoption">Adopt a cow</a></li>
+            <li><a href="{% url 'services:service_list' %}#visit">Visit the gaushala</a></li>
+            <li><a href="{% url 'core:contact' %}">Contact us</a></li>
+            <li><a href="{% url 'orders:cart' %}">Your cart</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+{% endblock %}

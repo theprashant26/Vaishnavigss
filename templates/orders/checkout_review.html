@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout: Review &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}checkout-review{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <link rel="stylesheet" href="{% static 'css/cart.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+  <section class="checkout container-vai" aria-labelledby="checkout-h">
+    <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+      <a href="{% url 'core:home' %}">Home</a>
+      <span class="sep">/</span>
+      <a href="{% url 'orders:cart' %}">Cart</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Review</span>
+    </nav>
+
+    <h1 id="checkout-h" class="visually-hidden">Checkout &mdash; Review</h1>
+    {% include 'orders/_checkout_steps.html' %}
+
+    {% if stock_errors %}
+      <div class="auth-error" role="alert" style="margin-bottom: 24px;">
+        <strong>Some items can't be fulfilled right now:</strong>
+        <ul style="margin: 8px 0 0 16px;">
+          {% for err in stock_errors %}<li>{{ err }}</li>{% endfor %}
+        </ul>
+        <p style="margin-top: 8px;"><a href="{% url 'orders:cart' %}">Update your cart</a> and try again.</p>
+      </div>
+    {% endif %}
+
+    <div class="checkout__grid">
+
+      <div>
+        <section class="review-block">
+          <div class="review-block__head">
+            <span class="review-block__title">Shipping to</span>
+            <a class="review-block__edit" href="{% url 'orders:checkout_address' %}">Edit</a>
+          </div>
+          <div class="review-block__body">
+            <strong>{{ address.recipient_name }}</strong> &middot; {{ address.recipient_phone }}<br>
+            {{ address.line_1 }}{% if address.line_2 %}, {{ address.line_2 }}{% endif %}<br>
+            {% if address.landmark %}Near {{ address.landmark }}<br>{% endif %}
+            {{ address.city }}, {{ address.state }} &mdash; {{ address.pincode }}
+          </div>
+        </section>
+
+        <section class="review-block">
+          <div class="review-block__head">
+            <span class="review-block__title">Payment method</span>
+            <a class="review-block__edit" href="{% url 'orders:checkout_payment' %}">Edit</a>
+          </div>
+          <div class="review-block__body">
+            {% if payment_method == 'RAZORPAY' %}Online via Razorpay (UPI, card, net banking, wallet){% else %}Cash on Delivery{% endif %}
+          </div>
+        </section>
+
+        <section class="review-block">
+          <div class="review-block__head">
+            <span class="review-block__title">Items ({{ items|length }})</span>
+            <a class="review-block__edit" href="{% url 'orders:cart' %}">Edit</a>
+          </div>
+          <div class="review-block__body">
+            {% for row in items %}
+              <div style="display:flex; justify-content:space-between; padding: 6px 0; border-bottom: 1px solid #eee;">
+                <span>{{ row.variant.product.name }} &middot; {{ row.variant.label }} &times; {{ row.quantity }}</span>
+                <strong>&#8377;{{ row.line_total|floatformat:"0" }}</strong>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+
+        <form method="post" action="{% url 'orders:checkout_review' %}">
+          {% csrf_token %}
+          <section class="review-block">
+            <div class="review-block__head"><span class="review-block__title">Notes for us (optional)</span></div>
+            <textarea name="customer_notes" class="form-control-vai" rows="3" placeholder="Delivery instructions, allergies, gift note..."></textarea>
+          </section>
+
+          <label class="terms-check">
+            <input type="checkbox" required>
+            <span>I have read and agree to the <a href="#">Terms</a> and <a href="#">Refund Policy</a>. I understand my purchase supports the welfare of our {{ site.cow_count }}+ cows.</span>
+          </label>
+
+          <div class="step-panel__actions">
+            <a href="{% url 'orders:checkout_payment' %}" class="btn-vaishnavi-ghost back">&larr; Back</a>
+            <button type="submit" class="btn-vaishnavi-primary" {% if stock_errors %}disabled aria-disabled="true"{% endif %}>
+              {% if payment_method == 'RAZORPAY' %}Place order &amp; pay{% else %}Place order (COD){% endif %}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="checkout-summary" aria-label="Order summary">
+        <h2>Your order</h2>
+
+        <div class="cart-summary__row"><span>Subtotal</span><strong>&#8377;{{ subtotal|floatformat:"0" }}</strong></div>
+        {% if promo %}<div class="cart-summary__row"><span>Discount ({{ promo.code }})</span><strong>&minus;&#8377;{{ discount|floatformat:"0" }}</strong></div>{% endif %}
+        <div class="cart-summary__row"><span>Shipping</span><strong>{% if shipping %}&#8377;{{ shipping|floatformat:"0" }}{% else %}Free{% endif %}</strong></div>
+        <div class="cart-summary__row"><span>GST (incl.)</span><strong>&#8377;{{ tax|floatformat:"0" }}</strong></div>
+
+        <div class="checkout-summary__total">
+          <span class="checkout-summary__total-label">Total</span>
+          <span class="checkout-summary__total-value">&#8377;{{ total|floatformat:"0" }}</span>
+        </div>
+      </aside>
+
+    </div>
+
+  </section>
+
+{% endblock %}

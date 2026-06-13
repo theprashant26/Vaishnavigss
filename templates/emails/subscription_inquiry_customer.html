@@ -1,0 +1,8 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Thank you &mdash; your {{ submission.plan.name }} inquiry{% endblock %}
+{% block body %}
+  <p>Hello {{ submission.name }},</p>
+  <p>Thank you for your interest in the <strong>{{ submission.plan.name }}</strong> subscription.</p>
+  <p>We received your inquiry and our team will reach out within one business day with delivery details and your first dispatch. No charges until we confirm.</p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

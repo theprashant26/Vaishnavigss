@@ -1,0 +1,8 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}We received your message{% endblock %}
+{% block body %}
+  <p>Hello {{ submission.name }},</p>
+  <p>We received your note and will reply usually within one business day. If it's urgent, please WhatsApp us &mdash; we read those faster.</p>
+  <p style="background:#FBF5E9; padding:12px; border-radius:4px; font-style:italic; color:#6b5b4a;">"{{ submission.message|truncatewords:60 }}"</p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

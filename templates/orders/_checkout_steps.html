@@ -1,0 +1,17 @@
+{# Reusable 3-step progress indicator. Requires `step` (1/2/3) in context. #}
+<ol class="steps" role="list">
+  <li class="steps__item{% if step >= 1 %} is-active{% endif %}{% if step > 1 %} is-done{% endif %}">
+    <span class="steps__num"><span>1</span></span>
+    <span class="steps__label">Address</span>
+  </li>
+  <span class="steps__line" aria-hidden="true"></span>
+  <li class="steps__item{% if step >= 2 %} is-active{% endif %}{% if step > 2 %} is-done{% endif %}">
+    <span class="steps__num"><span>2</span></span>
+    <span class="steps__label">Payment</span>
+  </li>
+  <span class="steps__line" aria-hidden="true"></span>
+  <li class="steps__item{% if step >= 3 %} is-active{% endif %}">
+    <span class="steps__num"><span>3</span></span>
+    <span class="steps__label">Review</span>
+  </li>
+</ol>

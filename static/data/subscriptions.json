@@ -1,0 +1,217 @@
+{
+  "tiers": [
+    {
+      "id": "daily",
+      "name": "Daily Essentials",
+      "tagline": "Delhi NCR · before sunrise",
+      "footnote": "All Tier A: free glass-bottle delivery, 6 AM slot, pause / skip / swap anytime from your dashboard.",
+      "plans": [
+        {
+          "id": "milk-mini",
+          "name": "Milk Mini",
+          "contents": "1 L A2 milk, every morning",
+          "price": 4200,
+          "period": "month",
+          "alacarte": 4500,
+          "saving": 300,
+          "items": [
+            "1 L A2 desi cow milk daily (30 L / month)",
+            "Glass bottles, returned next morning",
+            "6 AM delivery slot, Delhi NCR",
+            "Pause / skip from your profile"
+          ]
+        },
+        {
+          "id": "milk-family",
+          "name": "Milk Family",
+          "badge": "Most Popular",
+          "contents": "2 L A2 milk, every morning",
+          "price": 8100,
+          "period": "month",
+          "alacarte": 9000,
+          "saving": 900,
+          "items": [
+            "2 L A2 desi cow milk daily (60 L / month)",
+            "Glass bottles, returned next morning",
+            "6 AM delivery slot, Delhi NCR",
+            "Pause / skip from your profile",
+            "Free monthly cow update postcard"
+          ]
+        },
+        {
+          "id": "milk-chaas",
+          "name": "Milk + Chaas Combo",
+          "contents": "2 L milk + 1 L buttermilk daily",
+          "price": 9300,
+          "period": "month",
+          "alacarte": 10350,
+          "saving": 1050,
+          "items": [
+            "2 L A2 milk daily",
+            "1 L fresh buttermilk daily",
+            "Glass bottles, returned next morning",
+            "6 AM delivery slot, Delhi NCR",
+            "Pause / skip / swap from your profile"
+          ]
+        },
+        {
+          "id": "joint-family",
+          "name": "Joint Family",
+          "contents": "3 L A2 milk, every morning",
+          "price": 11700,
+          "period": "month",
+          "alacarte": 13500,
+          "saving": 1800,
+          "items": [
+            "3 L A2 desi cow milk daily (90 L / month)",
+            "Glass bottles, returned next morning",
+            "6 AM delivery slot, Delhi NCR",
+            "Priority routing — first stop of the day",
+            "Free monthly cow update postcard"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pantry",
+      "name": "Monthly Pantry",
+      "tagline": "Pan-India · cold-chain",
+      "footnote": "All Tier B: ships pan-India via insured cold-chain courier within 48 hours of churning.",
+      "plans": [
+        {
+          "id": "ghee-petite",
+          "name": "Ghee Petite",
+          "contents": "250 g Bilona ghee / month",
+          "price": 825,
+          "period": "month",
+          "alacarte": 875,
+          "saving": 50,
+          "items": [
+            "250 g A2 bilona ghee, glass-jarred",
+            "Cold-chain insured shipping pan-India",
+            "Same-jar guarantee — every jar from the same churn",
+            "Pause / skip / cancel anytime"
+          ]
+        },
+        {
+          "id": "ghee-classic",
+          "name": "Ghee Classic",
+          "badge": "Most Popular",
+          "contents": "500 g Bilona ghee / month",
+          "price": 1600,
+          "period": "month",
+          "alacarte": 1750,
+          "saving": 150,
+          "items": [
+            "500 g A2 bilona ghee, glass-jarred",
+            "Cold-chain insured shipping pan-India",
+            "Same-jar guarantee",
+            "Pause / skip / cancel anytime",
+            "Free WhatsApp ETA tracking"
+          ]
+        },
+        {
+          "id": "ghee-grand",
+          "name": "Ghee Grand",
+          "contents": "1 kg Bilona ghee / month",
+          "price": 3150,
+          "period": "month",
+          "alacarte": 3500,
+          "saving": 350,
+          "items": [
+            "1 kg A2 bilona ghee, glass-jarred",
+            "Cold-chain insured shipping pan-India",
+            "Same-jar guarantee",
+            "Pause / skip / cancel anytime",
+            "Free WhatsApp ETA tracking"
+          ]
+        },
+        {
+          "id": "ghee-quarterly",
+          "name": "Ghee Quarterly",
+          "badge": "Best Value",
+          "contents": "1 kg every 3 months · pre-paid",
+          "price": 9000,
+          "period": "quarter",
+          "alacarte": 10500,
+          "saving": 1500,
+          "items": [
+            "1 kg A2 bilona ghee, every 3 months",
+            "Single quarterly payment",
+            "Cold-chain insured shipping pan-India",
+            "Largest per-kg discount we offer",
+            "Auto-renews — cancel before the next ship date"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boxes",
+      "name": "Curated Boxes",
+      "tagline": "Hampers and full-plate combos",
+      "footnote": "Tier C boxes are assembled fresh on your scheduled date. Snack tins arrive vacuum-sealed; ghee in glass.",
+      "plans": [
+        {
+          "id": "tea-time",
+          "name": "Tea-time Treasures",
+          "contents": "250 g each Thekua + Nimki + Mathri",
+          "price": 320,
+          "period": "month",
+          "items": [
+            "250 g Thekua (Bihar sweet)",
+            "250 g Nimki (crispy savoury)",
+            "250 g Mathri (spiced biscuit)",
+            "Vacuum-sealed tins, stays crisp 3 weeks",
+            "Made by the Sitamarhi women's collective"
+          ]
+        },
+        {
+          "id": "heritage-hamper",
+          "name": "Heritage Hamper",
+          "badge": "Most Popular",
+          "contents": "500 g each of all 3 snacks + 250 g Ghee",
+          "price": 1500,
+          "period": "month",
+          "items": [
+            "500 g each Thekua, Nimki, Mathri",
+            "250 g A2 bilona ghee",
+            "Gift-ready cloth-wrapped box",
+            "Free shipping pan-India",
+            "Customisable note inside"
+          ]
+        },
+        {
+          "id": "full-plate",
+          "name": "The Vaishnavi Full Plate",
+          "badge": "Best Value",
+          "contents": "Daily milk + Monthly ghee + Snacks",
+          "price": 10500,
+          "period": "month",
+          "items": [
+            "2 L A2 milk daily (NCR only)",
+            "500 g A2 bilona ghee monthly",
+            "500 g each of all 3 traditional snacks",
+            "Single monthly billing",
+            "Save vs. ordering each item separately",
+            "Priority customer support line"
+          ]
+        },
+        {
+          "id": "pooja-pack",
+          "name": "Festive Pooja Pack",
+          "tagline": "Seasonal · one-time",
+          "contents": "500 g Ghee + assorted snacks, gift-wrapped",
+          "price": 2200,
+          "period": "one-time",
+          "items": [
+            "500 g A2 bilona ghee",
+            "250 g each of Thekua, Nimki, Mathri",
+            "Brass diya included",
+            "Festive gift packaging",
+            "Available for Diwali, Janmashtami, Holi, and major weddings"
+          ]
+        }
+      ]
+    }
+  ]
+}

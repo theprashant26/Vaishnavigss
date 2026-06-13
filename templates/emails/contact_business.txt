@@ -1,0 +1,18 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}New contact-form submission:
+
+Name:    {{ submission.name }}
+Email:   {{ submission.email }}
+Phone:   {{ submission.phone|default:"(not provided)" }}
+Subject: {{ submission.get_subject_display }}
+
+Message:
+{{ submission.message }}
+
+Submitted: {{ submission.created_at|date:"j M Y, H:i" }}
+IP: {{ submission.ip_address|default:"unknown" }}
+{% if submission.user %}Logged-in user: {{ submission.user.username }}{% endif %}
+
+Review and respond in admin:
+{{ site_domain }}/admin/core/contactsubmission/{{ submission.pk }}/change/
+{% endblock %}

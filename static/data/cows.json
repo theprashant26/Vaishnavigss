@@ -1,0 +1,69 @@
+[
+  {
+    "id": "gauri",
+    "name": "Gauri",
+    "breed": "Gir",
+    "breedSlug": "gir",
+    "age": "9 years",
+    "joined": "2017",
+    "image": "/assets/img/cow-gauri.jpg",
+    "imageAlt": "Gauri, a red-and-white Gir cow with curved horns and a calm gaze",
+    "story": "Our first Gir cow and the matriarch of the herd. She set the standard for what gentleness looks like — and is, to date, our most prolific milker. Every newcomer is introduced to her first."
+  },
+  {
+    "id": "nandini",
+    "name": "Nandini",
+    "breed": "Sahiwal",
+    "breedSlug": "sahiwal",
+    "age": "7 years",
+    "joined": "2019",
+    "image": "/assets/img/cow-nandini.jpg",
+    "imageAlt": "Nandini, a light reddish-brown Sahiwal cow with a soft expression",
+    "story": "Rescued from a tabela in Old Delhi where she had been kept tied for years. Her recovery — physical and emotional — took eighteen months. She now walks free and is our gentlest high-yielder."
+  },
+  {
+    "id": "lakshmi",
+    "name": "Lakshmi",
+    "breed": "Tharparkar",
+    "breedSlug": "tharparkar",
+    "age": "6 years",
+    "joined": "2020",
+    "image": "/assets/img/cow-lakshmi.jpg",
+    "imageAlt": "Lakshmi, a pure white Tharparkar cow standing in dappled sunlight",
+    "story": "Tharparkar through and through — desert-born, drought-tolerant, almost stoic. She arrived from a Rajasthan rescue weighing too little and now leads the herd to grazing every dawn."
+  },
+  {
+    "id": "saraswati",
+    "name": "Saraswati",
+    "breed": "Bachaur",
+    "breedSlug": "bachaur",
+    "age": "11 years",
+    "joined": "2015",
+    "image": "/assets/img/cow-saraswati.jpg",
+    "imageAlt": "Saraswati, a greyish-white Bachaur cow with a small bell and quiet eyes",
+    "story": "The Bachaur breed — quiet, compact, deeply rooted in Bihar's farming history. Saraswati was the first cow we ever bought, with a loan from a temple trust. Her gentleness is the standard we hold every newcomer to."
+  },
+  {
+    "id": "kamadhenu",
+    "name": "Kamadhenu",
+    "breed": "Punganur",
+    "breedSlug": "punganur",
+    "age": "4 years",
+    "joined": "2022",
+    "image": "/assets/img/cow-kamadhenu.jpg",
+    "imageAlt": "Kamadhenu, a small Punganur dwarf cow with delicate horns and a wreath of marigolds",
+    "story": "Our Punganur. One of the smallest cattle breeds in the world — barely waist-high — and considered sacred in temple traditions across South India. Named for the celestial wish-cow of legend. She produces a small amount of extraordinarily rich, high-butterfat milk, and every child who visits asks to feed her first.",
+    "isHero": true
+  },
+  {
+    "id": "radha",
+    "name": "Radha",
+    "breed": "Gir",
+    "breedSlug": "gir",
+    "age": "3 years",
+    "joined": "2023",
+    "image": "/assets/img/cow-radha.jpg",
+    "imageAlt": "Radha, a young red Gir cow with playful eyes and a still-soft hump",
+    "story": "Our youngest, born here on a monsoon morning to a mother we lost the same day. Hand-raised by the team. She greets every visitor by name (or so it feels) and has a particular fondness for children."
+  }
+]

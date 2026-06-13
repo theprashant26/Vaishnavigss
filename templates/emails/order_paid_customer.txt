@@ -1,0 +1,13 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Payment confirmed, {{ order.user.first_name|default:order.user.username }}.
+
+Thank you. Your payment of Rs.{{ order.total|floatformat:"0" }} for order {{ order.order_number }} was received.
+We're preparing your order now — you'll get an update before delivery.
+
+{% include 'emails/_order_summary.txt' %}
+Download your invoice:
+{{ site_domain }}/cart/invoice/{{ order.order_number }}/
+
+With seva,
+— {{ site_name }}
+{% endblock %}

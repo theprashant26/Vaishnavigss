@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+  <!-- Corner flourish: scrolling vine + dot.
+       Place top-left, mirror with CSS transform for other corners.
+       For premium product cards / featured sections. -->
+  <g stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round">
+    <path d="M2 2 L2 30"/>
+    <path d="M2 2 L30 2"/>
+    <path d="M2 30 C2 20, 6 14, 14 14 C20 14, 22 18, 22 22"/>
+    <path d="M30 2 C20 2, 14 6, 14 14 C14 20, 18 22, 22 22"/>
+    <circle cx="22" cy="22" r="2.5" fill="currentColor" stroke="none"/>
+    <path d="M10 10 C12 10, 14 12, 14 14" opacity="0.6"/>
+  </g>
+</svg>

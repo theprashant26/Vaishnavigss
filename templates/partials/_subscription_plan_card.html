@@ -1,0 +1,30 @@
+{% load static %}
+{# Reusable. Requires `plan` (SubscriptionPlan) in context. Matches static/js/services.js planCardHTML. #}
+{% with cycle_label=plan.get_delivery_frequency_display|lower %}
+<article class="plan-card{% if plan.is_featured %} plan-card--popular{% endif %}">
+  {% if plan.is_featured %}<span class="plan-card__badge">Most Popular</span>{% endif %}
+  <h4 class="plan-card__name">{{ plan.name }}</h4>
+  <p class="plan-card__contents">{{ plan.description }}</p>
+  <div class="plan-card__price">
+    <strong>&#8377;{{ plan.price|floatformat:"0" }}</strong>
+    <span class="plan-card__price-period">{% if plan.delivery_frequency == 'ONE_TIME' %}one-time{% else %}/ {{ cycle_label }}{% endif %}</span>
+  </div>
+  {% if plan.whats_included %}
+    <ul class="plan-card__items" role="list">
+      {% for line in plan.whats_included.splitlines %}
+        {% if line %}
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>{{ line|cut:"• " }}</span>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if plan.is_self_serve %}
+    <a class="btn-vaishnavi-primary btn-sm plan-card__cta" href="{% url 'subscriptions:signup' plan_slug=plan.slug %}">Get Started</a>
+  {% else %}
+    <a class="btn-vaishnavi-secondary btn-sm plan-card__cta" href="{% url 'subscriptions:inquiry' plan_slug=plan.slug %}">Enquire</a>
+  {% endif %}
+</article>
+{% endwith %}

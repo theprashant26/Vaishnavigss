@@ -1,0 +1,493 @@
+/* ============================================================
+   Services page — page-scoped styles.
+   ============================================================ */
+
+/* ====================================================
+   SERVICES HERO
+   ==================================================== */
+.svc-hero {
+  position: relative;
+  padding-block: var(--sp-8) var(--sp-7);
+  background:
+    radial-gradient(circle at 75% 25%, rgba(122, 31, 31, 0.08), transparent 55%),
+    var(--color-bg);
+  overflow: hidden;
+  isolation: isolate;
+  text-align: center;
+}
+.svc-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../svg/paisley-watermark.svg") right -120px center / 700px no-repeat;
+  opacity: 0.06;
+  z-index: -1;
+}
+.svc-hero h1 {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 700;
+  margin-block: var(--sp-3) var(--sp-4);
+  line-height: var(--lh-display);
+}
+.svc-hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+.svc-hero p {
+  max-width: 60ch;
+  margin-inline: auto;
+  color: var(--color-ink-soft);
+  font-size: 1.0625rem;
+}
+
+/* ====================================================
+   SERVICES GRID (2x3)
+   ==================================================== */
+.svc-grid {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 576px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 992px) { .svc-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.svc-card {
+  position: relative;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  height: 100%;
+  transition: box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+  scroll-margin-top: calc(var(--nav-height) + var(--sp-4));
+}
+.svc-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-3px);
+}
+
+.svc-card__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-md);
+  background-color: var(--color-bg-alt);
+  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.svc-card__title {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+.svc-card__tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--color-primary);
+  font-size: 1rem;
+  margin-top: calc(-1 * var(--sp-3));
+  margin-bottom: var(--sp-2);
+}
+.svc-card__desc {
+  color: var(--color-ink-soft);
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  flex-grow: 1;
+}
+.svc-card__price {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+}
+.svc-card__price small {
+  color: var(--color-ink-soft);
+  font-weight: 400;
+  font-size: var(--fs-tiny);
+  margin-left: 4px;
+}
+.svc-card__cta {
+  align-self: flex-start;
+  margin-top: var(--sp-3);
+}
+
+/* ====================================================
+   HOW IT WORKS — 4-step flow with dotted gold line
+   ==================================================== */
+.how-it-works {
+  background-color: var(--color-bg-alt);
+}
+.how__steps {
+  display: grid;
+  gap: var(--sp-6);
+  grid-template-columns: 1fr;
+  position: relative;
+  counter-reset: step;
+}
+@media (min-width: 768px) {
+  .how__steps {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-4);
+  }
+  /* Dotted connecting line */
+  .how__steps::before {
+    content: "";
+    position: absolute;
+    top: 32px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background-image: linear-gradient(to right, var(--color-gold) 50%, transparent 50%);
+    background-size: 12px 2px;
+    background-repeat: repeat-x;
+    z-index: 0;
+  }
+}
+
+.how__step {
+  position: relative;
+  text-align: center;
+  padding-inline: var(--sp-3);
+  z-index: 1;
+}
+.how__step-num {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--sp-4);
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 0 6px var(--color-bg-alt);
+}
+.how__step-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: var(--sp-2);
+  color: var(--color-ink);
+}
+.how__step-desc {
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+}
+
+/* ====================================================
+   SUBSCRIPTION PLANS — 3 tabs, plan-card grids
+   ==================================================== */
+.subs {
+  background-color: var(--color-bg);
+}
+.subs__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  justify-content: center;
+  margin-bottom: var(--sp-6);
+  padding: 6px;
+  background-color: var(--color-bg-alt);
+  border-radius: var(--r-pill);
+  width: fit-content;
+  margin-inline: auto;
+  border: 1px solid var(--color-line);
+}
+.subs__tab {
+  padding: 10px 22px;
+  background: none;
+  border: 0;
+  border-radius: var(--r-pill);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-small);
+  letter-spacing: 0.02em;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  transition: all var(--dur-base) var(--ease-out);
+  white-space: nowrap;
+}
+.subs__tab:hover { color: var(--color-primary); }
+.subs__tab.is-active {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-1);
+}
+
+.subs__pane {
+  display: none;
+}
+.subs__pane.is-active {
+  display: block;
+  animation: subs-fade var(--dur-base) var(--ease-out);
+}
+@keyframes subs-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .subs__pane.is-active { animation: none; }
+}
+
+.subs__pane-tagline {
+  text-align: center;
+  font-size: var(--fs-tiny);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-gold-deep);
+  font-weight: 600;
+  margin-bottom: var(--sp-5);
+}
+
+.subs__plan-grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 576px) { .subs__plan-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1200px) { .subs__plan-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.plan-card {
+  background-color: var(--color-surface);
+  border: 1.5px solid var(--color-line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  position: relative;
+  transition: box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out);
+}
+.plan-card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-3px);
+  border-color: var(--color-primary);
+}
+
+.plan-card--popular {
+  border-color: var(--color-primary);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(201, 169, 97, 0.08), transparent 50%),
+    var(--color-surface);
+}
+.plan-card--best {
+  border-color: var(--color-gold);
+}
+
+.plan-card__badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 12px;
+  background-color: var(--color-gold);
+  color: var(--color-primary-deep);
+  font-size: var(--fs-tiny);
+  font-weight: 700;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+.plan-card--popular .plan-card__badge {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.plan-card__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--color-ink);
+  line-height: 1.2;
+}
+.plan-card__contents {
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+  line-height: 1.5;
+  min-height: 2.4em;
+}
+.plan-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-1);
+  font-variant-numeric: tabular-nums;
+}
+.plan-card__price strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.875rem;
+  color: var(--color-primary);
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+}
+.plan-card__price-period {
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+}
+
+.plan-card__saving {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background-color: rgba(92, 138, 74, 0.12);
+  color: var(--color-success);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-tiny);
+  font-weight: 600;
+  align-self: flex-start;
+}
+.plan-card__alacarte {
+  font-size: var(--fs-tiny);
+  color: var(--color-muted);
+  text-decoration: line-through;
+  margin-left: 4px;
+}
+
+.plan-card__items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  flex-grow: 1;
+  padding-top: var(--sp-2);
+  border-top: 1px solid var(--color-line);
+}
+.plan-card__items li {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: flex-start;
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+  line-height: 1.5;
+}
+.plan-card__items svg {
+  color: var(--color-success);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.plan-card--popular .plan-card__items svg { color: var(--color-primary); }
+.plan-card--best .plan-card__items svg     { color: var(--color-gold-deep); }
+
+.plan-card__cta {
+  width: 100%;
+  margin-top: var(--sp-2);
+}
+
+.subs__footnote {
+  text-align: center;
+  font-size: var(--fs-tiny);
+  color: var(--color-muted);
+  margin-top: var(--sp-5);
+  max-width: 56ch;
+  margin-inline: auto;
+  line-height: 1.5;
+}
+
+/* ====================================================
+   PRICING / TIERS strip
+   ==================================================== */
+.tiers__grid {
+  display: grid;
+  gap: var(--sp-5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) { .tiers__grid { grid-template-columns: repeat(3, 1fr); } }
+
+.tier {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.tier--featured {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: var(--shadow-2);
+  position: relative;
+}
+.tier--featured::before {
+  content: "Most loved";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-gold);
+  color: var(--color-primary-deep);
+  font-size: var(--fs-tiny);
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+}
+.tier__name {
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 600;
+}
+.tier--featured .tier__name { color: var(--color-bg); }
+.tier__price {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.tier--featured .tier__price { color: var(--color-gold); }
+.tier__price small {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+  margin-left: 4px;
+}
+.tier--featured .tier__price small { color: rgba(251, 245, 233, 0.7); }
+.tier__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  flex-grow: 1;
+}
+.tier__list li {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: flex-start;
+  font-size: var(--fs-small);
+  color: var(--color-ink-soft);
+}
+.tier--featured .tier__list li { color: rgba(251, 245, 233, 0.85); }
+.tier__list svg {
+  color: var(--color-success);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.tier--featured .tier__list svg { color: var(--color-gold); }

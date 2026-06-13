@@ -1,0 +1,17 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Subscription paused.
+
+Hello {{ subscription.user.first_name|default:subscription.user.username }},
+
+Your {{ subscription.plan.name }} subscription has been paused.
+
+Pause start:    {{ subscription.pause_started_at|date:"j M Y"|default:"—" }}
+Pause end:      {{ subscription.paused_until|date:"j M Y"|default:"—" }}
+New period end: {{ subscription.current_period_end|date:"j M Y" }}
+
+Deliveries will resume automatically. You can also resume early:
+{{ site_domain }}/account/profile/subscriptions/{{ subscription.subscription_number }}/
+
+With seva,
+— {{ site_name }}
+{% endblock %}

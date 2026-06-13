@@ -1,0 +1,12 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}New COD order placed.
+
+{% include 'emails/_order_summary.txt' %}
+Customer:  {{ order.user.get_full_name|default:order.user.username }} <{{ order.user.email }}>{% if order.customer_notes %}
+
+Customer notes:
+{{ order.customer_notes }}{% endif %}
+
+Review in admin:
+{{ site_domain }}/admin/orders/order/{{ order.pk }}/change/
+{% endblock %}

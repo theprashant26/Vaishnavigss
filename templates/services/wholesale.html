@@ -1,0 +1,24 @@
+{% extends 'services/_inquiry_base.html' %}
+
+{% block inquiry_title %}Wholesale &amp; bulk{% endblock %}
+{% block inquiry_body_page %}wholesale{% endblock %}
+{% block inquiry_eyebrow %}For temples, restaurants &amp; sweet-makers{% endblock %}
+{% block inquiry_heading %}Bulk A2 dairy, traceable and on time.{% endblock %}
+{% block inquiry_lead %}
+  Reliable bulk supply of A2 milk, bilona ghee, paneer, khoya and traditional sweets &mdash; with traceability,
+  lab reports, GST invoices, and dedicated dispatch. Minimum order &#8377;10,000.
+  Tell us a little about your business and we'll send back a quote within a business day.
+{% endblock %}
+{% block inquiry_submit %}Request a quote{% endblock %}
+
+{% block inquiry_fields %}
+  {% include 'partials/_form_field.html' with field=form.business_name label="Business name" %}
+  {% include 'partials/_form_field.html' with field=form.contact_name label="Contact person" %}
+  {% include 'partials/_form_field.html' with field=form.email label="Email" %}
+  {% include 'partials/_form_field.html' with field=form.phone label="Phone" %}
+  {% include 'partials/_form_field.html' with field=form.gstin label="GSTIN" optional=True %}
+  {% include 'partials/_form_field.html' with field=form.delivery_city label="Delivery city" optional=True %}
+  {% include 'partials/_form_field.html' with field=form.expected_volume label="Expected monthly volume" span2=True %}
+  {% include 'partials/_form_field.html' with field=form.products_interested label="Products you're interested in" span2=True %}
+  {% include 'partials/_form_field.html' with field=form.message label="Anything else we should know" optional=True span2=True %}
+{% endblock %}

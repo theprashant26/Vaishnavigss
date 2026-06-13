@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Cart &mdash; {{ site.business_name }}{% endblock %}
+{% block meta_description %}Review your cart before checkout. Pure A2 dairy from {{ site.business_name }}.{% endblock %}
+{% block body_page %}cart{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/cart.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+    <section class="cart container-vai" aria-labelledby="cart-h">
+
+      <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+        <a href="{% url 'core:home' %}">Home</a>
+        <span class="sep">/</span>
+        <a href="{% url 'catalog:product_list' %}">Shop</a>
+        <span class="sep">/</span>
+        <span aria-current="page">Cart</span>
+      </nav>
+
+      <div class="cart__header">
+        <h1 id="cart-h">Your cart</h1>
+        <p><span data-summary-count>{{ cart_item_count|default:0 }}</span> items &middot; Pure, from our gaushala to your home.</p>
+      </div>
+
+      {% if items %}
+        <div class="cart__grid">
+
+          {# ─── Cart lines (server-rendered) ─── #}
+          <div class="cart__lines">
+            <div class="cart__head">
+              <span></span>
+              <span>Product</span>
+              <span>Qty</span>
+              <span>Price</span>
+              <span>Total</span>
+              <span></span>
+            </div>
+
+            <div data-cart-lines>
+              {% for row in items %}
+              <div class="cart__line" data-variant-id="{{ row.variant.pk }}">
+                <div class="cart__line-media">
+                  {% if row.variant.product.image %}
+                    <img src="{{ row.variant.product.image.url }}" alt="{{ row.variant.product.name }}">
+                  {% else %}
+                    <div class="cart__line-placeholder">{{ row.variant.product.name|slice:":1" }}</div>
+                  {% endif %}
+                </div>
+                <div class="cart__line-info">
+                  <a class="cart__line-name" href="{% url 'catalog:product_detail' slug=row.variant.product.slug %}">{{ row.variant.product.name }}</a>
+                  <span class="cart__line-variant">{{ row.variant.label }}</span>
+                </div>
+                <div class="cart__line-qty">
+                  <div class="qty-stepper">
+                    <button type="button" data-qty-dec aria-label="Decrease">&minus;</button>
+                    <input type="number" min="1" max="99" value="{{ row.quantity }}" data-qty-input aria-label="Quantity">
+                    <button type="button" data-qty-inc aria-label="Increase">+</button>
+                  </div>
+                </div>
+                <div class="cart__line-price">&#8377;{{ row.variant.price|floatformat:"0" }}</div>
+                <div class="cart__line-total">&#8377;{{ row.line_total|floatformat:"0" }}</div>
+                <div class="cart__line-actions">
+                  <button type="button" class="cart__line-remove" data-cart-remove aria-label="Remove">&times;</button>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          {# ─── Summary ─── #}
+          <aside class="cart-summary" aria-label="Order summary">
+            <h2>Order summary</h2>
+
+            <div class="cart-summary__row">
+              <span>Subtotal</span>
+              <strong>&#8377;{{ subtotal|floatformat:"0" }}</strong>
+            </div>
+
+            {% if promo %}
+              <div class="cart-summary__row">
+                <span>Discount ({{ promo.code }})</span>
+                <strong>&minus;&#8377;{{ discount|floatformat:"0" }}</strong>
+              </div>
+            {% endif %}
+
+            <div class="cart-summary__row">
+              <span>Shipping</span>
+              <strong>{% if shipping %}&#8377;{{ shipping|floatformat:"0" }}{% else %}Free{% endif %}</strong>
+            </div>
+
+            <div class="cart-summary__row">
+              <span>GST (incl.)</span>
+              <strong>&#8377;{{ tax|floatformat:"0" }}</strong>
+            </div>
+
+            {% if free_ship_remaining > 0 %}
+              <div class="cart-summary__progress">
+                <span>Add &#8377;{{ free_ship_remaining|floatformat:"0" }} more for free shipping</span>
+                <div class="cart-summary__bar">
+                  <div class="cart-summary__bar-fill" style="width: {% widthratio subtotal free_ship_threshold 100 %}%;"></div>
+                </div>
+              </div>
+            {% endif %}
+
+            {# Promo apply form #}
+            {% if promo %}
+              <form method="post" action="{% url 'orders:cart_remove_promo' %}" class="cart-summary__promo">
+                {% csrf_token %}
+                <span class="cart-summary__promo-tag">{{ promo.code }} applied</span>
+                <button type="submit" class="btn-vaishnavi-ghost btn-sm">Remove</button>
+              </form>
+            {% else %}
+              <form method="post" action="{% url 'orders:cart_apply_promo' %}" class="cart-summary__promo">
+                {% csrf_token %}
+                <label class="visually-hidden" for="promo-code">Promo code</label>
+                <input id="promo-code" class="form-control-vai" type="text" name="code" placeholder="Promo code" />
+                <button type="submit" class="btn-vaishnavi-ghost btn-sm">Apply</button>
+              </form>
+            {% endif %}
+
+            <div class="cart-summary__total">
+              <span class="cart-summary__total-label">Total</span>
+              <span class="cart-summary__total-value">&#8377;{{ total|floatformat:"0" }}</span>
+            </div>
+
+            {% if user.is_authenticated %}
+              <a href="{% url 'orders:checkout' %}" class="btn-vaishnavi-primary cart-summary__checkout">
+                Proceed to checkout
+              </a>
+            {% else %}
+              <a href="{% url 'accounts:login' %}?next={% url 'orders:checkout' %}" class="btn-vaishnavi-primary cart-summary__checkout">
+                Sign in to checkout
+              </a>
+              <p class="cart-summary__note">Your cart stays with you across login.</p>
+            {% endif %}
+
+            <p class="cart-summary__note">
+              Try <strong>VAISHNAVI10</strong> for 10% off or <strong>FIRSTORDER</strong> for &#8377;100 off your first order.
+            </p>
+          </aside>
+
+        </div>
+
+      {% else %}
+
+        <div class="cart-empty">
+          <div class="cart-empty__icon" aria-hidden="true">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3h2l2.6 12.6a2 2 0 0 0 2 1.4h8.8a2 2 0 0 0 2-1.5L22 7H6"/>
+              <circle cx="9" cy="20" r="1.5"/>
+              <circle cx="18" cy="20" r="1.5"/>
+            </svg>
+          </div>
+          <h2>Your cart is empty</h2>
+          <p>Start with a jar of A2 bilona ghee, or a bottle of fresh milk. Every order feeds the gaushala.</p>
+          <div class="cta-row">
+            <a href="{% url 'catalog:product_list' %}" class="btn-vaishnavi-primary">Shop now</a>
+            <a href="{% url 'services:service_list' %}" class="btn-vaishnavi-ghost">See subscriptions</a>
+          </div>
+        </div>
+
+      {% endif %}
+
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  function getCsrf() { return (document.cookie.match(/csrftoken=([^;]+)/) || [])[1] || ''; }
+  function post(url, body) {
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-CSRFToken': getCsrf() },
+      credentials: 'same-origin',
+      body: body,
+    }).then(function (r) { return r.json(); });
+  }
+
+  // Qty stepper + remove buttons (delegated)
+  document.body.addEventListener('click', function (e) {
+    var line = e.target.closest('[data-variant-id]');
+    if (!line) return;
+    var vid = line.dataset.variantId;
+    var input = line.querySelector('[data-qty-input]');
+
+    if (e.target.closest('[data-qty-dec]')) {
+      input.value = Math.max(1, Number(input.value) - 1);
+      post('{% url "orders:cart_api_update" %}', 'variant_id=' + vid + '&quantity=' + input.value)
+        .then(function () { location.reload(); });
+    } else if (e.target.closest('[data-qty-inc]')) {
+      input.value = Math.min(99, Number(input.value) + 1);
+      post('{% url "orders:cart_api_update" %}', 'variant_id=' + vid + '&quantity=' + input.value)
+        .then(function () { location.reload(); });
+    } else if (e.target.closest('[data-cart-remove]')) {
+      post('{% url "orders:cart_api_remove" %}', 'variant_id=' + vid)
+        .then(function () { location.reload(); });
+    }
+  });
+
+  // Manual qty input (on blur)
+  document.querySelectorAll('[data-qty-input]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      var line = input.closest('[data-variant-id]');
+      var vid = line.dataset.variantId;
+      var qty = Math.max(1, Math.min(99, Number(input.value) || 1));
+      input.value = qty;
+      post('{% url "orders:cart_api_update" %}', 'variant_id=' + vid + '&quantity=' + qty)
+        .then(function () { location.reload(); });
+    });
+  });
+})();
+</script>
+{% endblock %}

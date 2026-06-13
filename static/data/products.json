@@ -1,0 +1,258 @@
+[
+  {
+    "id": "milk-a2",
+    "slug": "a2-desi-cow-milk",
+    "name": "A2 Desi Cow Milk",
+    "category": "milk-dairy",
+    "price": 150,
+    "unit": "per litre",
+    "weight": "1 litre",
+    "sizes": [
+      { "label": "500 ml",  "price": 80 },
+      { "label": "1 litre", "price": 150 },
+      { "label": "2 litres", "price": 290 }
+    ],
+    "shortDescription": "Fresh, unprocessed A2 milk from our indigenous Gir, Sahiwal, Tharparkar, Bachaur and Punganur cows — hand-milked at dawn, glass-bottled, and at your door within six hours.",
+    "longDescription": "There is a reason your grandmother could drink milk every day and never feel heavy. That milk came from indigenous Indian breeds, and it carried only the A2 beta-casein protein — the kind our bodies were built for. Today most supermarket milk is A1 (from cross-bred Holstein-Friesian cows) or a mix. We keep only A2 cows, milk them by hand, never homogenise or ultra-pasteurise. Lightly heat-treated, glass-bottled, and shipped while still cool from the morning.",
+    "highlights": [
+      "100% A2 beta-casein — gentler on digestion",
+      "No hormones, no antibiotics, no preservatives",
+      "Hand-milked from named cows, never machine-milked at scale",
+      "Glass bottles, reusable and returnable",
+      "Delivered within 6 hours of milking (Delhi NCR)"
+    ],
+    "nutritionPer100ml": {
+      "energy": "67 kcal",
+      "protein": "3.4 g",
+      "fat": "4.1 g",
+      "carbs": "4.8 g",
+      "calcium": "120 mg"
+    },
+    "howItsMade": "Milking begins at 4:30 am, cow by cow, by hand. We collect into stainless-steel pails, strain through fine muslin, gently pasteurise at 63 °C for 30 minutes (low-temperature long-time, the dairy textbook gold standard), cool rapidly, and glass-bottle. The bottles leave the gaushala at 6 am sharp.",
+    "shipping": "Delhi NCR: daily 5 am – 9 am slot. Pan-India dairy delivery is not currently offered — milk is fragile and we'd rather not pretend otherwise. For other cities, see the Ghee and Buttermilk listings.",
+    "rating": 4.9,
+    "reviewCount": 184,
+    "inStock": true,
+    "isBestseller": true,
+    "badges": ["bestseller"],
+    "image": "/assets/img/products/milk-a2.jpg",
+    "imageAlt": "Glass bottle of fresh white A2 desi cow milk with a brass lid, on a wooden tray",
+    "gallery": [
+      "/assets/img/products/milk-a2-1.jpg",
+      "/assets/img/products/milk-a2-2.jpg",
+      "/assets/img/products/milk-a2-3.jpg"
+    ]
+  },
+  {
+    "id": "ghee-bilona",
+    "slug": "a2-bilona-ghee",
+    "name": "A2 Cow Ghee (Bilona Method)",
+    "category": "milk-dairy",
+    "price": 3500,
+    "unit": "per kg",
+    "weight": "1 kg",
+    "sizes": [
+      { "label": "250 g", "price": 875 },
+      { "label": "500 g", "price": 1750 },
+      { "label": "1 kg",  "price": 3500 }
+    ],
+    "shortDescription": "The flagship. Hand-churned bilona ghee — the eight-step traditional process, no shortcuts, no centrifuge, no compromise. From cultured curd to golden ghee over a cow-dung-cake fire.",
+    "longDescription": "Almost all ghee sold today is made by spinning cream in an industrial centrifuge — fast, cheap, and a different product entirely. The bilona method is older and slower, and you can taste the difference in a single spoon. Eight steps, three days, one jar.",
+    "highlights": [
+      "Cultured-curd bilona method — never cream-centrifuged",
+      "Slow-simmered on a cow-dung-cake fire, the traditional fuel",
+      "From A2 milk only — Gir, Sahiwal, Tharparkar, Bachaur, Punganur",
+      "No preservatives, no colours, no flavour additives",
+      "Granular texture, deep aroma — the way ghee is meant to be"
+    ],
+    "nutritionPer100ml": {
+      "energy": "900 kcal",
+      "protein": "0 g",
+      "fat": "99.7 g",
+      "saturatedFat": "62 g",
+      "vitaminA": "3,069 IU",
+      "cla": "1.5 g"
+    },
+    "howItsMade": "Step 1: Boil fresh A2 milk and cool to body temperature. Step 2: Set into curd overnight with a small ladle of yesterday's curd as starter. Step 3: Churn the curd in an earthen pot with a wooden bilona, by hand, for forty minutes. Step 4: Skim off the makhan (white butter) that floats to the top. Step 5: Wash the makhan in cool water to remove residual buttermilk. Step 6: Heat the makhan slowly on a cow-dung-cake fire (gives the ghee its signature aroma — gas flame works but the flavour differs). Step 7: Let the milk solids settle and turn golden-brown, then strain through fine muslin. Step 8: Bottle warm into glass jars and seal. From milking to jar: three days.",
+    "shipping": "Delhi NCR same-day. Pan-India insured courier, 2 – 4 business days. Free shipping above ₹999.",
+    "rating": 4.9,
+    "reviewCount": 412,
+    "inStock": true,
+    "isBestseller": true,
+    "badges": ["bestseller"],
+    "image": "/assets/img/products/ghee-bilona.jpg",
+    "imageAlt": "Glass jar of golden A2 bilona ghee with brass spoon on a marble countertop",
+    "gallery": [
+      "/assets/img/products/ghee-bilona-1.jpg",
+      "/assets/img/products/ghee-bilona-2.jpg",
+      "/assets/img/products/ghee-bilona-3.jpg"
+    ]
+  },
+  {
+    "id": "buttermilk",
+    "slug": "fresh-buttermilk",
+    "name": "Fresh Buttermilk (Chaas)",
+    "category": "milk-dairy",
+    "price": 45,
+    "unit": "per litre",
+    "weight": "1 litre",
+    "sizes": [
+      { "label": "500 ml",  "price": 25 },
+      { "label": "1 litre", "price": 45 },
+      { "label": "2 litres", "price": 85 }
+    ],
+    "shortDescription": "What's left after we churn makhan from curd. Lightly salted, tempered with cumin and curry leaves. Summer in a bottle.",
+    "longDescription": "When the makhan is lifted off our bilona churn, what remains is the real chaas — thin, tangy, alive with culture. We salt it lightly, temper with cumin seed and a few curry leaves, and bottle the same morning. Cooling in summer, easy on the stomach year-round, and impossibly fresh next to the supermarket alternative.",
+    "highlights": [
+      "Bilona by-product — the real thing, not water-and-yogurt",
+      "Live probiotic cultures from the curd",
+      "Lightly spiced with jeera and curry leaves",
+      "Glass-bottled, no preservatives — drink within 48 hours",
+      "Refreshing alongside paratha or as a midday cooler"
+    ],
+    "nutritionPer100ml": {
+      "energy": "30 kcal",
+      "protein": "3.0 g",
+      "fat": "1.2 g",
+      "calcium": "110 mg"
+    },
+    "howItsMade": "After the bilona churn separates makhan from curd, we collect the residual chaas, salt it lightly with rock salt, and temper with a quick tadka of cumin seed and torn curry leaves. Cooled and bottled within an hour.",
+    "shipping": "Delhi NCR: daily 5 am – 9 am slot, same as the milk route. Drink within 48 hours of delivery for best taste.",
+    "rating": 4.7,
+    "reviewCount": 96,
+    "inStock": true,
+    "badges": [],
+    "image": "/assets/img/products/buttermilk.jpg",
+    "imageAlt": "Brass glass of frothy spiced buttermilk garnished with curry leaves and roasted cumin",
+    "gallery": [
+      "/assets/img/products/buttermilk-1.jpg",
+      "/assets/img/products/buttermilk-2.jpg"
+    ]
+  },
+  {
+    "id": "thekua",
+    "slug": "thekua-bihar-sweet",
+    "name": "Thekua (Traditional Bihar Sweet)",
+    "category": "traditional-snacks",
+    "price": 350,
+    "unit": "per kg",
+    "weight": "1 kg",
+    "sizes": [
+      { "label": "250 g", "price": 100 },
+      { "label": "500 g", "price": 190 },
+      { "label": "1 kg",  "price": 350 }
+    ],
+    "shortDescription": "The festive Chhath-puja sweet from Bihar — whole wheat flour, jaggery, fennel, deep-fried in our own A2 ghee. Hand-pressed into the classic floral mould, by women from Sitamarhi villages.",
+    "longDescription": "Thekua is the soul of Chhath puja in Bihar — a hand-pressed, deep-fried whole-wheat sweet, fragrant with fennel and ghee, that keeps for weeks without a single preservative. Ours is made by a women's collective from villages near Sitamarhi using our own A2 bilona ghee. The wooden moulds carve the petalled motif you'll recognise from any Bihari grandmother's kitchen.",
+    "highlights": [
+      "Hand-rolled and hand-pressed in wooden moulds",
+      "Made with whole wheat atta and pure jaggery",
+      "Deep-fried in our own A2 bilona ghee",
+      "Fragrant with fennel (saunf) and grated coconut",
+      "Made by a women's collective in Sitamarhi — proceeds support rural livelihoods",
+      "Keeps 3+ weeks at room temperature, no preservatives"
+    ],
+    "nutritionPer100g": {
+      "energy": "420 kcal",
+      "protein": "6 g",
+      "fat": "18 g",
+      "carbs": "58 g"
+    },
+    "howItsMade": "Whole wheat flour is kneaded with gur (jaggery) syrup, a generous spoon of our bilona ghee, crushed fennel and grated dry coconut into a stiff dough. Small balls are pressed into carved wooden moulds — each one bears a different floral pattern — then deep-fried slowly in ghee on low heat until deep amber. Cooled, dried, packed.",
+    "shipping": "Pan-India insured courier, 3 – 5 business days. Free shipping above ₹999.",
+    "rating": 4.8,
+    "reviewCount": 156,
+    "inStock": true,
+    "badges": [],
+    "image": "/assets/img/products/thekua.jpg",
+    "imageAlt": "Stack of golden-brown thekua pieces with floral wooden-mould impressions, on a banana leaf",
+    "gallery": [
+      "/assets/img/products/thekua-1.jpg",
+      "/assets/img/products/thekua-2.jpg"
+    ]
+  },
+  {
+    "id": "nimki",
+    "slug": "nimki-savoury",
+    "name": "Nimki (Crispy Savoury)",
+    "category": "traditional-snacks",
+    "price": 450,
+    "unit": "per kg",
+    "weight": "1 kg",
+    "sizes": [
+      { "label": "250 g", "price": 125 },
+      { "label": "500 g", "price": 240 },
+      { "label": "1 kg",  "price": 450 }
+    ],
+    "shortDescription": "Diamond-cut, ghee-fried, crackling-crisp — Bihar's answer to namak para. Layered with ajwain, kalonji and a whisper of black salt. Tea's best friend.",
+    "longDescription": "Nimki is what you set out next to the kettle when family arrives unannounced. Flaky, salty, lightly spiced — a flour-and-ghee dough rolled paper-thin, scored into diamonds, and fried slowly until golden. Made by the same Sitamarhi women's collective that rolls our thekua, using our own bilona ghee in the dough and as the frying fat.",
+    "highlights": [
+      "Hand-rolled and diamond-cut, never stamped or machine-made",
+      "Spiced with carom (ajwain), nigella (kalonji) and black salt",
+      "Layered dough — visibly flaky, audibly crisp",
+      "Fried in our own A2 bilona ghee",
+      "Made by women from Sitamarhi villages",
+      "Stays crisp 2+ weeks in an airtight tin"
+    ],
+    "nutritionPer100g": {
+      "energy": "440 kcal",
+      "protein": "8 g",
+      "fat": "22 g",
+      "carbs": "52 g"
+    },
+    "howItsMade": "Maida and atta blended in a 70/30 ratio, kneaded with ghee until breadcrumb-textured, then bound with cold water and rested an hour. Rolled paper-thin, brushed with more ghee, folded over (this creates the layers), then scored into diamonds. Slow-fried in ghee at a moderate temperature until each piece sounds hollow when tapped.",
+    "shipping": "Pan-India insured courier, 3 – 5 business days. Free shipping above ₹999.",
+    "rating": 4.7,
+    "reviewCount": 82,
+    "inStock": true,
+    "badges": [],
+    "image": "/assets/img/products/nimki.jpg",
+    "imageAlt": "Bowl of diamond-cut golden nimki crackers with visible flaky layers",
+    "gallery": [
+      "/assets/img/products/nimki-1.jpg",
+      "/assets/img/products/nimki-2.jpg"
+    ]
+  },
+  {
+    "id": "mathri",
+    "slug": "mathri-spiced-biscuit",
+    "name": "Mathri (Spiced Flaky Biscuit)",
+    "category": "traditional-snacks",
+    "price": 500,
+    "unit": "per kg",
+    "weight": "1 kg",
+    "sizes": [
+      { "label": "250 g", "price": 140 },
+      { "label": "500 g", "price": 270 },
+      { "label": "1 kg",  "price": 500 }
+    ],
+    "shortDescription": "Thick, round, crackling-flaky North-Indian biscuit. Methi, ajwain, crushed black pepper. Tea or pickle or both — mathri does not mind.",
+    "longDescription": "If nimki is the polite teatime guest, mathri is the loud uncle who shows up with stories. Thicker, sturdier, more aggressively spiced — and built to last a week of train journeys without losing its crunch. We use dried fenugreek leaves and crushed pepper alongside the usual ajwain, which gives ours a slightly more complex bite than the standard Delhi market version.",
+    "highlights": [
+      "Thick-cut and pricked to crack open in layers as it fries",
+      "Methi (dried fenugreek), ajwain, crushed black pepper",
+      "Kneaded and fried in A2 bilona ghee",
+      "Made by the Sitamarhi women's collective",
+      "Pairs equally with masala chai or aam ka achar",
+      "Stays crisp 3+ weeks airtight"
+    ],
+    "nutritionPer100g": {
+      "energy": "460 kcal",
+      "protein": "8 g",
+      "fat": "24 g",
+      "carbs": "50 g"
+    },
+    "howItsMade": "Atta with a small portion of sooji for crunch, kneaded with ghee, dried methi, crushed pepper, ajwain and salt. Rested, rolled thick (about 4 mm), cut into rounds, pricked with a fork (this prevents puffing and creates the open layers), then fried at moderate heat until each one is golden and audible when tapped.",
+    "shipping": "Pan-India insured courier, 3 – 5 business days. Free shipping above ₹999.",
+    "rating": 4.8,
+    "reviewCount": 67,
+    "inStock": true,
+    "badges": [],
+    "image": "/assets/img/products/mathri.jpg",
+    "imageAlt": "Stack of round golden mathri biscuits flecked with fenugreek and pepper",
+    "gallery": [
+      "/assets/img/products/mathri-1.jpg",
+      "/assets/img/products/mathri-2.jpg"
+    ]
+  }
+]

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cancel subscription &mdash; {{ subscription.subscription_number }}{% endblock %}
+{% block body_page %}subscription-cancel{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+  <section class="checkout container-vai" aria-labelledby="cancel-h">
+    <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+      <a href="{% url 'accounts:profile' %}">Profile</a>
+      <span class="sep">/</span>
+      <a href="{% url 'accounts:profile_subscription_detail' subscription_number=subscription.subscription_number %}">{{ subscription.subscription_number }}</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Cancel</span>
+    </nav>
+
+    <h1 id="cancel-h">Cancel your subscription</h1>
+
+    <div class="step-panel">
+      <p>You'll continue receiving deliveries until
+        <strong>{{ subscription.current_period_end|date:"j M Y" }}</strong>.
+        No further charges will be made, and no auto-renewal will run.</p>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-grid">
+          {% include 'partials/_form_field.html' with field=form.reason label='Reason' %}
+          {% include 'partials/_form_field.html' with field=form.notes label='Anything we should know' optional=True span2=True %}
+        </div>
+        <div class="step-panel__actions">
+          <a class="btn-vaishnavi-ghost back" href="{% url 'accounts:profile_subscription_detail' subscription_number=subscription.subscription_number %}">Keep subscription</a>
+          <button type="submit" class="btn-vaishnavi-primary">Cancel at period end</button>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

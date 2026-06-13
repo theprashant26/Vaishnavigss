@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shop &mdash; {{ site.business_name }}{% endblock %}
+{% block meta_description %}A2 milk, bilona ghee, fresh buttermilk and traditional Bihari snacks &mdash; thekua, nimki and mathri &mdash; hand-made by women's collectives near our gaushala.{% endblock %}
+{% block body_page %}products{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/products.css' %}?v=3" />
+{% endblock %}
+
+{% block content %}
+
+    {% comment %} ============================================================
+       HERO
+       ============================================================ {% endcomment %}
+    <section class="products-hero" aria-labelledby="prod-h">
+      <div class="container-vai">
+        <span class="eyebrow">Shop the gaushala</span>
+        <h1 id="prod-h">Every jar funds a cow's good day.</h1>
+        <p>
+          A2 milk, bilona ghee, fresh buttermilk, plus traditional Bihari snacks &mdash;
+          thekua, nimki and mathri &mdash; hand-made by women's collectives near our gaushala.
+        </p>
+      </div>
+    </section>
+
+    {# Breadcrumb #}
+    <div class="container-vai">
+      <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+        <a href="{% url 'core:home' %}">Home</a>
+        <span class="sep">/</span>
+        <span aria-current="page">Shop</span>
+      </nav>
+    </div>
+
+    {% comment %} ============================================================
+       MAIN: filter sidebar + grid (wrapped in a GET form)
+       ============================================================ {% endcomment %}
+    <section class="products-main">
+      <div class="container-vai">
+
+        <form method="get" action="{% url 'catalog:product_list' %}" class="products-form" data-products-form>
+          <div class="products-layout">
+
+            {# Sidebar (offcanvas-lg = drawer below lg, static at lg+) #}
+            <aside class="offcanvas-lg offcanvas-start products-offcanvas"
+                   id="filterOffcanvas"
+                   tabindex="-1"
+                   aria-labelledby="filterOffcanvasLabel">
+              <div class="offcanvas-header">
+                <h2 class="offcanvas-title" id="filterOffcanvasLabel">Filters</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#filterOffcanvas" aria-label="Close"></button>
+              </div>
+
+              <div class="offcanvas-body">
+                <div class="filter-sidebar">
+
+                  <div class="filter__group">
+                    <h3 class="filter__title">Search</h3>
+                    <input type="text" name="q" value="{{ q }}" placeholder="A2 milk, ghee&hellip;" class="form-control-vai" />
+                  </div>
+
+                  <div class="filter__group">
+                    <h3 class="filter__title">Category</h3>
+                    <ul class="filter__check-list" role="list" data-filter-cats>
+                      {% for cat in categories %}
+                        <li>
+                          <label class="filter__check">
+                            <input type="checkbox" name="category" value="{{ cat.slug }}"
+                                   {% if cat.slug in selected_categories %}checked{% endif %} />
+                            <span>{{ cat.name }}</span>
+                          </label>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+
+                  <div class="filter__group">
+                    <h3 class="filter__title">Price (&#8377;)</h3>
+                    <div class="filter__price-inputs">
+                      <label class="visually-hidden" for="min_price">Minimum price</label>
+                      <input type="number" id="min_price" name="min_price" min="0" step="1"
+                             value="{{ min_price }}" placeholder="Min" class="form-control-vai" />
+                      <span aria-hidden="true">&ndash;</span>
+                      <label class="visually-hidden" for="max_price">Maximum price</label>
+                      <input type="number" id="max_price" name="max_price" min="0" step="1"
+                             value="{{ max_price }}" placeholder="Max" class="form-control-vai" />
+                    </div>
+                  </div>
+
+                  <div class="filter__group">
+                    <h3 class="filter__title">Availability</h3>
+                    <label class="filter__switch">
+                      <span>In stock only</span>
+                      <input type="checkbox" name="in_stock" {% if in_stock_only %}checked{% endif %} />
+                    </label>
+                  </div>
+
+                  <button type="submit" class="btn-vaishnavi-primary btn-sm" style="width:100%;">Apply filters</button>
+                  <a href="{% url 'catalog:product_list' %}" class="btn-vaishnavi-ghost btn-sm filter__reset">
+                    Clear filters
+                  </a>
+
+                </div>
+              </div>
+            </aside>
+
+            {# Grid column #}
+            <div>
+
+              <div class="products-toolbar">
+                <div class="products-toolbar__count">
+                  Showing <strong data-products-count>{{ total_count }}</strong> product{{ total_count|pluralize }}
+                </div>
+
+                <div class="products-toolbar__actions">
+                  <button class="btn-vaishnavi-ghost btn-sm products-toolbar__filter-btn"
+                          type="button"
+                          data-bs-toggle="offcanvas"
+                          data-bs-target="#filterOffcanvas"
+                          aria-controls="filterOffcanvas">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <line x1="4"  y1="6"  x2="20" y2="6"/>
+                      <line x1="8"  y1="12" x2="16" y2="12"/>
+                      <line x1="10" y1="18" x2="14" y2="18"/>
+                    </svg>
+                    Filters
+                  </button>
+
+                  <label class="visually-hidden" for="prod-sort">Sort by</label>
+                  <select id="prod-sort" name="sort" class="form-control-vai products-toolbar__sort"
+                          onchange="this.form.submit()">
+                    {% for key, label in sort_choices %}
+                      <option value="{{ key }}" {% if sort == key %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+
+              <div class="products-grid" data-products-grid role="list">
+                {% for product in products %}
+                  {% include 'partials/_product_card.html' with product=product %}
+                {% empty %}
+                  {# Empty state — preserves original markup but uses a real link to clear filters. #}
+                  <div class="products-empty">
+                    <div class="products-empty__icon" aria-hidden="true">
+                      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="7"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                        <line x1="8"  y1="11" x2="14" y2="11"/>
+                      </svg>
+                    </div>
+                    <h3>No products match these filters</h3>
+                    <p>Try widening your price range, removing a category, or turning off the in-stock toggle.</p>
+                    <a href="{% url 'catalog:product_list' %}" class="btn-vaishnavi-primary">Clear all filters</a>
+                  </div>
+                {% endfor %}
+              </div>
+
+              {% include 'partials/_pagination.html' %}
+
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </section>
+
+{% endblock %}

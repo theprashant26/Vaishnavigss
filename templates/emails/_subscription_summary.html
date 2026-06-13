@@ -1,0 +1,17 @@
+{# Reusable HTML subscription summary block. Inline styles only. #}
+<h3 style="font-family:'Fraunces', Georgia, serif; color:#7A1F1F; font-size:16px; margin:24px 0 8px;">Subscription #{{ subscription.subscription_number }}</h3>
+<table style="width:100%; border-collapse:collapse; font-size:14px;">
+  <tr><td style="padding:4px 0; color:#6b5b4a; width:160px;">Plan</td><td style="padding:4px 0;"><strong>{{ subscription.plan.name }}</strong></td></tr>
+  <tr><td style="padding:4px 0; color:#6b5b4a;">Status</td><td style="padding:4px 0;">{{ subscription.get_status_display }}</td></tr>
+  <tr><td style="padding:4px 0; color:#6b5b4a;">Period</td><td style="padding:4px 0;">{{ subscription.current_period_start|date:"j M Y" }} &ndash; {{ subscription.current_period_end|date:"j M Y" }}</td></tr>
+  {% if subscription.next_billing_date %}
+    <tr><td style="padding:4px 0; color:#6b5b4a;">Next billing</td><td style="padding:4px 0;">{{ subscription.next_billing_date|date:"j M Y" }}</td></tr>
+  {% endif %}
+  <tr><td style="padding:4px 0; color:#6b5b4a;">Delivery slot</td><td style="padding:4px 0;">{{ subscription.get_delivery_time_slot_display }}</td></tr>
+</table>
+<p style="margin-top:16px; font-size:13px; color:#6b5b4a;">
+  <strong>Shipping to:</strong><br>
+  {{ subscription.shipping_recipient_name }} &middot; {{ subscription.shipping_phone }}<br>
+  {{ subscription.shipping_line_1 }}{% if subscription.shipping_line_2 %}, {{ subscription.shipping_line_2 }}{% endif %}<br>
+  {{ subscription.shipping_city }}, {{ subscription.shipping_state }} &mdash; {{ subscription.shipping_pincode }}
+</p>

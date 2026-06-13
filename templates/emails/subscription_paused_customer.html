@@ -1,0 +1,16 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Subscription paused{% endblock %}
+{% block body %}
+  <p>Hello {{ subscription.user.first_name|default:subscription.user.username }},</p>
+  <p>Your <strong>{{ subscription.plan.name }}</strong> subscription has been paused.</p>
+  <table style="width:100%; font-size:14px;">
+    <tr><td style="padding:4px 0; color:#6b5b4a; width:140px;">Pause start</td><td>{{ subscription.pause_started_at|date:"j M Y"|default:"&mdash;" }}</td></tr>
+    <tr><td style="padding:4px 0; color:#6b5b4a;">Pause end</td><td>{{ subscription.paused_until|date:"j M Y"|default:"&mdash;" }}</td></tr>
+    <tr><td style="padding:4px 0; color:#6b5b4a;">New period end</td><td><strong>{{ subscription.current_period_end|date:"j M Y" }}</strong></td></tr>
+  </table>
+  <p style="margin-top:16px;">Deliveries will resume automatically. You can also resume early from your profile.</p>
+  <p style="margin-top:16px;">
+    <a href="{{ site_domain }}/account/profile/subscriptions/{{ subscription.subscription_number }}/" style="display:inline-block; background:#7A1F1F; color:#fff; padding:10px 20px; text-decoration:none; border-radius:4px;">Manage subscription</a>
+  </p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

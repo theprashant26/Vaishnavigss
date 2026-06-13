@@ -1,0 +1,11 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Hello {{ submission.contact_name }},
+
+Thank you for considering Vaishnavi Gaushala for {{ submission.business_name }}.
+
+Our wholesale team will reach out within one business day with pricing, sample
+availability, and dispatch timelines for your city.
+
+With seva,
+— {{ site_name }}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Subscription renewed.
+
+Hello {{ subscription.user.first_name|default:subscription.user.username }},
+
+Thank you for renewing your {{ subscription.plan.name }} subscription.
+Your new period runs through {{ subscription.current_period_end|date:"j M Y" }}.
+
+Amount paid:  ₹{{ payment.total|floatformat:"2" }}
+Razorpay ref: {{ payment.razorpay_payment_id|default:"—" }}
+
+{% include 'emails/_subscription_summary.txt' %}
+View: {{ site_domain }}/account/profile/subscriptions/{{ subscription.subscription_number }}/
+
+With seva,
+— {{ site_name }}
+{% endblock %}

@@ -1,0 +1,147 @@
+/* ============================================================
+   404 page — themed, restrained, on-brand.
+   ============================================================ */
+
+.nfp {
+  min-height: calc(100vh - var(--nav-height));
+  display: flex;
+  align-items: center;
+  padding: var(--sp-7) var(--sp-4);
+  background:
+    radial-gradient(circle at 20% 30%, rgba(201, 169, 97, 0.15), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(122, 31, 31, 0.07), transparent 55%),
+    var(--color-bg-alt);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  text-align: center;
+}
+.nfp::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    url("../svg/paisley-watermark.svg") left -100px top 30% / 500px no-repeat,
+    url("../svg/paisley-watermark.svg") right -100px bottom 10% / 400px no-repeat;
+  opacity: 0.06;
+  z-index: -1;
+}
+
+.nfp__inner {
+  max-width: 640px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+}
+
+.nfp__number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(6rem, 18vw, 12rem);
+  line-height: 1;
+  color: var(--color-primary);
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-gold-deep) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.nfp__cow {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 60%),
+    linear-gradient(160deg, #8B6F2E 0%, #5B4636 70%, #2B1810 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: var(--shadow-3);
+  margin-block: var(--sp-3);
+}
+.nfp__cow::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(201, 169, 97, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.nfp__cow svg {
+  color: var(--color-gold);
+}
+
+.nfp__deva {
+  font-family: var(--font-deva);
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  margin-bottom: var(--sp-2);
+}
+
+.nfp h1 {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
+  margin-bottom: var(--sp-2);
+}
+.nfp h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+.nfp__lead {
+  color: var(--color-ink-soft);
+  font-size: 1.0625rem;
+  max-width: 48ch;
+  margin-bottom: var(--sp-5);
+}
+
+.nfp__actions {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nfp__quick {
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--color-line);
+  width: 100%;
+  max-width: 480px;
+}
+.nfp__quick-label {
+  font-size: var(--fs-tiny);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  font-weight: 600;
+  margin-bottom: var(--sp-3);
+}
+.nfp__quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nfp__quick-links a {
+  padding: 8px 14px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-small);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  transition: all var(--dur-fast) var(--ease-out);
+}
+.nfp__quick-links a:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}

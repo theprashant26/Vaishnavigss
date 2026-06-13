@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{# Shared success-page shell for the 4 service inquiry types. #}
+
+{% block title %}{% block success_title %}Inquiry received{% endblock %} &mdash; {{ site.business_name }}{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="container-vai" style="max-width:640px; text-align:center; padding:48px 16px;">
+      <span class="eyebrow">{% block success_eyebrow %}Thank you{% endblock %}</span>
+      <h1>{% block success_heading %}Your inquiry is with us.{% endblock %}</h1>
+      <p class="text-muted-soft" style="margin: 16px auto; max-width:520px;">
+        {% block success_body %}We received your request and will reach out within one business day. The cows say thank you.{% endblock %}
+      </p>
+      <div class="cta-row" style="margin-top:24px; justify-content:center;">
+        <a href="{% url 'core:home' %}" class="btn-vaishnavi-primary">Back to home</a>
+        <a href="{% url 'services:service_list' %}" class="btn-vaishnavi-ghost">See other services</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

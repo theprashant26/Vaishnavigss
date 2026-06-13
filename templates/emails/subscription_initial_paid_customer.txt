@@ -1,0 +1,14 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Welcome aboard, {{ subscription.user.first_name|default:subscription.user.username }}.
+
+Thank you for choosing {{ subscription.plan.name }}. Your subscription is now active.
+
+{% if first_delivery %}First delivery: {{ first_delivery.scheduled_date|date:"l, j M Y" }} ({{ first_delivery.delivery_window|title }} slot)
+{% endif %}
+{% include 'emails/_subscription_summary.txt' %}
+You can pause, skip or cancel anytime from your profile:
+{{ site_domain }}/account/profile/subscriptions/{{ subscription.subscription_number }}/
+
+With seva,
+— {{ site_name }}
+{% endblock %}

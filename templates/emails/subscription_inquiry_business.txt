@@ -1,0 +1,20 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}New subscription inquiry.
+
+Plan:        {{ submission.plan.name }} ({{ submission.plan.get_tier_display }})
+Price:       ₹{{ submission.plan.price|floatformat:"0" }} / {{ submission.plan.get_delivery_frequency_display|lower }}
+Delivery:    {% if submission.plan.delivery_scope == 'NCR_ONLY' %}NCR only{% else %}Pan-India{% endif %}
+
+Name:        {{ submission.name }}
+Email:       {{ submission.email }}
+Phone:       {{ submission.phone }}
+City:        {{ submission.delivery_city|default:"(not provided)" }}
+Pincode:     {{ submission.delivery_pincode|default:"(not provided)" }}
+Start date:  {% if submission.start_date_preference %}{{ submission.start_date_preference|date:"j M Y" }}{% else %}(flexible){% endif %}
+
+Message:
+{{ submission.message|default:"(none)" }}
+
+Submitted: {{ submission.created_at|date:"j M Y, H:i" }}
+Review: {{ site_domain }}/admin/subscriptions/subscriptioninquiry/{{ submission.pk }}/change/
+{% endblock %}

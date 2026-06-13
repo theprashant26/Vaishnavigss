@@ -1,0 +1,79 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}{{ order.order_number }}{% endblock %}
+
+{% block breadcrumb_extra %}
+  <span class="sep">/</span>
+  <a href="{% url 'accounts:profile_orders' %}">Orders</a>
+  <span class="sep">/</span>
+  <span aria-current="page">{{ order.order_number }}</span>
+{% endblock %}
+
+{% block profile_content %}
+  <section class="profile-view is-active" aria-label="Order detail">
+    <div class="view-card">
+
+      <div class="dash-recent__head">
+        <h2>Order {{ order.order_number }}</h2>
+        <span class="status-pill status-{{ order.status|lower }}">{{ order.get_status_display }}</span>
+      </div>
+      <p class="view-card__lead">
+        Placed {{ order.placed_at|date:"j M Y, H:i" }}
+        {% if order.paid_at %}&middot; Paid {{ order.paid_at|date:"j M Y, H:i" }}{% endif %}
+        {% if order.shipped_at %}&middot; Shipped {{ order.shipped_at|date:"j M Y" }}{% endif %}
+        {% if order.delivered_at %}&middot; Delivered {{ order.delivered_at|date:"j M Y" }}{% endif %}
+      </p>
+
+      <h3>Items</h3>
+      <table class="order-detail-table">
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Unit</th><th>Total</th></tr>
+        </thead>
+        <tbody>
+          {% for item in order.items.all %}
+            <tr>
+              <td>{{ item.product_name }}<br><small class="text-muted-soft">{{ item.variant_label }}</small></td>
+              <td>{{ item.quantity }}</td>
+              <td>&#8377;{{ item.unit_price|floatformat:"0" }}</td>
+              <td>&#8377;{{ item.line_total|floatformat:"0" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr><td colspan="3">Subtotal</td><td>&#8377;{{ order.subtotal|floatformat:"0" }}</td></tr>
+          {% if order.discount %}<tr><td colspan="3">Discount{% if order.promo_code %} ({{ order.promo_code }}){% endif %}</td><td>&minus;&#8377;{{ order.discount|floatformat:"0" }}</td></tr>{% endif %}
+          <tr><td colspan="3">Shipping</td><td>&#8377;{{ order.shipping_charge|floatformat:"0" }}</td></tr>
+          <tr><td colspan="3">GST (incl.)</td><td>&#8377;{{ order.tax_amount|floatformat:"0" }}</td></tr>
+          <tr class="grand-total"><td colspan="3"><strong>Total</strong></td><td><strong>&#8377;{{ order.total|floatformat:"0" }}</strong></td></tr>
+        </tfoot>
+      </table>
+
+      <h3 style="margin-top: 24px;">Shipping address</h3>
+      <p style="margin:0;">
+        <strong>{{ order.shipping_recipient_name }}</strong> &middot; {{ order.shipping_phone }}<br>
+        {{ order.shipping_line_1 }}{% if order.shipping_line_2 %}, {{ order.shipping_line_2 }}{% endif %}<br>
+        {{ order.shipping_city }}, {{ order.shipping_state }} &mdash; {{ order.shipping_pincode }}
+      </p>
+
+      <h3 style="margin-top: 24px;">Payment</h3>
+      <p style="margin:0;">{{ order.get_payment_method_display }} &middot; <span class="status-pill status-pay-{{ order.payment_status|lower }}">{{ order.get_payment_status_display }}</span></p>
+
+      {% if order.customer_notes %}
+        <h3 style="margin-top: 24px;">Your notes</h3>
+        <p style="background:#FBF5E9; padding:12px; border-radius:4px; margin:0;">{{ order.customer_notes }}</p>
+      {% endif %}
+
+      <div class="auth-actions-row" style="margin-top:24px;">
+        {% if order.payment_status == 'COMPLETED' or order.payment_method == 'COD' %}
+          <a href="{% url 'orders:invoice' order_number=order.order_number %}" target="_blank" class="btn-vaishnavi-primary btn-sm">Download invoice</a>
+        {% endif %}
+        {% if order.payment_method == 'RAZORPAY' and order.payment_status == 'PENDING' %}
+          <a href="{% url 'orders:checkout_pay' order_number=order.order_number %}" class="btn-vaishnavi-gold btn-sm">Retry payment</a>
+        {% endif %}
+        {# TODO: Phase 8 — Reorder button (re-add items to cart) #}
+      </div>
+
+    </div>
+  </section>
+{% endblock %}

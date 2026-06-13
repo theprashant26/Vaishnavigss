@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Verify your email &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}register-verify{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+    <section class="auth" aria-labelledby="verify-h">
+      <div class="auth-card">
+
+        <div class="auth-card__brand">
+          <img src="{% static 'img/vaishnavilogo.jpeg' %}" alt="{{ site.business_name }}" width="64" height="64" class="logo-img logo-img--blend" />
+          <div class="auth-card__brand-name">Vaishnavi</div>
+          <div class="auth-card__brand-tag">गऊ सेवा</div>
+        </div>
+
+        <div class="auth-step is-active">
+
+          <h1 id="verify-h">Verify your email</h1>
+          <p class="auth-card__lead">
+            We've sent a 6-digit code to <strong>{{ masked_email }}</strong>.
+            Enter it below to finish creating your account.
+          </p>
+
+          {% if form.errors %}
+            {% for field, errs in form.errors.items %}
+              <div class="auth-error" role="alert">{{ errs|join:" " }}</div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post" action="{% url 'accounts:register_verify' %}" data-server-side novalidate>
+            {% csrf_token %}
+            <div class="otp-group">
+              {% for i in "123456" %}<input class="otp-input" type="text" inputmode="numeric" maxlength="1" data-otp aria-label="OTP digit {{ forloop.counter }}" autocomplete="one-time-code" />{% endfor %}
+            </div>
+            <input type="hidden" name="code" data-otp-collect />
+            <button type="submit" class="btn-vaishnavi-primary auth-form__cta">Verify &amp; sign in</button>
+          </form>
+
+          <form method="post" action="{% url 'accounts:register_verify' %}" class="otp-resend-form">
+            {% csrf_token %}
+            <input type="hidden" name="resend" value="1" />
+            <p class="otp-resend">
+              Didn't get the code?
+              <button type="submit" {% if cooldown > 0 %}disabled{% endif %}>
+                {% if cooldown > 0 %}Resend in {{ cooldown }}s{% else %}Resend OTP{% endif %}
+              </button>
+            </p>
+          </form>
+
+          <div class="auth-card__footer">
+            <a href="{% url 'accounts:register' %}">&larr; Use a different email</a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/register.js' %}"></script>
+{% endblock %}

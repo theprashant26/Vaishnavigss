@@ -1,0 +1,36 @@
+# Vaishnavi Gaushala cron jobs
+#
+# Install (as the `vaishnavi` user, on the server):
+#   crontab deploy/crontab.txt
+#   crontab -l    # verify
+#
+# Logs go to logs/cron.log (rotated by hand — add logrotate if it grows).
+#
+# Edit timing if your traffic peaks differ. All commands are idempotent and
+# safe to re-run.
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+DJANGO_SETTINGS_MODULE=vaishnavi.settings.prod
+VAISHNAVI=/home/vaishnavi/vaishnavi-backend
+VENV=/home/vaishnavi/vaishnavi-backend/.venv/bin
+
+# ============================================================
+# Subscription daily maintenance (Phase 7)
+# Run in this order, 5 minutes apart so one doesn't overlap the next.
+# ============================================================
+0  6 * * * cd $VAISHNAVI && $VENV/python manage.py expire_unpaid_subscriptions >> $VAISHNAVI/logs/cron.log 2>&1
+5  6 * * * cd $VAISHNAVI && $VENV/python manage.py auto_resume_paused           >> $VAISHNAVI/logs/cron.log 2>&1
+10 6 * * * cd $VAISHNAVI && $VENV/python manage.py mark_missed_deliveries       >> $VAISHNAVI/logs/cron.log 2>&1
+0  9 * * * cd $VAISHNAVI && $VENV/python manage.py send_renewal_reminders       >> $VAISHNAVI/logs/cron.log 2>&1
+
+# ============================================================
+# OTP cleanup — delete expired OneTimePasscode rows older than 24h
+# (the table grows ~hundreds/day under normal use; quick to clean up daily)
+# ============================================================
+0 3 * * * cd $VAISHNAVI && $VENV/python manage.py shell -c "from django.utils import timezone; from datetime import timedelta; from accounts.models import OneTimePasscode; n,_=OneTimePasscode.objects.filter(expires_at__lt=timezone.now()-timedelta(hours=24)).delete(); print(f'OTP cleanup: deleted {n}')" >> $VAISHNAVI/logs/cron.log 2>&1
+
+# ============================================================
+# Backups — DB + media (nightly)
+# ============================================================
+0  2 * * * /home/vaishnavi/vaishnavi-backend/deploy/scripts/backup_db.sh    >> /home/vaishnavi/logs/backup.log 2>&1
+30 2 * * * /home/vaishnavi/vaishnavi-backend/deploy/scripts/backup_media.sh >> /home/vaishnavi/logs/backup.log 2>&1

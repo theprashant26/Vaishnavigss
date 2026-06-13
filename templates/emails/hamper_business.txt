@@ -1,0 +1,18 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}New hamper inquiry.
+
+Name:        {{ submission.name }}
+Email:       {{ submission.email }}
+Phone:       {{ submission.phone }}
+Occasion:    {{ submission.get_occasion_display }}
+Budget:      {{ submission.get_budget_range_display }}
+Quantity:    {{ submission.quantity }}
+Date:        {% if submission.delivery_date %}{{ submission.delivery_date|date:"j M Y" }}{% else %}(flexible){% endif %}
+City:        {{ submission.delivery_city|default:"(not provided)" }}
+
+Message:
+{{ submission.message|default:"(none)" }}
+
+Submitted: {{ submission.created_at|date:"j M Y, H:i" }}
+Review: {{ site_domain }}/admin/services/hamperinquiry/{{ submission.pk }}/change/
+{% endblock %}

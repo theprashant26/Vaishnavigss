@@ -1,0 +1,8 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Your order is on its way{% endblock %}
+{% block body %}
+  <p>Hello {{ order.user.first_name|default:order.user.username }},</p>
+  <p>We've shipped your order <strong>{{ order.order_number }}</strong> today. Watch your phone &mdash; our delivery partner will reach out before they arrive.</p>
+  {% include 'emails/_order_summary.html' %}
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

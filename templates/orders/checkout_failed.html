@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment failed &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}checkout-failed{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="container-vai" style="max-width:560px; text-align:center; padding:48px 16px;">
+      <span class="eyebrow">Payment not completed</span>
+      <h1>Your payment didn't go through.</h1>
+      <p class="text-muted-soft">
+        No money was taken. Your order is still pending &mdash; you can retry from the
+        <a href="{% url 'accounts:profile_orders' %}">Orders page</a> or contact us if you need a hand.
+      </p>
+      <div class="cta-row" style="justify-content:center; margin-top:24px;">
+        <a href="{% url 'accounts:profile_orders' %}" class="btn-vaishnavi-primary">My orders</a>
+        <a href="{% url 'core:contact' %}" class="btn-vaishnavi-ghost">Contact support</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

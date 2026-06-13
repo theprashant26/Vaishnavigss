@@ -1,0 +1,161 @@
+{% load static %}
+{# `site` (SiteSettings) injected by core.context_processors.site_settings (Phase 2). #}
+{# Reach Us emoji icons retained per spec — flagged for SVG replacement in a future polish phase. #}
+<footer class="vai-footer">
+
+  {# Promise strip #}
+  <div class="vai-footer__promise">
+    <div class="container">
+      <div class="row g-4 text-center text-md-start align-items-center">
+        <div class="col-6 col-md-3 vai-promise-item">
+          <div class="vai-promise-icon">🐄</div>
+          <div class="vai-promise-text"><strong>A2 Desi Cows</strong><span>Gir · Sahiwal · Tharparkar</span></div>
+        </div>
+        <div class="col-6 col-md-3 vai-promise-item">
+          <div class="vai-promise-icon">🌾</div>
+          <div class="vai-promise-text"><strong>Hand-churned</strong><span>Traditional bilona method</span></div>
+        </div>
+        <div class="col-6 col-md-3 vai-promise-item">
+          <div class="vai-promise-icon">🚚</div>
+          <div class="vai-promise-text"><strong>Fresh delivery</strong><span>NCR daily · Pan-India weekly</span></div>
+        </div>
+        <div class="col-6 col-md-3 vai-promise-item">
+          <div class="vai-promise-icon">🙏</div>
+          <div class="vai-promise-text"><strong>Funds {{ site.cow_count }}+ cows</strong><span>Every purchase = seva</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Newsletter #}
+  <div class="vai-footer__newsletter">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <h3 class="vai-newsletter-title">Stories from the gaushala, in your inbox.</h3>
+          <p class="vai-newsletter-sub">Recipes, cow-care updates, festival offers. No spam — twice a month.</p>
+        </div>
+        <div class="col-lg-6">
+          <form class="vai-newsletter-form d-flex flex-column flex-sm-row gap-2" method="post" action="{% url 'core:newsletter_subscribe' %}">
+            {% csrf_token %}
+            <input type="hidden" name="source" value="footer">
+            <div class="vai-honeypot" aria-hidden="true">
+              <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            </div>
+            <input type="email" name="email" class="form-control vai-input" placeholder="your@email.com" aria-label="Email" required>
+            <button type="submit" class="btn vai-btn-gold">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Main grid #}
+  <div class="vai-footer__main">
+    <div class="container">
+      <div class="row g-4 g-lg-5">
+
+        {# Brand column #}
+        <div class="col-12 col-lg-4 vai-footer__brand-col">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <img src="{% static 'img/vaishnavilogo.jpeg' %}" alt="{{ site.business_name }}" class="vai-footer-logo">
+            <div>
+              <div class="vai-brand-name">Vaishnavi</div>
+              <div class="vai-brand-sub">गऊ सेवा गौसंस्थान</div>
+            </div>
+          </div>
+          <p class="vai-footer-desc">A sanctuary for {{ site.cow_count }}+ indigenous cows. Every product you buy funds their care, fodder, and shelter. From our gaushala to your home — pure, traditional, sacred.</p>
+          <div class="vai-footer-chips">
+            <span class="vai-chip">Est. 2013</span>
+            <span class="vai-chip">A2 Desi Only</span>
+            <span class="vai-chip">{{ site.cow_count }}+ Cows</span>
+            <span class="vai-chip">Pan-India</span>
+          </div>
+          <div class="vai-footer-social mt-3">
+            <a href="{{ site.instagram_url|default:'#' }}" aria-label="Instagram" class="vai-social-btn"{% if site.instagram_url %} target="_blank" rel="noopener"{% endif %}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.5 1s.8.9 1 1.5c.2.4.4 1 .4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-1 1.5s-.9.8-1.5 1c-.4.2-1 .4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.5-1s-.8-.9-1-1.5c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8c.1-1.2.2-1.8.4-2.2.2-.6.5-1 1-1.5s.9-.8 1.5-1c.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8s-.6.8-.8 1.3c-.1.4-.3 1-.4 2.1C2.6 8.5 2.6 8.9 2.6 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3s.8.6 1.3.8c.4.1 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8s.6-.8.8-1.3c.1-.4.3-1 .4-2.1.1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c-.1-1.1-.2-1.7-.4-2.1-.2-.5-.4-.9-.8-1.3s-.8-.6-1.3-.8c-.4-.1-1-.3-2.1-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.1a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-2.1a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+            </a>
+            <a href="{{ site.facebook_url|default:'#' }}" aria-label="Facebook" class="vai-social-btn"{% if site.facebook_url %} target="_blank" rel="noopener"{% endif %}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+            </a>
+            <a href="{{ site.youtube_url|default:'#' }}" aria-label="YouTube" class="vai-social-btn"{% if site.youtube_url %} target="_blank" rel="noopener"{% endif %}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+            </a>
+            {% if site.phone_whatsapp %}
+              {% with wa=site.phone_whatsapp|cut:" "|cut:"+"|cut:"-" %}
+              <a href="https://wa.me/{{ wa }}" aria-label="WhatsApp" class="vai-social-btn" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.3c1.4.8 3 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.3c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3.2.8.9-3.1-.2-.3a8.2 8.2 0 1 1 7.2 4z"/></svg>
+              </a>
+              {% endwith %}
+            {% endif %}
+          </div>
+        </div>
+
+        {# Shop #}
+        <div class="col-6 col-md-3 col-lg-2 vai-footer__col">
+          <h4 class="vai-footer-heading">Shop</h4>
+          <ul class="vai-footer-links">
+            <li><a href="{% url 'catalog:product_list' %}">All Products</a></li>
+            <li><a href="{% url 'catalog:product_list' %}?category=milk-dairy">A2 Milk</a></li>
+            <li><a href="{% url 'catalog:product_list' %}?category=milk-dairy">Bilona Ghee</a></li>
+            <li><a href="{% url 'catalog:product_list' %}?category=milk-dairy">Buttermilk</a></li>
+            <li><a href="{% url 'catalog:product_list' %}?category=traditional-snacks">Snacks</a></li>
+            <li><a href="{% url 'services:service_list' %}#subscriptions">Subscriptions</a></li>
+          </ul>
+        </div>
+
+        {# Gaushala #}
+        <div class="col-6 col-md-3 col-lg-2 vai-footer__col">
+          <h4 class="vai-footer-heading">Our Gaushala</h4>
+          <ul class="vai-footer-links">
+            <li><a href="{% url 'core:about' %}">Our Story</a></li>
+            <li><a href="{% url 'core:about' %}#cows">Meet the Cows</a></li>
+            <li><a href="{% url 'core:about' %}#breeds">Our Breeds</a></li>
+            <li><a href="{% url 'services:service_list' %}">Services</a></li>
+            <li><a href="{% url 'services:service_list' %}#adoption">Cow Adoption</a></li>
+            <li><a href="{% url 'services:service_list' %}#visit">Visit Us</a></li>
+          </ul>
+        </div>
+
+        {# Help #}
+        <div class="col-6 col-md-3 col-lg-2 vai-footer__col">
+          <h4 class="vai-footer-heading">Help</h4>
+          <ul class="vai-footer-links">
+            <li><a href="{% url 'core:contact' %}">Shipping &amp; Delivery</a></li>
+            <li><a href="{% url 'core:contact' %}">Returns &amp; Refunds</a></li>
+            <li><a href="{% url 'services:service_list' %}#subscriptions">Subscription FAQ</a></li>
+            <li><a href="{% url 'accounts:profile' %}#orders">Track Order</a></li>
+            <li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+            <li><a href="{% url 'services:service_list' %}#wholesale">Bulk / Wholesale</a></li>
+          </ul>
+        </div>
+
+        {# Reach Us #}
+        <div class="col-6 col-md-3 col-lg-2 vai-footer__col">
+          <h4 class="vai-footer-heading">Reach Us</h4>
+          <ul class="vai-footer-links vai-footer-contact">
+            <li>📍 {{ site.business_name }}{% if site.address_line_1 %},<br>{{ site.address_line_1 }}{% if site.city %}, {{ site.city }}{% endif %}{% endif %}</li>
+            {% if site.phone_primary %}<li>📞 <a href="tel:{{ site.phone_primary|cut:' ' }}">{{ site.phone_primary }}</a></li>{% endif %}
+            {% if site.email_primary %}<li>✉️ <a href="mailto:{{ site.email_primary }}">{{ site.email_primary }}</a></li>{% endif %}
+            {% if site.business_hours %}<li>🕒 {{ site.business_hours }}</li>{% endif %}
+            {% if site.phone_whatsapp %}
+              {% with wa=site.phone_whatsapp|cut:" "|cut:"+"|cut:"-" %}
+                <li><a href="https://wa.me/{{ wa }}" class="vai-whatsapp-pill" target="_blank" rel="noopener">Chat on WhatsApp</a></li>
+              {% endwith %}
+            {% endif %}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {# Bottom strip #}
+  <div class="vai-footer__bottom">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <small>&copy; {% now "Y" %} {{ site.business_name }}. All rights reserved.</small>
+      <small><a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="#">Refund Policy</a></small>
+    </div>
+  </div>
+
+</footer>

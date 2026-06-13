@@ -1,0 +1,20 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}New wholesale inquiry.
+
+Business:    {{ submission.business_name }}
+Contact:     {{ submission.contact_name }}
+Email:       {{ submission.email }}
+Phone:       {{ submission.phone }}
+GSTIN:       {{ submission.gstin|default:"(not provided)" }}
+City:        {{ submission.delivery_city|default:"(not provided)" }}
+Volume:      {{ submission.get_expected_volume_display }}
+
+Products of interest:
+{{ submission.products_interested }}
+
+Message:
+{{ submission.message|default:"(none)" }}
+
+Submitted: {{ submission.created_at|date:"j M Y, H:i" }}
+Review: {{ site_domain }}/admin/services/wholesaleinquiry/{{ submission.pk }}/change/
+{% endblock %}

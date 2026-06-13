@@ -1,0 +1,19 @@
+{% load static %}
+{# Reusable. Requires `cow` in context. Matches markup from static/js/about.js renderCows. #}
+<article class="cow-card{% if cow.is_featured %} cow-card--hero{% endif %}" data-cow-id="{{ cow.pk }}">
+  <div class="cow-card__media" aria-hidden="true">
+    {% if cow.photo %}
+      <img loading="lazy" src="{{ cow.photo.url }}" alt="{{ cow.name }} — {{ cow.breed.name }} cow">
+    {% else %}
+      <div class="cow-card__media-placeholder">{{ cow.name|slice:":1"|upper }}</div>
+    {% endif %}
+  </div>
+  <div class="cow-card__body">
+    <h3 class="cow-card__name">{{ cow.name }}</h3>
+    <div class="cow-card__meta">
+      <span><strong>{{ cow.breed.name }}</strong></span>
+      {% if cow.age_years %}<span>{{ cow.age_years }} year{{ cow.age_years|pluralize }}</span>{% endif %}
+    </div>
+    {% if cow.bio %}<p class="cow-card__story">{{ cow.bio }}</p>{% endif %}
+  </div>
+</article>

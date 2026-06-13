@@ -1,0 +1,17 @@
+{# Reusable plain-text order summary block, included by all order emails. #}
+Order #: {{ order.order_number }}
+Placed:  {{ order.placed_at|date:"j M Y, H:i" }}
+
+Items:
+{% for item in order.items.all %}  - {{ item.product_name }} ({{ item.variant_label }}) x {{ item.quantity }} = Rs.{{ item.line_total|floatformat:"0" }}
+{% endfor %}
+Subtotal:   Rs.{{ order.subtotal|floatformat:"0" }}{% if order.discount %}
+Discount{% if order.promo_code %} ({{ order.promo_code }}){% endif %}:  -Rs.{{ order.discount|floatformat:"0" }}{% endif %}
+Shipping:   Rs.{{ order.shipping_charge|floatformat:"0" }}
+GST (incl.): Rs.{{ order.tax_amount|floatformat:"0" }}
+Total:      Rs.{{ order.total|floatformat:"0" }}
+
+Shipping to:
+  {{ order.shipping_recipient_name }} ({{ order.shipping_phone }})
+  {{ order.shipping_line_1 }}{% if order.shipping_line_2 %}, {{ order.shipping_line_2 }}{% endif %}
+  {{ order.shipping_city }}, {{ order.shipping_state }} - {{ order.shipping_pincode }}

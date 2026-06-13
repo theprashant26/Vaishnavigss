@@ -1,0 +1,15 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Subscription renewed{% endblock %}
+{% block body %}
+  <p>Hello {{ subscription.user.first_name|default:subscription.user.username }},</p>
+  <p>Thank you for renewing your <strong>{{ subscription.plan.name }}</strong> subscription. Your new period runs through <strong>{{ subscription.current_period_end|date:"j M Y" }}</strong>.</p>
+  <p style="background:#FBF5E9; padding:12px; border-radius:4px;">
+    <strong>Amount paid:</strong> &#8377;{{ payment.total|floatformat:"2" }}<br>
+    <strong>Razorpay ref:</strong> <small>{{ payment.razorpay_payment_id|default:"&mdash;" }}</small>
+  </p>
+  {% include 'emails/_subscription_summary.html' %}
+  <p style="margin-top:24px;">
+    <a href="{{ site_domain }}/account/profile/subscriptions/{{ subscription.subscription_number }}/" style="display:inline-block; background:#7A1F1F; color:#fff; padding:10px 20px; text-decoration:none; border-radius:4px;">View subscription</a>
+  </p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

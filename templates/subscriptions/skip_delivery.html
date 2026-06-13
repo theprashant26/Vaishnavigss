@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Skip delivery &mdash; {{ subscription.subscription_number }}{% endblock %}
+{% block body_page %}subscription-skip{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+  <section class="checkout container-vai" aria-labelledby="skip-h">
+    <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+      <a href="{% url 'accounts:profile' %}">Profile</a>
+      <span class="sep">/</span>
+      <a href="{% url 'accounts:profile_subscription_detail' subscription_number=subscription.subscription_number %}">{{ subscription.subscription_number }}</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Skip delivery</span>
+    </nav>
+
+    <h1 id="skip-h">Skip this delivery?</h1>
+
+    <div class="step-panel">
+      <p><strong>{{ delivery.scheduled_date|date:"l, j M Y" }}</strong>
+        &middot; {{ delivery.delivery_window|title }} slot</p>
+      <ul class="order-detail-table" style="list-style:none; padding:0;">
+        {% for item in delivery.items.all %}
+          <li><strong>{{ item.quantity|floatformat:"-2" }} ×</strong>
+            {{ item.product_name }} ({{ item.variant_label }})</li>
+        {% endfor %}
+      </ul>
+
+      <p class="text-muted-soft" style="margin-top:16px;">
+        Your subscription period will be extended by 1 day so you don't lose value.
+        Your next billing date will move to <strong>{{ subscription.current_period_end|date:"j M Y" }} + 1</strong>.
+      </p>
+
+      <form method="post">
+        {% csrf_token %}
+        <div class="step-panel__actions">
+          <a class="btn-vaishnavi-ghost back" href="{% url 'accounts:profile_subscription_detail' subscription_number=subscription.subscription_number %}">Keep delivery</a>
+          <button type="submit" class="btn-vaishnavi-primary">Yes, skip this one</button>
+        </div>
+      </form>
+    </div>
+  </section>
+{% endblock %}

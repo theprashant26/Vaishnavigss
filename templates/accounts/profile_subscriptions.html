@@ -1,0 +1,53 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}Subscriptions{% endblock %}
+
+{% block profile_content %}
+  <section class="profile-view is-active" aria-label="Subscriptions">
+    <div class="view-card">
+      <h2>Your subscriptions</h2>
+
+      {% if subscriptions %}
+        <p class="view-card__lead">
+          {{ subscriptions|length }} subscription{{ subscriptions|length|pluralize }} on your account.
+        </p>
+        <div class="orders-list">
+          {% for sub in subscriptions %}
+            {% with nd=sub.next_delivery %}
+              <a class="order-row" href="{% url 'accounts:profile_subscription_detail' subscription_number=sub.subscription_number %}">
+                <div class="order-row__main">
+                  <strong class="order-row__num">{{ sub.subscription_number }}</strong>
+                  <span class="order-row__date">{{ sub.plan.name }}</span>
+                </div>
+                <div class="order-row__items">
+                  {% if nd %}
+                    Next: {{ nd.scheduled_date|date:"j M" }} ({{ nd.delivery_window|title }})
+                  {% elif sub.status == 'EXPIRED' or sub.status == 'ENDED' %}
+                    No upcoming deliveries
+                  {% else %}
+                    &mdash;
+                  {% endif %}
+                </div>
+                <div class="order-row__status">
+                  <span class="status-pill status-sub-{{ sub.status|lower }}">{{ sub.get_status_display }}</span>
+                  {% if sub.days_until_renewal is not None and sub.is_active %}
+                    {% if sub.days_until_renewal >= 0 %}
+                      <span class="status-pill status-pay-pending">{{ sub.days_until_renewal }}d to renew</span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <div class="order-row__total">&#8377;{{ sub.plan.price|floatformat:"0" }}</div>
+              </a>
+            {% endwith %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="view-card__lead">
+          No subscriptions yet. Daily milk in NCR, monthly ghee pan-India &mdash; pause, skip or cancel any time.
+        </p>
+        <a href="{% url 'services:service_list' %}#subscriptions" class="btn-vaishnavi-primary btn-sm">See plans</a>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

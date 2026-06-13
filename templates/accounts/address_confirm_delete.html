@@ -1,0 +1,44 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}Delete address{% endblock %}
+
+{% block breadcrumb_extra %}
+  <span class="sep">/</span>
+  <a href="{% url 'accounts:address_list' %}">Addresses</a>
+  <span class="sep">/</span>
+  <span aria-current="page">Delete</span>
+{% endblock %}
+
+{% block profile_content %}
+
+  <section class="profile-view is-active" aria-label="Confirm delete address">
+    <div class="view-card">
+      <h2>Delete this address?</h2>
+      <p class="view-card__lead">This can't be undone. You can always add it again later.</p>
+
+      <article class="addr-card">
+        <header class="addr-card__head">
+          <strong>{{ address.label }}</strong>
+          {% if address.is_default %}<span class="addr-card__badge">Default</span>{% endif %}
+        </header>
+        <div class="addr-card__body">
+          <p>
+            {{ address.recipient_name }}<br>
+            {{ address.line_1 }}{% if address.line_2 %}<br>{{ address.line_2 }}{% endif %}<br>
+            {{ address.city }}, {{ address.state }} &mdash; {{ address.pincode }}
+          </p>
+        </div>
+      </article>
+
+      <form method="post" action="{% url 'accounts:address_delete' address.pk %}">
+        {% csrf_token %}
+        <div class="auth-actions-row">
+          <a href="{% url 'accounts:address_list' %}" class="btn-vaishnavi-ghost">Cancel</a>
+          <button type="submit" class="btn-vaishnavi-primary">Yes, delete</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+{% endblock %}

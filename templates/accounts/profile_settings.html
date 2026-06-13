@@ -1,0 +1,76 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}Settings{% endblock %}
+
+{% block breadcrumb_extra %}
+  <span class="sep">/</span>
+  <span aria-current="page">Settings</span>
+{% endblock %}
+
+{% block profile_content %}
+
+  <section class="profile-view is-active" aria-label="Settings">
+    <div class="view-card">
+      <h2>Account settings</h2>
+      <p class="view-card__lead">Manage how we reach you and what's on file.</p>
+
+      {% if form.non_field_errors %}
+        <div class="auth-error" role="alert">{{ form.non_field_errors|join:" " }}</div>
+      {% endif %}
+
+      <form method="post" action="{% url 'accounts:profile_settings' %}" class="settings-section" novalidate>
+        {% csrf_token %}
+        <h3>Account info</h3>
+        <p class="settings-section__lead">Changing your email or phone will require re-verification.</p>
+
+        <div class="settings-row">
+          <div>
+            <label for="id_first_name" class="form-label-vai">First name</label>
+            <input id="id_first_name" name="first_name" class="form-control-vai{% if form.first_name.errors %} is-invalid{% endif %}" type="text" value="{{ form.first_name.value|default:'' }}" required />
+            {% if form.first_name.errors %}<div class="field-error">{{ form.first_name.errors|join:" " }}</div>{% endif %}
+          </div>
+          <div>
+            <label for="id_last_name" class="form-label-vai">Last name</label>
+            <input id="id_last_name" name="last_name" class="form-control-vai{% if form.last_name.errors %} is-invalid{% endif %}" type="text" value="{{ form.last_name.value|default:'' }}" required />
+            {% if form.last_name.errors %}<div class="field-error">{{ form.last_name.errors|join:" " }}</div>{% endif %}
+          </div>
+          <div>
+            <label for="id_phone" class="form-label-vai">
+              Phone
+              {% if profile.is_phone_verified %}<span class="settings-verified">verified</span>{% else %}<span class="settings-unverified">not verified</span>{% endif %}
+            </label>
+            <input id="id_phone" name="phone" class="form-control-vai{% if form.phone.errors %} is-invalid{% endif %}" type="tel" value="{{ form.phone.value|default:'' }}" required />
+            {% if form.phone.errors %}<div class="field-error">{{ form.phone.errors|join:" " }}</div>{% endif %}
+          </div>
+          <div>
+            <label for="id_email" class="form-label-vai">
+              Email
+              {% if profile.email_verified %}<span class="settings-verified">verified</span>{% else %}<span class="settings-unverified">not verified &mdash; <a href="{% url 'accounts:register_verify' %}">verify now</a></span>{% endif %}
+            </label>
+            <input id="id_email" name="email" class="form-control-vai{% if form.email.errors %} is-invalid{% endif %}" type="email" value="{{ form.email.value|default:'' }}" required />
+            {% if form.email.errors %}<div class="field-error">{{ form.email.errors|join:" " }}</div>{% endif %}
+          </div>
+        </div>
+
+        <label class="notif-row filter__switch">
+          <div class="notif-row__label">
+            <strong>Newsletter &amp; offers</strong>
+            <span>Seasonal recipes, cow updates, and gentle promotions.</span>
+          </div>
+          <input type="checkbox" name="marketing_opt_in" {% if form.marketing_opt_in.value %}checked{% endif %} />
+        </label>
+
+        <button type="submit" class="btn-vaishnavi-primary btn-sm">Save changes</button>
+      </form>
+
+      <div class="settings-section">
+        <h3>Password</h3>
+        <p class="settings-section__lead">Change your password from a dedicated page.</p>
+        <a href="{% url 'accounts:password_change' %}" class="btn-vaishnavi-ghost btn-sm">Change password</a>
+      </div>
+
+    </div>
+  </section>
+
+{% endblock %}

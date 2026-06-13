@@ -1,0 +1,43 @@
+[
+  {
+    "id": "gir",
+    "name": "Gir",
+    "region": "Gujarat",
+    "color": "Reddish · white-patched",
+    "trait": "A2 milk with high butterfat. Hardy, gentle, the classic Indian dairy breed.",
+    "fact": "Gir cows have a distinctive convex forehead and pendulous ears — designed by climate, not breeding committees."
+  },
+  {
+    "id": "sahiwal",
+    "name": "Sahiwal",
+    "region": "Punjab / Haryana",
+    "color": "Reddish-brown",
+    "trait": "India's finest dairy breed. Heat-tolerant, calm-tempered, consistently high-yielding.",
+    "fact": "A Sahiwal cow can produce milk in 40 °C heat that would shut down a Holstein-Friesian's lactation."
+  },
+  {
+    "id": "tharparkar",
+    "name": "Tharparkar",
+    "region": "Rajasthan · Thar desert",
+    "color": "White or grey",
+    "trait": "Dual-purpose, drought-resistant, deep-chested. The cow that survives where others can't.",
+    "fact": "Named for the Thar Parkar region. Was nearly lost during Partition; conservation programmes brought the breed back."
+  },
+  {
+    "id": "bachaur",
+    "name": "Bachaur",
+    "region": "Bihar · Sitamarhi",
+    "color": "Greyish-white",
+    "trait": "Compact, strong, traditionally a draught + dairy breed. Quiet temperament.",
+    "fact": "Named for the Bachaur region near the Nepal border. Less famous than Gir or Sahiwal but every bit as important to local farming heritage."
+  },
+  {
+    "id": "punganur",
+    "name": "Punganur",
+    "region": "Andhra Pradesh · Chittoor",
+    "color": "Varied · usually white or fawn",
+    "trait": "One of the smallest cattle breeds in the world. Dwarf stature, A2 milk with very high butterfat. Sacred in temple traditions.",
+    "fact": "An adult Punganur stands about 70–90 cm at the shoulder. A 5-year-old child looks her in the eye.",
+    "isHero": true
+  }
+]

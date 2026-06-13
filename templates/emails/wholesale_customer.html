@@ -1,0 +1,8 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}We received your wholesale inquiry{% endblock %}
+{% block body %}
+  <p>Hello {{ submission.contact_name }},</p>
+  <p>Thank you for considering us for <strong>{{ submission.business_name }}</strong>.</p>
+  <p>Our wholesale team will reach out within one business day with pricing, sample availability, and dispatch timelines for your city.</p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

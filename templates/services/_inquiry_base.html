@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{# Shared shell for all 4 service inquiry pages. #}
+
+{% block title %}{% block inquiry_title %}Inquire{% endblock %} &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}{% block inquiry_body_page %}inquiry{% endblock %}{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}?v=3" />
+{% endblock %}
+
+{% block content %}
+
+  <section class="contact-hero" aria-labelledby="inq-h">
+    <div class="container-vai">
+      <div>
+        <span class="eyebrow">{% block inquiry_eyebrow %}Vaishnavi Gaushala{% endblock %}</span>
+        <h1 id="inq-h">{% block inquiry_heading %}Inquire{% endblock %}</h1>
+        <p>{% block inquiry_lead %}{% endblock %}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-label="Inquiry form">
+    <div class="container-vai">
+      <div class="contact-form-card" style="max-width:720px; margin:0 auto;">
+
+        {% if form.non_field_errors %}
+          <div class="auth-error" role="alert">{{ form.non_field_errors|join:" " }}</div>
+        {% endif %}
+
+        <form method="post" class="contact-form__grid" novalidate>
+          {% csrf_token %}
+          {{ form.submitted_at_min }}
+          <div class="vai-honeypot" aria-hidden="true">{{ form.website }}</div>
+
+          {% block inquiry_fields %}{% endblock %}
+
+          <div class="span-2">
+            <button type="submit" class="btn-vaishnavi-primary">{% block inquiry_submit %}Send inquiry{% endblock %}</button>
+            <p class="contact-form__hint">We never share your details. We will reply only to the contact you give us.</p>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

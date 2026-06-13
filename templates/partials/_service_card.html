@@ -1,0 +1,36 @@
+{% load static %}
+{# Reusable. Requires `service` in context. Matches static/js/services.js renderNonSubServices. #}
+{# Type → icon. Keep the same SVG set the JS used. #}
+<article class="svc-card" id="{{ service.slug }}">
+  <div class="svc-card__icon" aria-hidden="true">
+    {% if service.service_type == 'VISIT' %}
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    {% elif service.service_type == 'ADOPTION' %}
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    {% elif service.service_type == 'WHOLESALE' %}
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="1"/><path d="M3 12h18"/><path d="M8 8V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v3"/></svg>
+    {% elif service.service_type == 'HAMPER' %}
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v3"/><path d="M8 5l2 4h4l2-4"/><path d="M6 9c-2 0-3 1-3 3 0 4 4 9 9 9s9-5 9-9c0-2-1-3-3-3"/></svg>
+    {% else %}
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
+    {% endif %}
+  </div>
+  <h3 class="svc-card__title">{{ service.name }}</h3>
+  <p class="svc-card__tagline">{{ service.short_description }}</p>
+  <p class="svc-card__desc">{{ service.description }}</p>
+  {% if service.price_display %}
+    <div class="svc-card__price">{{ service.price_display }}</div>
+  {% endif %}
+  {# Phase 5: route each service type to its dedicated inquiry form. #}
+  {% if service.service_type == 'ADOPTION' %}
+    <a class="btn-vaishnavi-primary btn-sm svc-card__cta" href="{% url 'services:adoption' %}">Adopt a cow</a>
+  {% elif service.service_type == 'VISIT' %}
+    <a class="btn-vaishnavi-primary btn-sm svc-card__cta" href="{% url 'services:visit' %}">Book a visit</a>
+  {% elif service.service_type == 'WHOLESALE' %}
+    <a class="btn-vaishnavi-primary btn-sm svc-card__cta" href="{% url 'services:wholesale' %}">Request a quote</a>
+  {% elif service.service_type == 'HAMPER' %}
+    <a class="btn-vaishnavi-primary btn-sm svc-card__cta" href="{% url 'services:hampers' %}">Build a hamper</a>
+  {% else %}
+    <a class="btn-vaishnavi-primary btn-sm svc-card__cta" href="{% url 'core:contact' %}?topic={{ service.slug }}">Enquire</a>
+  {% endif %}
+</article>

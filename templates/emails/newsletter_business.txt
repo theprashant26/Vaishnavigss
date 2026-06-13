@@ -1,0 +1,12 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}New newsletter subscriber.
+
+Email:  {{ submission.email }}
+Name:   {{ submission.name|default:"(not provided)" }}
+Source: {{ submission.source|default:"(unknown)" }}
+IP:     {{ submission.ip_address|default:"unknown" }}
+Joined: {{ submission.subscribed_at|date:"j M Y, H:i" }}
+
+Manage in admin:
+{{ site_domain }}/admin/core/newslettersubscriber/{{ submission.pk }}/change/
+{% endblock %}

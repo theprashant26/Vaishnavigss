@@ -1,0 +1,10 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Thank you for your order{% endblock %}
+{% block body %}
+  <p>Hello {{ order.user.first_name|default:order.user.username }},</p>
+  <p>We received your order and will start preparing it shortly.</p>
+  <p>Since this is a <strong>Cash on Delivery</strong> order, please keep <strong>&#8377;{{ order.total|floatformat:"0" }}</strong> ready for the delivery agent.</p>
+  {% include 'emails/_order_summary.html' %}
+  <p style="margin-top:24px;">Questions? Reply to this email or WhatsApp us.</p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Inquiry received &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}subscription-inquiry-success{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="container-vai" style="max-width:640px; text-align:center; padding:48px 16px;">
+      <span class="eyebrow">Thank you</span>
+      <h1>You're almost subscribed.</h1>
+      <p class="text-muted-soft" style="margin: 16px auto; max-width:520px;">
+        We received your inquiry for <strong>{{ plan.name }}</strong>.
+        Our team will reach out within one business day with delivery details and your first dispatch.
+      </p>
+      <div class="cta-row" style="margin-top:24px; justify-content:center;">
+        <a href="{% url 'core:home' %}" class="btn-vaishnavi-primary">Back to home</a>
+        <a href="{% url 'services:service_list' %}" class="btn-vaishnavi-ghost">See other plans</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

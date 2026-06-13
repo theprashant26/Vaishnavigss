@@ -1,0 +1,8 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Delivered with love{% endblock %}
+{% block body %}
+  <p>Hello {{ order.user.first_name|default:order.user.username }},</p>
+  <p>Your order <strong>{{ order.order_number }}</strong> has been delivered. We hope every jar finds its right place in your kitchen.</p>
+  <p style="color:#6b5b4a; font-size:14px;">If anything isn't right, reply to this email within 48 hours &mdash; we'll make it right.</p>
+  <p style="margin-top:24px;">With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

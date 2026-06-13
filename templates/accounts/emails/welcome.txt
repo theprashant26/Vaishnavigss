@@ -1,0 +1,13 @@
+Welcome to {{ site_name }}, {{ first_name }}.
+
+Your account is set up. You can now:
+
+  • Order pure A2 dairy and traditional snacks
+  • Start a subscription for daily milk or monthly ghee
+  • Adopt one of our 35+ indigenous cows
+  • Visit the gaushala any weekend
+
+Visit us: {{ site_domain }}
+
+With seva,
+— {{ site_name }}

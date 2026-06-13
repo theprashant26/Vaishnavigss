@@ -1,0 +1,17 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Welcome aboard{% endblock %}
+{% block body %}
+  <p>Hello {{ subscription.user.first_name|default:subscription.user.username }},</p>
+  <p>Thank you for choosing <strong>{{ subscription.plan.name }}</strong>. Your subscription is now active and your first delivery is on its way.</p>
+  {% if first_delivery %}
+    <p style="background:#FBF5E9; padding:12px; border-radius:4px;">
+      <strong>First delivery:</strong> {{ first_delivery.scheduled_date|date:"l, j M Y" }} ({{ first_delivery.delivery_window|title }} slot)
+    </p>
+  {% endif %}
+  {% include 'emails/_subscription_summary.html' %}
+  <p style="margin-top:24px;">You can pause, skip or cancel anytime from your profile.</p>
+  <p style="margin-top:16px;">
+    <a href="{{ site_domain }}/account/profile/subscriptions/{{ subscription.subscription_number }}/" style="display:inline-block; background:#7A1F1F; color:#fff; padding:10px 20px; text-decoration:none; border-radius:4px;">Manage subscription</a>
+  </p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

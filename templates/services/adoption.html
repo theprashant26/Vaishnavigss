@@ -1,0 +1,22 @@
+{% extends 'services/_inquiry_base.html' %}
+
+{% block inquiry_title %}Adopt a cow{% endblock %}
+{% block inquiry_body_page %}adoption{% endblock %}
+{% block inquiry_eyebrow %}Cow adoption{% endblock %}
+{% block inquiry_heading %}Sponsor a cow. Receive her stories.{% endblock %}
+{% block inquiry_lead %}
+  For &#8377;3,000 a month (or &#8377;35,000 a year) you adopt one of our 35+ indigenous cows by name.
+  You'll receive a welcome certificate, monthly photos and updates, a share of her ghee or milk,
+  and a quarterly invitation to visit her at the gaushala.
+{% endblock %}
+{% block inquiry_submit %}Send adoption inquiry{% endblock %}
+
+{% block inquiry_fields %}
+  {% include 'partials/_form_field.html' with field=form.name label="Your name" %}
+  {% include 'partials/_form_field.html' with field=form.phone label="Phone" %}
+  {% include 'partials/_form_field.html' with field=form.email label="Email" span2=True %}
+  {% include 'partials/_form_field.html' with field=form.plan_interest label="Plan interest" %}
+  {% include 'partials/_form_field.html' with field=form.preferred_breed label="Preferred breed" optional=True %}
+  {% include 'partials/_form_field.html' with field=form.preferred_cow label="Preferred cow" optional=True span2=True %}
+  {% include 'partials/_form_field.html' with field=form.message label="Anything you'd like us to know" optional=True span2=True %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Hello {{ submission.name }},
+
+Thank you for thinking of Vaishnavi for your {{ submission.get_occasion_display|lower }}.
+
+We received your hamper request and will send a curated proposal (with photos
+and pricing) within one business day. If your date is tight, please WhatsApp
+us so we can prioritise.
+
+With seva,
+— {{ site_name }}
+{% endblock %}

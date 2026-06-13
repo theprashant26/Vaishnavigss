@@ -1,0 +1,11 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Payment confirmed{% endblock %}
+{% block body %}
+  <p>Hello {{ order.user.first_name|default:order.user.username }},</p>
+  <p>Thank you. Your payment of <strong>&#8377;{{ order.total|floatformat:"0" }}</strong> for order <strong>{{ order.order_number }}</strong> was received. We're preparing your order now &mdash; you'll get an update before delivery.</p>
+  {% include 'emails/_order_summary.html' %}
+  <p style="margin-top:24px;">
+    <a href="{{ site_domain }}/cart/invoice/{{ order.order_number }}/" style="display:inline-block; background:#7A1F1F; color:#fff; padding:10px 20px; text-decoration:none; border-radius:4px;">Download invoice</a>
+  </p>
+  <p style="margin-top:16px;">With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

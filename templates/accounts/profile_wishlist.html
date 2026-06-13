@@ -1,0 +1,14 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}Wishlist{% endblock %}
+
+{% block profile_content %}
+  <section class="profile-view is-active" aria-label="Wishlist">
+    <div class="view-card">
+      <h2>Your wishlist</h2>
+      <p class="view-card__lead">Wishlist coming soon. For now, you can save products in your cart and decide later.</p>
+      <a href="{% url 'catalog:product_list' %}" class="btn-vaishnavi-primary btn-sm">Browse the shop</a>
+    </div>
+  </section>
+{% endblock %}

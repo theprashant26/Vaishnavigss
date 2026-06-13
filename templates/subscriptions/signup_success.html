@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}You're subscribed &mdash; {{ subscription.subscription_number }}{% endblock %}
+{% block body_page %}subscription-success{% endblock %}
+
+{% block content %}
+  <section class="section">
+    <div class="container-vai" style="max-width:640px; text-align:center; padding:48px 16px;">
+      <span class="eyebrow">With seva</span>
+      <h1>Welcome aboard.</h1>
+      <p class="text-muted-soft" style="margin:16px auto; max-width:520px;">
+        Your subscription <strong>{{ subscription.subscription_number }}</strong> is active.
+        Thank you for choosing {{ subscription.plan.name }}.
+      </p>
+
+      <div class="step-panel" style="text-align:left; margin-top:24px;">
+        <h2 style="margin:0 0 12px;">What happens next</h2>
+        <ul style="margin:0; padding-left:18px; line-height:1.7;">
+          {% if first_delivery %}
+            <li>First delivery: <strong>{{ first_delivery.scheduled_date|date:"j M Y" }}</strong>
+              ({{ first_delivery.get_delivery_window_display|default:first_delivery.delivery_window|title }} slot)</li>
+          {% endif %}
+          <li>Period ends: <strong>{{ subscription.current_period_end|date:"j M Y" }}</strong></li>
+          <li>Next billing date: <strong>{{ subscription.next_billing_date|date:"j M Y" }}</strong>
+            &mdash; we'll email you 5, 3 and 1 days before so you can renew.</li>
+          <li>You can skip, pause or cancel any time from your profile.</li>
+        </ul>
+      </div>
+
+      <div class="cta-row" style="margin-top:24px; justify-content:center;">
+        <a class="btn-vaishnavi-primary" href="{% url 'accounts:profile' %}">Go to profile</a>
+        <a class="btn-vaishnavi-ghost" href="{% url 'core:home' %}">Back to home</a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

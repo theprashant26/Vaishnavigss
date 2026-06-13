@@ -1,0 +1,145 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}{{ subscription.subscription_number }}{% endblock %}
+
+{% block breadcrumb_extra %}
+  <span class="sep">/</span>
+  <a href="{% url 'accounts:profile_subscriptions' %}">Subscriptions</a>
+  <span class="sep">/</span>
+  <span aria-current="page">{{ subscription.subscription_number }}</span>
+{% endblock %}
+
+{% block profile_content %}
+  <section class="profile-view is-active" aria-label="Subscription detail">
+    <div class="view-card">
+
+      <div class="dash-recent__head">
+        <h2>{{ subscription.plan.name }}</h2>
+        <span class="status-pill status-sub-{{ subscription.status|lower }}">{{ subscription.get_status_display }}</span>
+      </div>
+      <p class="view-card__lead">
+        {{ subscription.subscription_number }}
+        {% if subscription.activated_at %}&middot; activated {{ subscription.activated_at|date:"j M Y" }}{% endif %}
+      </p>
+
+      {# --- Period + key facts --- #}
+      <table class="order-detail-table" style="margin-top:8px;">
+        <tbody>
+          <tr><td>Plan</td><td>{{ subscription.plan.name }} ({{ subscription.plan.get_tier_display }})</td></tr>
+          <tr><td>Cadence</td><td>{{ subscription.plan.get_delivery_frequency_display }} &middot; bills every {{ subscription.plan.billing_period_days }}d</td></tr>
+          <tr><td>Current period</td><td>{{ subscription.current_period_start|date:"j M Y" }} &ndash; {{ subscription.current_period_end|date:"j M Y" }}</td></tr>
+          {% if subscription.next_billing_date %}
+            <tr><td>Next billing</td><td>{{ subscription.next_billing_date|date:"j M Y" }}</td></tr>
+          {% endif %}
+          <tr><td>Delivery slot</td><td>{{ subscription.get_delivery_time_slot_display }}</td></tr>
+          {% if subscription.status == 'PAUSED' and subscription.paused_until %}
+            <tr><td>Paused until</td><td>{{ subscription.paused_until|date:"j M Y" }}</td></tr>
+          {% endif %}
+        </tbody>
+      </table>
+
+      {# --- Action buttons --- #}
+      <div class="auth-actions-row" style="margin-top:24px; flex-wrap:wrap;">
+        {% if subscription.status == 'ACTIVE' %}
+          <a href="{% url 'subscriptions:pause' subscription_number=subscription.subscription_number %}" class="btn-vaishnavi-gold btn-sm">Pause</a>
+        {% elif subscription.status == 'PAUSED' %}
+          <a href="{% url 'subscriptions:resume' subscription_number=subscription.subscription_number %}" class="btn-vaishnavi-primary btn-sm">Resume now</a>
+        {% endif %}
+        {% if subscription.status == 'ACTIVE' or subscription.status == 'PAUSED' %}
+          <a href="{% url 'subscriptions:cancel' subscription_number=subscription.subscription_number %}" class="btn-vaishnavi-ghost btn-sm">Cancel</a>
+        {% endif %}
+        {% if subscription.status == 'ACTIVE' and subscription.days_until_renewal is not None and subscription.days_until_renewal <= 7 %}
+          <a href="{% url 'subscriptions:renew' subscription_number=subscription.subscription_number %}" class="btn-vaishnavi-primary btn-sm">Renew now</a>
+        {% elif subscription.status == 'EXPIRED' %}
+          <a href="{% url 'subscriptions:renew' subscription_number=subscription.subscription_number %}" class="btn-vaishnavi-primary btn-sm">Renew now</a>
+        {% endif %}
+      </div>
+
+      {# --- Shipping address (with Change button) --- #}
+      <h3 style="margin-top:32px;">Shipping address
+        <a href="{% url 'subscriptions:update_address' subscription_number=subscription.subscription_number %}" class="btn-vaishnavi-ghost btn-sm" style="float:right;">Change</a>
+      </h3>
+      <p style="margin:0;">
+        <strong>{{ subscription.shipping_recipient_name }}</strong> &middot; {{ subscription.shipping_phone }}<br>
+        {{ subscription.shipping_line_1 }}{% if subscription.shipping_line_2 %}, {{ subscription.shipping_line_2 }}{% endif %}<br>
+        {% if subscription.shipping_landmark %}Near {{ subscription.shipping_landmark }}<br>{% endif %}
+        {{ subscription.shipping_city }}, {{ subscription.shipping_state }} &mdash; {{ subscription.shipping_pincode }}
+      </p>
+
+      {# --- Upcoming deliveries --- #}
+      <h3 style="margin-top:32px;">Upcoming deliveries</h3>
+      {% if upcoming_deliveries %}
+        <table class="order-detail-table">
+          <thead><tr><th>Date</th><th>Items</th><th>Status</th><th></th></tr></thead>
+          <tbody>
+            {% for d in upcoming_deliveries %}
+              <tr>
+                <td>{{ d.scheduled_date|date:"D, j M" }}<br><small class="text-muted-soft">{{ d.delivery_window|title }}</small></td>
+                <td>
+                  {% for it in d.items.all %}
+                    {{ it.quantity|floatformat:"-2" }}× {{ it.product_name }} ({{ it.variant_label }}){% if not forloop.last %}<br>{% endif %}
+                  {% endfor %}
+                </td>
+                <td><span class="status-pill status-sub-{{ d.status|lower }}">{{ d.get_status_display }}</span></td>
+                <td>
+                  {% if d.scheduled_date > today %}
+                    <a href="{% url 'subscriptions:skip_delivery' subscription_number=subscription.subscription_number delivery_id=d.pk %}" class="btn-vaishnavi-ghost btn-sm">Skip</a>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="text-muted-soft" style="margin:0;">No upcoming deliveries scheduled.</p>
+      {% endif %}
+
+      {# --- Past deliveries --- #}
+      {% if past_deliveries %}
+        <h3 style="margin-top:32px;">Past deliveries</h3>
+        <table class="order-detail-table">
+          <thead><tr><th>Date</th><th>Status</th><th>Notes</th></tr></thead>
+          <tbody>
+            {% for d in past_deliveries %}
+              <tr>
+                <td>{{ d.scheduled_date|date:"j M Y" }}</td>
+                <td><span class="status-pill status-sub-{{ d.status|lower }}">{{ d.get_status_display }}</span></td>
+                <td>{{ d.delivery_notes|default:"&mdash;" }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+
+      {# --- Payment history --- #}
+      <h3 style="margin-top:32px;">Payments</h3>
+      <table class="order-detail-table">
+        <thead><tr><th>Reference</th><th>Type</th><th>Period</th><th>Amount</th><th>Status</th></tr></thead>
+        <tbody>
+          {% for p in payments %}
+            <tr>
+              <td>{{ p.payment_number }}{% if p.paid_at %}<br><small class="text-muted-soft">{{ p.paid_at|date:"j M Y" }}</small>{% endif %}</td>
+              <td>{{ p.get_payment_type_display }}</td>
+              <td>{{ p.period_start|date:"j M" }} &ndash; {{ p.period_end|date:"j M Y" }}</td>
+              <td>&#8377;{{ p.total|floatformat:"0" }}</td>
+              <td><span class="status-pill status-pay-{{ p.status|lower }}">{{ p.get_status_display }}</span></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {# --- Notes --- #}
+      {% if subscription.customer_notes %}
+        <h3 style="margin-top:32px;">Your notes</h3>
+        <p style="background:#FBF5E9; padding:12px; border-radius:4px; margin:0;">{{ subscription.customer_notes }}</p>
+      {% endif %}
+
+      {% if subscription.cancellation_reason %}
+        <h3 style="margin-top:32px;">Cancellation reason</h3>
+        <p style="margin:0;">{{ subscription.cancellation_reason }}</p>
+      {% endif %}
+
+    </div>
+  </section>
+{% endblock %}

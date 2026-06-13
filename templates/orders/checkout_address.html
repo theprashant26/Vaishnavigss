@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout: Address &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}checkout-address{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+  <section class="checkout container-vai" aria-labelledby="checkout-h">
+    <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+      <a href="{% url 'core:home' %}">Home</a>
+      <span class="sep">/</span>
+      <a href="{% url 'orders:cart' %}">Cart</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Checkout</span>
+    </nav>
+
+    <h1 id="checkout-h" class="visually-hidden">Checkout &mdash; Address</h1>
+    {% include 'orders/_checkout_steps.html' %}
+
+    <section class="step-panel" aria-label="Pick a shipping address">
+      <h2>Where should we deliver?</h2>
+
+      {% if addresses %}
+        <form method="post" action="{% url 'orders:checkout_address' %}">
+          {% csrf_token %}
+          <div class="addr-chips">
+            {% for addr in addresses %}
+              <label class="addr-chip{% if addr.is_default and not selected_address_id %} is-active{% endif %}{% if selected_address_id == addr.pk %} is-active{% endif %}">
+                <input type="radio" name="address_id" value="{{ addr.pk }}"
+                       {% if selected_address_id == addr.pk %}checked{% elif addr.is_default and not selected_address_id %}checked{% endif %}>
+                <strong>{{ addr.label }}{% if addr.is_default %} &middot; default{% endif %}</strong>
+                <span>{{ addr.recipient_name }} &middot; {{ addr.recipient_phone }}</span>
+                <span>{{ addr.line_1 }}{% if addr.line_2 %}, {{ addr.line_2 }}{% endif %}</span>
+                <span>{{ addr.city }}, {{ addr.state }} &mdash; {{ addr.pincode }}</span>
+              </label>
+            {% endfor %}
+          </div>
+          <div class="step-panel__actions">
+            <a href="{% url 'orders:cart' %}" class="btn-vaishnavi-ghost back">Back to cart</a>
+            <button type="submit" class="btn-vaishnavi-primary">Continue to payment</button>
+          </div>
+        </form>
+
+        <details style="margin-top: 24px;">
+          <summary class="form-label-vai">Add a new address instead</summary>
+          {% include 'orders/_inline_address_form.html' %}
+        </details>
+      {% else %}
+        <p class="step-panel__lead">No saved addresses yet. Add one to continue.</p>
+        {% include 'orders/_inline_address_form.html' %}
+      {% endif %}
+    </section>
+
+  </section>
+
+{% endblock %}

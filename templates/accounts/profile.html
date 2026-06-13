@@ -1,0 +1,38 @@
+{% extends 'accounts/profile_base.html' %}
+{% load static %}
+
+{% block profile_title %}Dashboard{% endblock %}
+
+{% block profile_content %}
+
+  <section class="profile-view is-active" aria-label="Dashboard">
+
+    <div class="dash-stats">
+      <div class="dash-stat">
+        <div class="dash-stat__label">Total orders</div>
+        <div class="dash-stat__value">0</div>
+        <div class="dash-stat__sub">no orders yet</div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat__label">Subscription savings</div>
+        <div class="dash-stat__value">&#8377;0</div>
+        <div class="dash-stat__sub">no active subscriptions</div>
+      </div>
+      <div class="dash-stat">
+        <div class="dash-stat__label">Cows you support</div>
+        <div class="dash-stat__value">{{ site.cow_count }}</div>
+        <div class="dash-stat__sub">every order, every day</div>
+      </div>
+    </div>
+
+    <div class="view-card">
+      <div class="dash-recent__head">
+        <h3>Recent orders</h3>
+        <a href="{% url 'accounts:profile_orders' %}">View all &rarr;</a>
+      </div>
+      <p class="view-card__lead">You haven't placed any orders yet. <a href="{% url 'catalog:product_list' %}">Browse the shop &rarr;</a></p>
+    </div>
+
+  </section>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Delivered with love.
+
+Your order {{ order.order_number }} has been delivered. We hope every jar finds its
+right place in your kitchen.
+
+If anything isn't right, reply to this email within 48 hours — we'll make it right.
+
+With seva,
+— {{ site_name }}
+{% endblock %}

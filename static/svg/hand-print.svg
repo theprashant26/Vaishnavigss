@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 40" fill="none" aria-hidden="true">
+  <!-- Sacred hand-print (हाथ का छाप).
+       Echoes the red hand-prints on the cow body in the logo.
+       Use small, as a brand-mark / list-bullet / divider accent. -->
+  <g fill="currentColor">
+    <!-- Palm -->
+    <path d="M8 18
+             C 8 14, 9 12, 12 12
+             L 20 12
+             C 23 12, 24 14, 24 18
+             L 24 30
+             C 24 34, 22 36, 18 36
+             L 14 36
+             C 10 36, 8 34, 8 30 Z"/>
+    <!-- Thumb -->
+    <ellipse cx="7" cy="20" rx="2.5" ry="4" transform="rotate(-25 7 20)"/>
+    <!-- Index -->
+    <ellipse cx="11" cy="8"  rx="2"   ry="5"/>
+    <!-- Middle -->
+    <ellipse cx="16" cy="6"  rx="2"   ry="6"/>
+    <!-- Ring -->
+    <ellipse cx="21" cy="8"  rx="2"   ry="5"/>
+    <!-- Pinky -->
+    <ellipse cx="25" cy="13" rx="1.8" ry="3.5" transform="rotate(15 25 13)"/>
+  </g>
+</svg>

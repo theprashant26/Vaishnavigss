@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Access denied &mdash; {{ site.business_name }}{% endblock %}
+{% block meta_description %}You don't have permission to view this page.{% endblock %}
+{% block body_page %}403{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/404.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+  <section class="nfp" aria-labelledby="nfp-h">
+    <div class="nfp__inner">
+      <span class="nfp__number" aria-hidden="true">403</span>
+
+      <div class="nfp__cow" aria-hidden="true">
+        <img src="{% static 'img/vaishnavilogo.jpeg' %}" alt="{{ site.business_name }}" width="100" height="100" class="logo-img logo-img--medallion" />
+      </div>
+
+      <span class="nfp__deva">प्रवेश निषेध</span>
+
+      <h1 id="nfp-h">This door is <em>closed</em> to you.</h1>
+
+      <p class="nfp__lead">
+        You don't have permission to view this page. If you think this is a mistake,
+        sign in again or contact us.
+      </p>
+
+      <div class="nfp__actions">
+        <a href="{% url 'core:home' %}" class="btn-vaishnavi-primary">Take me home</a>
+        <a href="{% url 'accounts:login' %}" class="btn-vaishnavi-ghost">Sign in</a>
+      </div>
+
+      <div class="nfp__quick">
+        <div class="nfp__quick-label">Or try one of these</div>
+        <ul class="nfp__quick-links" role="list">
+          <li><a href="{% url 'catalog:product_list' %}">Browse the shop</a></li>
+          <li><a href="{% url 'services:service_list' %}">See subscription plans</a></li>
+          <li><a href="{% url 'core:contact' %}">Contact us</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+{% endblock %}

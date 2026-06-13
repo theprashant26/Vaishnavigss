@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout &mdash; {{ site.business_name }}{% endblock %}
+{% block meta_description %}Complete your order &mdash; {{ site.business_name }}.{% endblock %}
+{% block body_page %}checkout{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+    <section class="checkout container-vai" aria-labelledby="checkout-h">
+
+      <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+        <a href="{% url 'core:home' %}">Home</a>
+        <span class="sep">/</span>
+        <a href="{% url 'orders:cart' %}">Cart</a>
+        <span class="sep">/</span>
+        <span aria-current="page">Checkout</span>
+      </nav>
+
+      <h1 id="checkout-h" class="visually-hidden">Checkout</h1>
+
+      <div data-checkout-shell>
+
+        <ol class="steps" role="list">
+          <li class="steps__item"><span class="steps__num"><span>1</span></span><span class="steps__label">Address</span></li>
+          <span class="steps__line" aria-hidden="true"></span>
+          <li class="steps__item"><span class="steps__num"><span>2</span></span><span class="steps__label">Payment</span></li>
+          <span class="steps__line" aria-hidden="true"></span>
+          <li class="steps__item"><span class="steps__num"><span>3</span></span><span class="steps__label">Review</span></li>
+        </ol>
+
+        <div class="checkout__grid">
+
+          <div>
+
+            {# STEP 1 — Address & slot #}
+            <section class="step-panel" data-step="1" aria-label="Step 1: Address and delivery slot">
+              <h2>Delivery address</h2>
+              <p class="step-panel__lead">Where would you like your order to arrive?</p>
+
+              <div class="addr-chips" data-addr-chips>
+                {# Rendered by checkout.js #}
+              </div>
+
+              <div data-new-addr-wrap class="is-hidden">
+                <form data-new-addr-form novalidate>
+                  <div class="step-panel__row">
+                    <div><label for="addr-name" class="form-label-vai">Full name</label><input id="addr-name" name="name" type="text" class="form-control-vai" placeholder="Anjali Sharma" /></div>
+                    <div><label for="addr-phone" class="form-label-vai">Phone</label><input id="addr-phone" name="phone" type="tel" class="form-control-vai" placeholder="+91 9XXXX XXXXX" /></div>
+                    <div class="span-2"><label for="addr-line1" class="form-label-vai">Address line 1</label><input id="addr-line1" name="line1" type="text" class="form-control-vai" placeholder="House / flat number, street" /></div>
+                    <div class="span-2"><label for="addr-line2" class="form-label-vai">Address line 2 <span class="text-muted-soft">(optional)</span></label><input id="addr-line2" name="line2" type="text" class="form-control-vai" placeholder="Landmark, apartment block" /></div>
+                    <div><label for="addr-city" class="form-label-vai">City</label><input id="addr-city" name="city" type="text" class="form-control-vai" placeholder="Gurgaon" /></div>
+                    <div><label for="addr-state" class="form-label-vai">State</label><input id="addr-state" name="state" type="text" class="form-control-vai" placeholder="Haryana" /></div>
+                    <div><label for="addr-pin" class="form-label-vai">PIN code</label><input id="addr-pin" name="pin" type="text" inputmode="numeric" maxlength="6" class="form-control-vai" placeholder="122002" /></div>
+                  </div>
+                </form>
+              </div>
+
+              <h3 class="form-label-vai mt-section">Delivery slot</h3>
+              <div class="slots">
+                <button type="button" class="slot is-active" data-slot="sat-am"><span class="slot__day">This Saturday</span><span class="slot__time">8 am &ndash; 11 am</span></button>
+                <button type="button" class="slot" data-slot="sat-pm"><span class="slot__day">This Saturday</span><span class="slot__time">4 pm &ndash; 6 pm</span></button>
+                <button type="button" class="slot" data-slot="sun-am"><span class="slot__day">This Sunday</span><span class="slot__time">8 am &ndash; 11 am</span></button>
+                <button type="button" class="slot" data-slot="sun-pm"><span class="slot__day">This Sunday</span><span class="slot__time">4 pm &ndash; 6 pm</span></button>
+                <button type="button" class="slot" data-slot="daily"><span class="slot__day">Daily (subscription)</span><span class="slot__time">6 am &ndash; 8 am</span></button>
+                <button type="button" class="slot" data-slot="weekday"><span class="slot__day">Weekdays</span><span class="slot__time">5 pm &ndash; 7 pm</span></button>
+              </div>
+
+              <div class="step-panel__actions">
+                <a href="{% url 'orders:cart' %}" class="btn-vaishnavi-ghost back">Back to cart</a>
+                <button type="button" class="btn-vaishnavi-primary" data-step-next>Continue to payment</button>
+              </div>
+            </section>
+
+            {# STEP 2 — Payment #}
+            <section class="step-panel" data-step="2" aria-label="Step 2: Payment method">
+              <h2>Payment method</h2>
+              <p class="step-panel__lead">All methods are equally secure. Pay only after your order arrives if you choose Cash on Delivery.</p>
+
+              <div class="pay-methods">
+
+                <label class="pay-method is-active" data-pay-method="upi">
+                  <input type="radio" name="payment" class="pay-method__radio" value="upi" checked />
+                  <div class="pay-method__main">
+                    <span class="pay-method__name">UPI</span>
+                    <span class="pay-method__desc">Google Pay, PhonePe, Paytm, BHIM. Instant settlement.</span>
+                  </div>
+                  <div class="pay-method__icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 11h20"/><path d="M7 15h2"/></svg>
+                  </div>
+                </label>
+
+                <label class="pay-method" data-pay-method="card">
+                  <input type="radio" name="payment" class="pay-method__radio" value="card" />
+                  <div class="pay-method__main">
+                    <span class="pay-method__name">Credit / Debit Card</span>
+                    <span class="pay-method__desc">Visa, Mastercard, RuPay. EMI on orders above &#8377;3,000.</span>
+                  </div>
+                  <div class="pay-method__icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                  </div>
+                </label>
+
+                <label class="pay-method" data-pay-method="nb">
+                  <input type="radio" name="payment" class="pay-method__radio" value="nb" />
+                  <div class="pay-method__main">
+                    <span class="pay-method__name">Net Banking</span>
+                    <span class="pay-method__desc">All major Indian banks supported.</span>
+                  </div>
+                  <div class="pay-method__icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22h18"/><path d="M3 10h18"/><path d="M5 6l7-4 7 4"/><path d="M5 10v12"/><path d="M19 10v12"/><path d="M9 14v4"/><path d="M15 14v4"/></svg>
+                  </div>
+                </label>
+
+                <label class="pay-method" data-pay-method="cod">
+                  <input type="radio" name="payment" class="pay-method__radio" value="cod" />
+                  <div class="pay-method__main">
+                    <span class="pay-method__name">Cash on Delivery</span>
+                    <span class="pay-method__desc">Pay in person when your order arrives. Available pan-India.</span>
+                  </div>
+                  <div class="pay-method__icon" aria-hidden="true">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><line x1="6" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="18" y2="12"/></svg>
+                  </div>
+                </label>
+
+              </div>
+
+              <div class="step-panel__actions">
+                <button type="button" class="btn-vaishnavi-ghost back" data-step-back>&larr; Back</button>
+                <button type="button" class="btn-vaishnavi-primary" data-step-next>Review order</button>
+              </div>
+            </section>
+
+            {# STEP 3 — Review #}
+            <section class="step-panel" data-step="3" aria-label="Step 3: Review and place order">
+              <h2>Review &amp; place order</h2>
+              <p class="step-panel__lead">One last look before we begin churning.</p>
+
+              <div class="review-block">
+                <div class="review-block__head"><span class="review-block__title">Delivery to</span><button type="button" class="review-block__edit" data-edit-step="1">Edit</button></div>
+                <div class="review-block__body" data-review-addr></div>
+              </div>
+
+              <div class="review-block">
+                <div class="review-block__head"><span class="review-block__title">Delivery slot</span><button type="button" class="review-block__edit" data-edit-step="1">Edit</button></div>
+                <div class="review-block__body" data-review-slot></div>
+              </div>
+
+              <div class="review-block">
+                <div class="review-block__head"><span class="review-block__title">Payment method</span><button type="button" class="review-block__edit" data-edit-step="2">Edit</button></div>
+                <div class="review-block__body" data-review-pay></div>
+              </div>
+
+              <label class="terms-check">
+                <input type="checkbox" data-terms />
+                <span>
+                  I have read and agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                  I understand my purchase supports the welfare of our {{ site.cow_count }}+ cows.
+                </span>
+              </label>
+
+              <div class="step-panel__actions">
+                <button type="button" class="btn-vaishnavi-ghost back" data-step-back>&larr; Back</button>
+                <button type="button" class="btn-vaishnavi-primary" data-place-order>Place order</button>
+              </div>
+            </section>
+
+          </div>
+
+          {# RIGHT — order summary #}
+          <aside class="checkout-summary" aria-label="Order summary">
+            <h2>Your order</h2>
+
+            <div class="checkout-summary__lines" data-checkout-lines>
+              {# Rendered by checkout.js #}
+            </div>
+
+            <div class="cart-summary__row"><span>Subtotal</span><strong data-co-subtotal>&#8377;0</strong></div>
+            <div class="cart-summary__row is-hidden" data-co-discount-row><span>Discount</span><strong data-co-discount>&mdash;</strong></div>
+            <div class="cart-summary__row"><span>Shipping</span><strong data-co-shipping>Free</strong></div>
+
+            <div class="checkout-summary__total">
+              <span class="checkout-summary__total-label">Total</span>
+              <span class="checkout-summary__total-value" data-co-total>&#8377;0</span>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+
+      {# SUCCESS PANEL (toggled visible by checkout.js after place-order) #}
+      <div class="checkout-success" data-checkout-success>
+        <div class="checkout-success__icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>
+        </div>
+        <h2>Thank you. Your order is placed.</h2>
+        <div class="checkout-success__id">Order # <span data-order-id>VAI-XXXXXX</span></div>
+        <p>We've sent a confirmation to your email. Our team is preparing your order now &mdash; you'll get an update before delivery. The cows say thank you, too.</p>
+        <div class="cta-row">
+          <a href="{% url 'accounts:profile' %}" class="btn-vaishnavi-primary">Track order</a>
+          <a href="{% url 'catalog:product_list' %}" class="btn-vaishnavi-ghost">Continue shopping</a>
+        </div>
+      </div>
+
+    </section>
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/checkout.js' %}"></script>
+{% endblock %}

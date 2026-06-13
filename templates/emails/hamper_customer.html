@@ -1,0 +1,8 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Your hamper inquiry is with us{% endblock %}
+{% block body %}
+  <p>Hello {{ submission.name }},</p>
+  <p>Thank you for thinking of Vaishnavi for your <strong>{{ submission.get_occasion_display|lower }}</strong>.</p>
+  <p>We received your request and will send a curated proposal (with photos and pricing) within one business day. If your date is tight, please WhatsApp us so we can prioritise.</p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "t1",
+    "name": "Anjali Sharma",
+    "location": "Gurgaon",
+    "rating": 5,
+    "quote": "The ghee tastes like my grandmother's kitchen. After one month my children asked me to never buy supermarket ghee again. I have been a subscriber for two years.",
+    "product": "A2 Bilona Ghee",
+    "avatar": "/assets/img/avatar-anjali.jpg",
+    "avatarAlt": "Portrait of Anjali Sharma, a smiling woman in her early forties"
+  },
+  {
+    "id": "t2",
+    "name": "Dr. Rohan Mehta",
+    "location": "South Delhi",
+    "rating": 5,
+    "quote": "As a physician I am sceptical by training. But the difference in digestion after switching to A2 milk is real for my entire family. The glass-bottle delivery is the cherry on top.",
+    "product": "Daily Milk Subscription",
+    "avatar": "/assets/img/avatar-rohan.jpg",
+    "avatarAlt": "Portrait of Dr. Rohan Mehta, a man in a navy blue shirt"
+  },
+  {
+    "id": "t3",
+    "name": "Kavita Iyer",
+    "location": "Noida",
+    "rating": 5,
+    "quote": "We visited the gaushala on Janmashtami. The cows are clearly cared for, the staff is reverent, and you can see where every rupee goes. That is rare.",
+    "product": "Gaushala Visit + Adoption",
+    "avatar": "/assets/img/avatar-kavita.jpg",
+    "avatarAlt": "Portrait of Kavita Iyer wearing a green saree with gold border"
+  },
+  {
+    "id": "t4",
+    "name": "Vikram Singh",
+    "location": "Delhi",
+    "rating": 5,
+    "quote": "The Mathura peda is dangerously good. I bought one box, ordered three more the same week, then signed up for the monthly box. Worth every rupee.",
+    "product": "Mathura Peda + Monthly Ghee Box",
+    "avatar": "/assets/img/avatar-vikram.jpg",
+    "avatarAlt": "Portrait of Vikram Singh, a bearded man in a kurta"
+  }
+]

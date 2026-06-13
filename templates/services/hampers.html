@@ -1,0 +1,24 @@
+{% extends 'services/_inquiry_base.html' %}
+
+{% block inquiry_title %}Custom hampers{% endblock %}
+{% block inquiry_body_page %}hampers{% endblock %}
+{% block inquiry_eyebrow %}Festive &amp; wedding gifting{% endblock %}
+{% block inquiry_heading %}Bespoke hampers for the occasions that matter.{% endblock %}
+{% block inquiry_lead %}
+  Custom hampers for Diwali, Janmashtami, weddings, grihapravesh and corporate gifting.
+  A jar of bilona ghee, a brass diya, our hand-pressed sweets &mdash; assembled fresh, wrapped in cloth,
+  optionally branded with your name or family crest.
+{% endblock %}
+{% block inquiry_submit %}Send hamper inquiry{% endblock %}
+
+{% block inquiry_fields %}
+  {% include 'partials/_form_field.html' with field=form.name label="Your name" %}
+  {% include 'partials/_form_field.html' with field=form.phone label="Phone" %}
+  {% include 'partials/_form_field.html' with field=form.email label="Email" span2=True %}
+  {% include 'partials/_form_field.html' with field=form.occasion label="Occasion" %}
+  {% include 'partials/_form_field.html' with field=form.budget_range label="Budget per hamper" %}
+  {% include 'partials/_form_field.html' with field=form.quantity label="How many hampers" %}
+  {% include 'partials/_form_field.html' with field=form.delivery_date label="Delivery date" optional=True %}
+  {% include 'partials/_form_field.html' with field=form.delivery_city label="Delivery city" optional=True span2=True %}
+  {% include 'partials/_form_field.html' with field=form.message label="Tell us about the occasion" optional=True span2=True %}
+{% endblock %}

@@ -1,0 +1,134 @@
+{% load static %}
+{% comment %}
+  Vaishnavi Gaushala — Navbar Partial
+  Rendered server-side via include in base.html.
+  Pages set aria-current="page" on the active link via app.js.
+{% endcomment %}
+<header>
+<nav class="vai-nav" aria-label="Main navigation" data-vai-nav>
+  <div class="container-vai vai-nav__inner">
+
+    {# Brand — logo only; the JPEG already contains the wordmark #}
+    <a class="vai-nav__brand" href="{% url 'core:home' %}" aria-label="Vaishnavi Gau Seva Gausansthan — Home">
+      <img src="{% static 'img/vaishnavilogo.jpeg' %}" alt="Vaishnavi Gau Seva Gausansthan" width="60" height="60" class="logo-img logo-img--blend vai-nav__brand-img" />
+    </a>
+
+    {# Desktop links #}
+    <ul class="vai-nav__links" role="list">
+      <li><a href="{% url 'core:home' %}"               data-nav="home">Home</a></li>
+      <li><a href="{% url 'catalog:product_list' %}"    data-nav="products">Shop</a></li>
+      <li><a href="{% url 'services:service_list' %}"   data-nav="services">Services</a></li>
+      <li><a href="{% url 'core:about' %}"              data-nav="about">Our Story</a></li>
+      <li><a href="{% url 'core:contact' %}"            data-nav="contact">Contact</a></li>
+    </ul>
+
+    {# Actions #}
+    <div class="vai-nav__actions">
+      {% if user.is_authenticated %}
+        {# Logged-in: My Account dropdown (Bootstrap) #}
+        <div class="dropdown vai-nav__account">
+          <button class="dropdown-toggle vai-nav__account-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="8" r="4"/>
+              <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+            </svg>
+            <span class="vai-nav__account-name">{{ user.first_name|default:user.username|truncatechars:14 }}</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end vai-nav__account-menu">
+            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Dashboard</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}#orders">Orders</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}#subscriptions">Subscriptions</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}#wishlist">Wishlist</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <form method="post" action="{% url 'accounts:logout' %}" class="vai-nav__logout-form">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item">Sign out</button>
+              </form>
+            </li>
+          </ul>
+        </div>
+      {% else %}
+        {# Anonymous: simple account icon → login page #}
+        <a href="{% url 'accounts:login' %}" class="btn-icon" aria-label="Sign in">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+          </svg>
+        </a>
+      {% endif %}
+      <a href="{% url 'orders:cart' %}" class="btn-icon vai-nav__cart" aria-label="Cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 3h2l2.6 12.6a2 2 0 0 0 2 1.4h8.8a2 2 0 0 0 2-1.5L22 7H6"/>
+          <circle cx="9" cy="20" r="1.5"/>
+          <circle cx="18" cy="20" r="1.5"/>
+        </svg>
+        <span class="vai-nav__cart-count" data-cart-count{% if not cart_item_count %} hidden{% endif %}>{{ cart_item_count|default:0 }}</span>
+      </a>
+      <button class="vai-nav__toggle btn-icon"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#vaiMobileNav"
+              aria-controls="vaiMobileNav"
+              aria-label="Open menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="6"  x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+</header>
+
+{# Mobile offcanvas drawer #}
+<div class="offcanvas offcanvas-end vai-offcanvas" tabindex="-1" id="vaiMobileNav" aria-labelledby="vaiMobileNavLabel">
+  <div class="offcanvas-header">
+    <a class="vai-nav__brand" href="{% url 'core:home' %}">
+      <img src="{% static 'img/vaishnavilogo.jpeg' %}" alt="Vaishnavi Gau Seva Gausansthan" width="52" height="52" class="logo-img logo-img--blend vai-nav__brand-img" />
+    </a>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul role="list">
+      <li><a href="{% url 'core:home' %}"             data-nav="home">Home</a></li>
+      <li><a href="{% url 'catalog:product_list' %}"  data-nav="products">Shop</a></li>
+      {% if nav_categories %}
+        {# DB-driven Categories sub-list (rendered via category_nav context processor). #}
+        <li class="vai-offcanvas__sublist-wrap">
+          <span class="vai-offcanvas__sublist-label">Categories</span>
+          <ul class="vai-offcanvas__sublist" role="list">
+            {% for cat in nav_categories %}
+              <li><a href="{% url 'catalog:product_list' %}?category={{ cat.slug }}">{{ cat.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endif %}
+      <li><a href="{% url 'services:service_list' %}" data-nav="services">Services</a></li>
+      <li><a href="{% url 'core:about' %}"            data-nav="about">Our Story</a></li>
+      <li><a href="{% url 'core:contact' %}"          data-nav="contact">Contact</a></li>
+      {% if user.is_authenticated %}
+        <li><a href="{% url 'accounts:profile' %}"    data-nav="profile">My account</a></li>
+        <li>
+          <form method="post" action="{% url 'accounts:logout' %}" class="vai-offcanvas__logout-form">
+            {% csrf_token %}
+            <button type="submit">Sign out</button>
+          </form>
+        </li>
+      {% else %}
+        <li><a href="{% url 'accounts:login' %}"      data-nav="login">Login / Register</a></li>
+      {% endif %}
+    </ul>
+    <hr class="vai-offcanvas__divider">
+    {% if site.phone_whatsapp %}
+      {% with wa=site.phone_whatsapp|cut:" "|cut:"+"|cut:"-" %}
+        <a href="https://wa.me/{{ wa }}"
+           class="btn-vaishnavi-gold btn-sm vai-offcanvas__wa"
+           target="_blank" rel="noopener">WhatsApp Us</a>
+      {% endwith %}
+    {% else %}
+      <a href="{% url 'core:contact' %}" class="btn-vaishnavi-gold btn-sm vai-offcanvas__wa">Contact Us</a>
+    {% endif %}
+  </div>
+</div>

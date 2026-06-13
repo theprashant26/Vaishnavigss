@@ -1,0 +1,11 @@
+{% extends 'emails/_base.html' %}
+{% block heading %}Subscription expired{% endblock %}
+{% block body %}
+  <p>Hello {{ subscription.user.first_name|default:subscription.user.username }},</p>
+  <p>Your <strong>{{ subscription.plan.name }}</strong> subscription expired on <strong>{{ subscription.current_period_end|date:"j M Y" }}</strong> because the next period wasn't renewed.</p>
+  <p>You can restart it any time &mdash; the plan and pricing are unchanged.</p>
+  <p style="margin:24px 0;">
+    <a href="{{ site_domain }}{% url 'subscriptions:signup' plan_slug=subscription.plan.slug %}" style="display:inline-block; background:#7A1F1F; color:#fff; padding:12px 28px; text-decoration:none; border-radius:4px; font-weight:600;">Subscribe again</a>
+  </p>
+  <p>With seva,<br>&mdash; {{ site_name }}</p>
+{% endblock %}

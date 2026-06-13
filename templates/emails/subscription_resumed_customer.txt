@@ -1,0 +1,13 @@
+{% extends 'emails/_base.txt' %}
+{% block body %}Subscription resumed.
+
+Hello {{ subscription.user.first_name|default:subscription.user.username }},
+
+Your {{ subscription.plan.name }} subscription is back on. Deliveries will resume on the next scheduled date.
+
+{% include 'emails/_subscription_summary.txt' %}
+View: {{ site_domain }}/account/profile/subscriptions/{{ subscription.subscription_number }}/
+
+With seva,
+— {{ site_name }}
+{% endblock %}

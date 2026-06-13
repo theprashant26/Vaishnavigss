@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout: Payment &mdash; {{ site.business_name }}{% endblock %}
+{% block body_page %}checkout-payment{% endblock %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/checkout.css' %}?v=3" />
+  <meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
+{% block content %}
+
+  <section class="checkout container-vai" aria-labelledby="checkout-h">
+    <nav class="breadcrumb-vai" aria-label="Breadcrumb">
+      <a href="{% url 'core:home' %}">Home</a>
+      <span class="sep">/</span>
+      <a href="{% url 'orders:cart' %}">Cart</a>
+      <span class="sep">/</span>
+      <span aria-current="page">Checkout</span>
+    </nav>
+
+    <h1 id="checkout-h" class="visually-hidden">Checkout &mdash; Payment</h1>
+    {% include 'orders/_checkout_steps.html' %}
+
+    <section class="step-panel" aria-label="Pick a payment method">
+      <h2>How would you like to pay?</h2>
+      <p class="step-panel__lead">Both options are equally secure. Pay on delivery if you prefer cash.</p>
+
+      <form method="post" action="{% url 'orders:checkout_payment' %}">
+        {% csrf_token %}
+        <div class="pay-methods">
+          {% for value, label in methods %}
+            <label class="pay-method{% if selected_method == value %} is-active{% elif forloop.first and not selected_method %} is-active{% endif %}">
+              <input type="radio" name="payment_method" class="pay-method__radio" value="{{ value }}"
+                     {% if selected_method == value %}checked{% elif forloop.first and not selected_method %}checked{% endif %} required>
+              <div class="pay-method__main">
+                <span class="pay-method__name">{{ label }}</span>
+                <span class="pay-method__desc">
+                  {% if value == 'RAZORPAY' %}Pay securely with UPI, card, net banking or wallet via Razorpay.
+                  {% else %}Pay in cash when your order arrives at your door.{% endif %}
+                </span>
+              </div>
+            </label>
+          {% endfor %}
+        </div>
+
+        <div class="step-panel__actions">
+          <a href="{% url 'orders:checkout_address' %}" class="btn-vaishnavi-ghost back">&larr; Back</a>
+          <button type="submit" class="btn-vaishnavi-primary">Review order</button>
+        </div>
+      </form>
+    </section>
+
+  </section>
+
+{% endblock %}
